@@ -7,6 +7,7 @@
     const mysql = require('mysql');
     const app = express();
     const crypto = require('crypto');
+    const pwd = require('./assets/json/pwd.json').pwd_auth_organify;
 
     app.use('/assets', express.static('assets'));
     app.use(bodyParser.json() );
@@ -20,7 +21,7 @@
         host: 'localhost',
         user: 'oauth_organify',
         database: 'organify',
-        password: 'V%XP7a?]hf526Fs$'
+        password: pwd
     });
 
     connection.connect();

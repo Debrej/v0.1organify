@@ -10,6 +10,7 @@
     const http = require('http');
     const qs = require('querystring');
     const bearerToken = require('express-bearer-token');
+    const pwd = require('./assets/json/pwd.json').pwd_organify;
 
     app.use('/assets', express.static('assets'));
     app.use(bodyParser.json() );
@@ -24,7 +25,7 @@
         host: 'localhost',
         user: 'organify',
         database: 'organify',
-        password: 'Adufp$_CZ9-s9jdw'
+        password: pwd
     });
 
     connection.connect();

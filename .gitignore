@@ -65,4 +65,5 @@ Organify.postman_collection.json
 .idea/*
 .idea/
 .git/
+server/assets/json/pwd.json
  
