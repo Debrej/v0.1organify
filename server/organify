@@ -1,0 +1,4 @@
+#!/bin/bash
+
+konsole -e 'nodemon server.js' &
+konsole -e 'nodemon auth.js' &
