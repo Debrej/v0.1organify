@@ -21,6 +21,7 @@
     app.use(express.json());
     app.use(express.urlencoded());
     app.use(bearerToken());
+    app.use(app.router);
 
     const connection = mysql.createConnection({
         host: 'localhost',
