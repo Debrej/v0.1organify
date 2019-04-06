@@ -7,5 +7,6 @@
   "error_6": "API ENDPOINT NOT IMPLEMENTED YET",
   "error_401": {
     "token": "UNAUTHORIZED REQUEST : TOKEN NOT VALID"
-  }
+  },
+  "error_1000": "CLIENT ERROR, THIS IS NOT NORMAL :/"
 }

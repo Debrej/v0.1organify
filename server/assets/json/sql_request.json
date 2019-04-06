@@ -8,7 +8,7 @@
   "get_shift_by_orga": "SELECT SHIFT_ORGA.idOrga, SHIFT.idShift, DATE_FORMAT(start_date, '%d-%m-%Y %H:%i:%s') AS start_date, DATE_FORMAT(end_date, '%d-%m-%Y %H:%i:%s') AS end_date FROM SHIFT_ORGA JOIN SHIFT ON (SHIFT_ORGA.idShift = SHIFT.idShift) WHERE SHIFT_ORGA.idOrga =",
   "get_subshift_by_task": "SELECT SHIFT_TASK.idTask, SUBSHIFT.idSubShift, DATE_FORMAT(start_date, '%d-%m-%Y %H:%i:%s') AS start_date, DATE_FORMAT(end_date, '%d-%m-%Y %H:%i:%s') AS end_date  FROM SHIFT_TASK JOIN SUBSHIFT ON (SHIFT_TASK.idSubShift = SUBSHIFT.idSubShift) WHERE SHIFT_TASK.idTask = ",
   "get_orga_by_shift": "SELECT * FROM ORGA WHERE idOrga IN (SELECT idOrga FROM SHIFT_ORGA WHERE idShift = %d);",
-  "get_orga_by_subshift": "SELECT * FROM ORGA WHERE idOrga IN (SELECT idOrga FROM SHIFT_ORGA JOIN SUBSHIFT ON (SUBSHIFT.idShift = SHIFT_ORGA.idShift) WHERE idSubShift = %d);",
+  "get_orga_by_subshift": "SELECT * FROM ORGA WHERE idOrga IN (SELECT idOrga FROM SHIFT_ORGA JOIN SUBSHIFT ON (SUBSHIFT.idShift = SHIFT_ORGA.idShift) WHERE idSubShift = %s);",
   "get_task_by_orga": "SELECT * FROM TASK WHERE idTask IN (SELECT idTask FROM SHIFT_TASK WHERE idSubShift IN (SELECT idSubShift FROM SUBSHIFT SB JOIN SHIFT_ORGA S ON SB.idShift = S.idShift WHERE idOrga = %d));",
   "get_task_by_shift": "SELECT * FROM TASK WHERE idTask IN (SELECT idTask FROM SHIFT_TASK WHERE idSubShift IN (SELECT idSubShift FROM SHIFT S JOIN SUBSHIFT SB ON SB.idShift = S.idShift WHERE S.idShift = %d));",
   "get_task_by_subshift": "SELECT * FROM TASK WHERE idTask IN (SELECT idTask FROM SHIFT_TASK WHERE idSubShift = %d);",
