@@ -231,23 +231,7 @@
 //region QUERY GET REQUESTS
 
     app.get("/test_req", function(req, res){
-        let token = req.token;
-        let request = sprintf(sql_requests.validate_token, token);
-        connection.query(request,function(err, rows, fields) {
-            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-            if(rows[0] === undefined){
-                res.send({'status': 401, 'error': errors.error_401.token});
-            }
-            else {
-                let accept = req.token === rows[0].token;
-                if(accept) {
-                    //PLACE REQUEST BODY HERE
-                }
-                else {
-                    res.send({'status': 401, 'error': errors.error_401.token});
-                }
-            }
-        });
+        res.send(req.body)
     });
 
     //region GET TABLES ALL DATA
@@ -340,7 +324,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.body.idOrga;
+            params["idOrga"] = req.form.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -364,7 +348,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"]= req.body.idOrga;
+            params["idOrga"]= req.form.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -387,7 +371,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.body.idOrga;
+            params["idOrga"] = req.form.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -416,7 +400,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.body.idOrga;
+            params["idOrga"] = req.form.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -444,7 +428,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.body.idOrga;
+            params["idOrga"] = req.form.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -467,7 +451,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.body.idOrga;
+            params["idOrga"] = req.form.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -490,7 +474,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.body.idOrga;
+            params["idOrga"] = req.form.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -517,7 +501,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idTask"] = req.body.idTask;
+            params["idTask"] = req.form.idTask;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -540,7 +524,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idTask"] = req.body.idTask;
+            params["idTask"] = req.form.idTask;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -568,7 +552,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idShift"] = req.body.idShift;
+            params["idShift"] = req.form.idShift;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -591,7 +575,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idShift"] = req.body.idShift;
+            params["idShift"] = req.form.idShift;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -614,7 +598,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idShift"] = req.body.idShift;
+            params["idShift"] = req.form.idShift;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -639,7 +623,7 @@
             console.log(host+req.originalUrl);
             //endregion
             let params = [];
-            params["idSubShift"] = req.body.idSubShift;
+            params["idSubShift"] = req.form.idSubShift;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -664,7 +648,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idSubShift"] = req.body.idSubShift;
+            params["idSubShift"] = req.form.idSubShift;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -692,10 +676,10 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["last_name"] = req.body.last_name;
-            params["first_name"] = req.body.first_name;
-            params["mail"] = req.body.mail;
-            params["pwd"] = req.body.pwd;
+            params["last_name"] = req.form.last_name;
+            params["first_name"] = req.form.first_name;
+            params["mail"] = req.form.mail;
+            params["pwd"] = req.form.pwd;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -736,8 +720,8 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.body.idOrga;
-            params["shifts"] = JSON.parse(req.body.shifts).shifts;
+            params["idOrga"] = req.form.idOrga;
+            params["shifts"] = JSON.parse(req.form.shifts).shifts;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -767,11 +751,11 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["name"] = escapeChars(req.body.name);
-            params["description"] = escapeChars(req.body.description);
-            params["start_date"] = req.body.start_date;
-            params["end_date"] = req.body.end_date;
-            params["idOrga"] = req.body.idOrga;
+            params["name"] = escapeChars(req.form.name);
+            params["description"] = escapeChars(req.form.description);
+            params["start_date"] = req.form.start_date;
+            params["end_date"] = req.form.end_date;
+            params["idOrga"] = req.form.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -829,7 +813,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["start_date"] = req.body.start_date;
+            params["start_date"] = req.form.start_date;
 
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
@@ -870,8 +854,8 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.body.idOrga;
-            params["idTask"] = req.body.idTask;
+            params["idOrga"] = req.form.idOrga;
+            params["idTask"] = req.form.idTask;
 
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
@@ -927,8 +911,8 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idShift"] = req.body.idShift;
-            params["delete_task"] = parseInt(req.body.delete_task);
+            params["idShift"] = req.form.idShift;
+            params["delete_task"] = parseInt(req.form.delete_task);
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -994,8 +978,8 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.body.idOrga;
-            params["delete_task"] = parseInt(req.body.delete_tasks);
+            params["idOrga"] = req.form.idOrga;
+            params["delete_task"] = parseInt(req.form.delete_tasks);
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -1037,7 +1021,7 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idTask"] = req.body.idTask;
+            params["idTask"] = req.form.idTask;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -1062,8 +1046,8 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idTask"] = req.body.idTask;
-            params["idSubShift"] = req.body.idSubShift;
+            params["idTask"] = req.form.idTask;
+            params["idSubShift"] = req.form.idSubShift;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -1088,8 +1072,8 @@
             console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idTask"] = req.body.idTask;
-            params["idOrga"] = req.body.Orga;
+            params["idTask"] = req.form.idTask;
+            params["idOrga"] = req.form.Orga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -1110,6 +1094,10 @@
     });
 
 //endregion
+
+app.use(function(req, res){
+    res.send(req.body);
+});
 
 //region LISTEN
 

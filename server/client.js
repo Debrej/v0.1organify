@@ -5,6 +5,7 @@ const errors = require("./assets/json/error_messages.json");
 const app = express();
 const bearerToken = require('express-bearer-token');
 const request = require("request");
+const host = "organify.debrej.fr";
 
 app.use('/assets', express.static('assets'));
 app.use(bodyParser.json() );
