@@ -8,6 +8,7 @@
     const app = express();
     const crypto = require('crypto');
     const pwd = require('./assets/json/pwd.json').pwd_auth_organify;
+    const host = "auth.debrej.fr";
 
     app.use('/assets', express.static('assets'));
     app.use(bodyParser.json() );
@@ -41,11 +42,12 @@
 //region REQUESTS
 
     app.post("/check_pwd", function(req, res){
-       let pwd = req.body.pwd;
-       let mail = req.body.mail;
+        console.log(host+req.originalUrl);
+        let pwd = req.body.pwd;
+        let mail = req.body.mail;
 
-       let request = sprintf(auth_requests.get_idorga_by_mail, mail);
-       connection.query(request, function(err, rows, field){
+        let request = sprintf(auth_requests.get_idorga_by_mail, mail);
+        connection.query(request, function(err, rows, field){
            if (err) res.send({'status': 1, 'error': errors.error_1});
            let idOrga = rows[0].idOrga;
            let request = sprintf(auth_requests.get_pwd_idorga, idOrga);
@@ -81,6 +83,7 @@
     });
 
     app.post("/register_user", function(req, res){
+        console.log(host+req.originalUrl);
         let pwd = req.body.pwd;
         let mail = req.body.mail;
 
@@ -114,6 +117,7 @@
     });
 
     app.post("/logout", function(req, res){
+        console.log(host+req.originalUrl);
         let idOrga = req.body.idOrga;
         let request = sprintf(auth_requests.delete_token, idOrga);
         connection.query(request, function (err, rows, fields) {

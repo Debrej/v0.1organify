@@ -11,6 +11,7 @@
     const qs = require('querystring');
     const bearerToken = require('express-bearer-token');
     const pwd = require('./assets/json/pwd.json').pwd_organify;
+    const host = "organify.debrej.fr";
 
     app.use('/assets', express.static('assets'));
     app.use(bodyParser.json() );
@@ -276,6 +277,7 @@
     //region GET TABLES ALL DATA
     app.get("/orga", function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             connection.query(sql_requests.get_orga, function(err, rows, fields) {
                 if (err) {res.send({'status': 1, 'error': errors.error_1});}
                 else{
@@ -287,6 +289,7 @@
 
     app.get("/task", function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
 
             //endregion
@@ -301,6 +304,7 @@
 
     app.get("/shift", function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
 
             //endregion
@@ -315,6 +319,7 @@
 
     app.get("/subshift", function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
 
             //endregion
@@ -329,6 +334,7 @@
 
     app.get("/shift_orga", function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             
             //endregion
@@ -343,6 +349,7 @@
 
     app.get("/shift_task", function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             connection.query(sql_requests.get_shift_task, function(err, rows, fields) {
                 if (err) {res.send({'status': 1, 'error': errors.error_1});}
                 res.send({'subshift' : rows, 'status': 0});
@@ -354,6 +361,7 @@
     //region GET DATA WITH idOrga
     app.get("/shift_by_orga",function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.orga.idOrga;
@@ -377,6 +385,7 @@
 
     app.get("/task_by_orga",function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"]= req.orga.idOrga;
@@ -399,6 +408,7 @@
 
     app.get("/orga_task",function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.orga.idOrga;
@@ -427,6 +437,7 @@
 
     app.get("/orga_shift",function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.orga.idOrga;
@@ -454,6 +465,7 @@
 
     app.get("/orga_details",function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.orga.idOrga;
@@ -476,6 +488,7 @@
 
     app.get("/task_by_resp_orga", function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.orga.idOrga;
@@ -498,6 +511,7 @@
 
     app.get("/assigned_task_by_orga",function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.body.idOrga;
@@ -524,6 +538,7 @@
     //region GET DATA WITH idTask
     app.get("/shift_by_task",function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idTask"] = req.orga.idTask;
@@ -546,6 +561,7 @@
 
     app.get("/orga_assigned_by_task", function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idTask"] = req.body.idTask;
@@ -571,6 +587,7 @@
     //region GET DATA WITH idShift
     app.get("/orga_by_shift",function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idShift"] = req.orga.idShift;
@@ -593,6 +610,7 @@
 
     app.get("/task_by_shift",function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idShift"] = req.orga.idShift;
@@ -615,6 +633,7 @@
 
     app.get("/subshift_by_shift",function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idShift"] = req.orga.idShift;
@@ -639,6 +658,7 @@
     //region GET DATA WITH idSubShift
     app.get("/orga_by_subshift",function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //endregion
             let params = [];
             params["idSubShift"] = req.orga.idSubShift;
@@ -661,6 +681,7 @@
 
     app.get("/task_by_subshift",function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idSubShift"] = req.orga.idSubShift;
@@ -688,6 +709,7 @@
 
     app.post("/orga", function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["last_name"] = req.body.last_name;
@@ -731,6 +753,7 @@
 
     app.post("/assign_shift_orga", function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.body.idOrga;
@@ -761,6 +784,7 @@
 
     app.post("/task", function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["name"] = escapeChars(req.body.name);
@@ -822,6 +846,7 @@
 
     app.post("/shift", function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["start_date"] = req.body.start_date;
@@ -862,6 +887,7 @@
 
     app.post("/assign_task_orga", function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.body.idOrga;
@@ -903,6 +929,7 @@
     app.post("/shifts", function(req, res){
         //TODO create multiple shifts
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             res.send({'status': 6, 'error': errors.error_6});
         });
     });
@@ -917,6 +944,7 @@
 
     app.delete('/shift', function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idShift"] = req.body.idShift;
@@ -983,6 +1011,7 @@
 
     app.delete('/orga', function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.body.idOrga;
@@ -1025,6 +1054,7 @@
 
     app.delete('/task', function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idTask"] = req.body.idTask;
@@ -1049,6 +1079,7 @@
 
     app.delete('/task_shift', function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idTask"] = req.body.idTask;
@@ -1074,6 +1105,7 @@
 
     app.delete('/task_orga', function(req, res){
         auth(req, res, function(){
+            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
             params["idTask"] = req.body.idTask;
