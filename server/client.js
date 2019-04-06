@@ -858,7 +858,7 @@ app.post("/logout", function(req, res){
 /*endregion*/
 
 app.use(function(req, res){
-    res.send(404);
+    res.send(host+req.originalUrl);
 });
 
 //region LISTEN

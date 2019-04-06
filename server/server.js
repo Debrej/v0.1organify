@@ -1096,7 +1096,7 @@
 //endregion
 
 app.use(function(req, res){
-    res.send(req.body);
+    res.send(host+req.originalUrl);
 });
 
 //region LISTEN
