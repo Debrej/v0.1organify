@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(bearerToken());
+app.use(app.router);
 
 //endregion
 
@@ -856,6 +857,10 @@ app.post("/logout", function(req, res){
 });
 
 /*endregion*/
+
+app.use(function(req, res){
+    res.send(404);
+});
 
 //region LISTEN
 
