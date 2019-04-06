@@ -31,8 +31,10 @@
     connection.connect();
 
     connection.query('SELECT 1 + 1 AS status', function(err, rows, fields) {
-        if (err) {res.send({'status': 1, 'error': errors.error_1});}
-        console.log('Connection to DB acquired\n\tSTATUS -> CONNECTED\n');
+        if (err) {console.log("ERROR WHEN CONNECTING");}
+        else{
+            console.log('Connection to DB acquired\n\tSTATUS -> CONNECTED\n');
+        }
     });
 
     let params = {
@@ -206,16 +208,18 @@
         let request = sprintf(sql_requests.validate_token, token);
         connection.query(request,function(err, rows, fields) {
             if (err) {res.send({'status': 1, 'error': errors.error_1});}
-            if(rows[0] === undefined){
-                res.send({'status': 401, 'error': errors.error_401.token});
-            }
-            else {
-                let accept = req.token === rows[0].token;
-                if(accept) {
-                    requestFunc(res);
+            {
+                if(rows[0] === undefined){
+                    res.send({'status': 401, 'error': errors.error_401.token});
                 }
                 else {
-                    res.send({'status': 401, 'error': errors.error_401.token});
+                    let accept = req.token === rows[0].token;
+                    if(accept) {
+                        requestFunc(res);
+                    }
+                    else {
+                        res.send({'status': 401, 'error': errors.error_401.token});
+                    }
                 }
             }
         });

@@ -27,8 +27,10 @@
     connection.connect();
 
     connection.query('SELECT 1 + 1 AS status', function(err, rows, fields) {
-        if (err) {res.send({'status': 1});}
-        console.log('Connection to DB acquired\n\tSTATUS -> CONNECTED\n');
+        if (err) {console.log("ERROR WHEN CONNECTING");}
+        else{
+            console.log('Connection to DB acquired\n\tSTATUS -> CONNECTED\n');
+        }
     });
 //endregion
 
@@ -56,19 +58,21 @@
                    let request = sprintf(auth_requests.check_user_already_exist, idOrga);
                    connection.query(request, function(err, rows, field){
                        if(err) res.send({'status': 1, 'error': errors.error_1});
-                       if(rows[0] !== undefined){
-                           let request = sprintf(auth_requests.update_token, token, idOrga);
-                           connection.query(request, function(err, rows, field){
-                               if(err) res.send({'status': 1, 'error': errors.error_1});
-                               res.send({"status": 0, "response": ans_status, "token": token});
-                           });
-                       }
                        else{
-                           let request = sprintf(auth_requests.insert_token, idOrga, token);
-                           connection.query(request, function(err, rows, field){
-                               if(err) res.send({'status': 1, 'error': errors.error_1});
-                               res.send({"status": 0, "response": ans_status, "token": token});
-                           });
+                           if(rows[0] !== undefined){
+                               let request = sprintf(auth_requests.update_token, token, idOrga);
+                               connection.query(request, function(err, rows, field){
+                                   if(err) res.send({'status': 1, 'error': errors.error_1});
+                                   res.send({"status": 0, "response": ans_status, "token": token});
+                               });
+                           }
+                           else{
+                               let request = sprintf(auth_requests.insert_token, idOrga, token);
+                               connection.query(request, function(err, rows, field){
+                                   if(err) res.send({'status': 1, 'error': errors.error_1});
+                                   res.send({"status": 0, "response": ans_status, "token": token});
+                               });
+                           }
                        }
                    });
                });
