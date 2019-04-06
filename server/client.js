@@ -45,6 +45,7 @@ app.get("/affect", function(req, res){
 
 //region GET TABLES ALL DATA
 app.get("/orga", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga',
@@ -67,6 +68,7 @@ app.get("/orga", function(req, res){
 });
 
 app.get("/task", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/task',
@@ -88,6 +90,7 @@ app.get("/task", function(req, res){
 });
 
 app.get("/shift", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/shift',
@@ -109,6 +112,7 @@ app.get("/shift", function(req, res){
 });
 
 app.get("/subshift", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/subshift',
@@ -130,6 +134,7 @@ app.get("/subshift", function(req, res){
 });
 
 app.get("/shift_orga", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/shift_orga',
@@ -151,6 +156,7 @@ app.get("/shift_orga", function(req, res){
 });
 
 app.get("/shift_task", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/shift_task',
@@ -174,6 +180,7 @@ app.get("/shift_task", function(req, res){
 
 //region GET DATA WITH idOrga
 app.get("/shift_by_orga",function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/shift_by_orga',
@@ -195,6 +202,7 @@ app.get("/shift_by_orga",function(req, res){
 });
 
 app.get("/task_by_orga",function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/task_by_orga',
@@ -216,6 +224,7 @@ app.get("/task_by_orga",function(req, res){
 });
 
 app.get("/orga_task",function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga_task',
@@ -237,6 +246,7 @@ app.get("/orga_task",function(req, res){
 });
 
 app.get("/orga_shift",function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga_shift',
@@ -258,6 +268,7 @@ app.get("/orga_shift",function(req, res){
 });
 
 app.get("/orga_details",function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga_details',
@@ -279,6 +290,7 @@ app.get("/orga_details",function(req, res){
 });
 
 app.get("/task_by_resp_orga", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/task_by_resp_orga',
@@ -300,6 +312,7 @@ app.get("/task_by_resp_orga", function(req, res){
 });
 
 app.get("/assigned_task_by_orga",function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/assigned_task_by_orga',
@@ -323,6 +336,7 @@ app.get("/assigned_task_by_orga",function(req, res){
 
 //region GET DATA WITH idTask
 app.get("/shift_by_task",function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/shift_by_task',
@@ -343,6 +357,7 @@ app.get("/shift_by_task",function(req, res){
 });
 
 app.get("/orga_assigned_by_task", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga_assigned_by_task',
@@ -365,6 +380,7 @@ app.get("/orga_assigned_by_task", function(req, res){
 
 //region GET DATA WITH idShift
 app.get("/orga_by_shift",function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga_by_shift',
@@ -385,6 +401,7 @@ app.get("/orga_by_shift",function(req, res){
 });
 
 app.get("/task_by_shift",function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/task_by_shift',
@@ -405,6 +422,7 @@ app.get("/task_by_shift",function(req, res){
 });
 
 app.get("/subshift_by_shift",function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/subshift_by_shift',
@@ -427,6 +445,7 @@ app.get("/subshift_by_shift",function(req, res){
 
 //region GET DATA WITH idSubShift
 app.get("/orga_by_subshift",function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga_by_subshift',
@@ -447,6 +466,7 @@ app.get("/orga_by_subshift",function(req, res){
 });
 
 app.get("/task_by_subshift",function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/task_by_subshift',
@@ -472,6 +492,7 @@ app.get("/task_by_subshift",function(req, res){
 //region QUERY CREATE REQUESTS
 
 app.post("/orga", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/orga',
@@ -498,6 +519,7 @@ app.post("/orga", function(req, res){
 });
 
 app.post("/assign_shift_orga", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/assign_shift_orga',
@@ -522,6 +544,7 @@ app.post("/assign_shift_orga", function(req, res){
 });
 
 app.post("/task", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/task',
@@ -549,6 +572,7 @@ app.post("/task", function(req, res){
 });
 
 app.post("/shift", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/shift',
@@ -572,6 +596,7 @@ app.post("/shift", function(req, res){
 });
 
 app.post("/assign_task_orga", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/assign_task_orga',
@@ -596,6 +621,7 @@ app.post("/assign_task_orga", function(req, res){
 });
 
 app.post("/shifts", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/shifts',
@@ -627,6 +653,7 @@ app.post("/shifts", function(req, res){
 //region QUERY DELETE REQUESTS
 
 app.delete('/shift', function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'DELETE',
         url: 'http://127.0.0.1:2445/shift',
@@ -651,6 +678,7 @@ app.delete('/shift', function(req, res){
 });
 
 app.delete('/orga', function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'DELETE',
         url: 'http://127.0.0.1:2445/orga',
@@ -675,6 +703,7 @@ app.delete('/orga', function(req, res){
 });
 
 app.delete('/task', function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'DELETE',
         url: 'http://127.0.0.1:2445/task',
@@ -698,6 +727,7 @@ app.delete('/task', function(req, res){
 });
 
 app.delete('/task_shift', function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/task_shift',
@@ -722,6 +752,7 @@ app.delete('/task_shift', function(req, res){
 });
 
 app.delete('/task_orga', function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/task_orga',
@@ -750,6 +781,7 @@ app.delete('/task_orga', function(req, res){
 /*region AUTH REQUESTS*/
 
 app.post("/check_pwd", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://localhost:4524/check_pwd',
@@ -774,6 +806,7 @@ app.post("/check_pwd", function(req, res){
 });
 
 app.post("/register_user", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://localhost:4524/register_user',
@@ -798,6 +831,7 @@ app.post("/register_user", function(req, res){
 });
 
 app.post("/logout", function(req, res){
+    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://localhost:4524/logout',
