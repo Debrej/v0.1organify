@@ -233,6 +233,8 @@
         });
     }
 
+    app.use(auth);
+
 //endregion
 
 //region QUERY GET REQUESTS
@@ -243,174 +245,137 @@
 
     //region GET TABLES ALL DATA
     app.get("/orga", function(req, res){
-        auth(req, res, function(){
-            connection.query(sql_requests.get_orga, function(err, rows, fields) {
-                if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                else{
-                    res.send({'orga' : rows, 'status': 0});
-                }
-            });
+        connection.query(sql_requests.get_orga, function(err, rows, fields) {
+            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+            else{
+                res.send({'orga' : rows, 'status': 0});
+            }
         });
     });
 
     app.get("/task", function(req, res){
-        auth(req, res, function(){
-            //region PARAMETERS CHECK
-
-            //endregion
-            //region REQUEST BODY
-            connection.query(sql_requests.get_task, function(err, rows, fields) {
-                if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                else{
-                    res.send({'task' : rows, 'status': 0});
-                }
-            });
-            //endregion
+        //region REQUEST BODY
+        connection.query(sql_requests.get_task, function(err, rows, fields) {
+            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+            else{
+                res.send({'task' : rows, 'status': 0});
+            }
         });
+        //endregion
     });
 
     app.get("/shift", function(req, res){
-        auth(req, res, function(){
-            //region PARAMETERS CHECK
-
-            //endregion
-            //region REQUEST BODY
-            connection.query(sql_requests.get_shift, function(err, rows, fields) {
-                if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                else{
-                    res.send({'shift' : rows, 'status': 0});
-                }
-            });
-            //endregion
+        connection.query(sql_requests.get_shift, function(err, rows, fields) {
+            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+            else{
+                res.send({'shift' : rows, 'status': 0});
+            }
         });
     });
 
     app.get("/subshift", function(req, res){
-        auth(req, res, function(){
-            //region PARAMETERS CHECK
-
-            //endregion
-            //region REQUEST BODY
-            connection.query(sql_requests.get_subshift, function(err, rows, fields) {
-                if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                else {
-                    res.send({'subshift' : rows, 'status': 0});
-                }
-            });
-            //endregion
+        connection.query(sql_requests.get_subshift, function(err, rows, fields) {
+            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+            else {
+                res.send({'subshift' : rows, 'status': 0});
+            }
         });
     });
 
     app.get("/shift_orga", function(req, res){
-        auth(req, res, function(){
-            //region PARAMETERS CHECK
-
-            //endregion
-            //region REQUEST BODY
-            connection.query(sql_requests.get_shift_orga, function(err, rows, fields) {
-                if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                else{
-                    res.send({'shift' : rows, 'status': 0});
-                }
-            });
-            //endregion
+        connection.query(sql_requests.get_shift_orga, function(err, rows, fields) {
+            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+            else{
+                res.send({'shift' : rows, 'status': 0});
+            }
         });
     });
 
     app.get("/shift_task", function(req, res){
-        auth(req, res, function(){
-            connection.query(sql_requests.get_shift_task, function(err, rows, fields) {
-                if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                else{
-                    res.send({'subshift' : rows, 'status': 0});
-                }
-            });
+        connection.query(sql_requests.get_shift_task, function(err, rows, fields) {
+            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+            else{
+                res.send({'subshift' : rows, 'status': 0});
+            }
         });
     });
     //endregion
 
     //region GET DATA WITH idOrga
     app.get("/shift_by_orga",function(req, res){
-        auth(req, res, function(){
-            //region PARAMETERS CHECK
-            let params = [];
-            params["idOrga"] = req.body.idOrga;
-            let undefParams = undefinedParameters(params);
-            if(undefParams !== ""){
-                res.send({'status': 5, 'error': errors.error_5 + undefParams});
-            }
-            //endregion
-            //region REQUEST BODY
-            else{
-                let request = sql_requests.get_shift_by_orga + params["idOrga"];
-                connection.query(request, function(err, rows, fields) {
-                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    else{
-                        res.send({'shift' : rows, 'status': 0});
-                    }
-                });
-            }
-            //endregion
-        });
+        //region PARAMETERS CHECK
+        let params = [];
+        params["idOrga"] = req.body.idOrga;
+        let undefParams = undefinedParameters(params);
+        if(undefParams !== ""){
+            res.send({'status': 5, 'error': errors.error_5 + undefParams});
+        }
+        //endregion
+        //region REQUEST BODY
+        else{
+            let request = sql_requests.get_shift_by_orga + params["idOrga"];
+            connection.query(request, function(err, rows, fields) {
+                if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                else{
+                    res.send({'shift' : rows, 'status': 0});
+                }
+            });
+        }
+        //endregion
     });
 
     app.get("/task_by_orga",function(req, res){
-        auth(req, res, function(){
-            //region PARAMETERS CHECK
-            let params = [];
-            params["idOrga"]= req.body.idOrga;
-            let undefParams = undefinedParameters(params);
-            if(undefParams !== ""){
-                res.send({'status': 5, 'error': errors.error_5 + undefParams});
-            }
-            //endregion
-            //region REQUEST BODY
-            else{
-                let request = sprintf(sql_requests.get_task_by_orga, params["idOrga"]);
-                connection.query(request, function(err, rows, fields) {
-                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    else{
-                        res.send({'task' : rows, 'status': 0});
-                    }
-                });
-            }
-            //endregion
-        });
+        //region PARAMETERS CHECK
+        let params = [];
+        params["idOrga"]= req.body.idOrga;
+        let undefParams = undefinedParameters(params);
+        if(undefParams !== ""){
+            res.send({'status': 5, 'error': errors.error_5 + undefParams});
+        }
+        //endregion
+        //region REQUEST BODY
+        else{
+            let request = sprintf(sql_requests.get_task_by_orga, params["idOrga"]);
+            connection.query(request, function(err, rows, fields) {
+                if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                else{
+                    res.send({'task' : rows, 'status': 0});
+                }
+            });
+        }
+        //endregion
     });
 
     app.get("/orga_task",function(req, res){
-        auth(req, res, function(){
-            //region PARAMETERS CHECK
-            let params = [];
-            params["idOrga"] = req.body.idOrga;
-            let undefParams = undefinedParameters(params);
-            if(undefParams !== ""){
-                res.send({'status': 5, 'error': errors.error_5 + undefParams});
-            }
-            //endregion
-            //region REQUEST BODY
-            else{
-                let request = sprintf(sql_requests.get_orga_details, params["idOrga"]);
-                connection.query(request, function(err, rows, fields) {
-                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    else{
-                        let details_orga = rows[0];
-                        let request = sprintf(sql_requests.get_task_by_orga, params["idOrga"]);
-                        connection.query(request, function(err, rows, fields) {
-                            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                            else{
-                                res.send({'orga': details_orga, 'task': rows, 'status': 0});
-                            }
-                        });
-                    }
-                });
-            }
-            //endregion
-        });
+        //region PARAMETERS CHECK
+        let params = [];
+        params["idOrga"] = req.body.idOrga;
+        let undefParams = undefinedParameters(params);
+        if(undefParams !== ""){
+            res.send({'status': 5, 'error': errors.error_5 + undefParams});
+        }
+        //endregion
+        //region REQUEST BODY
+        else{
+            let request = sprintf(sql_requests.get_orga_details, params["idOrga"]);
+            connection.query(request, function(err, rows, fields) {
+                if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                else{
+                    let details_orga = rows[0];
+                    let request = sprintf(sql_requests.get_task_by_orga, params["idOrga"]);
+                    connection.query(request, function(err, rows, fields) {
+                        if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                        else{
+                            res.send({'orga': details_orga, 'task': rows, 'status': 0});
+                        }
+                    });
+                }
+            });
+        }
+        //endregion
     });
 
     app.get("/orga_shift",function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.body.idOrga;
@@ -436,12 +401,9 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.get("/orga_details",function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.body.idOrga;
@@ -460,12 +422,9 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.get("/task_by_resp_orga", function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.body.idOrga;
@@ -484,12 +443,9 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.get("/assigned_task_by_orga",function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.body.idOrga;
@@ -508,14 +464,11 @@
                     }
                 });
             }
-            //endregion
-        });
     });
     //endregion
 
     //region GET DATA WITH idTask
     app.get("/task_details", function(res, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idTask"] = req.body.idTask;
@@ -534,12 +487,9 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.get("/shift_by_task",function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idTask"] = req.body.idTask;
@@ -558,12 +508,9 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.get("/orga_assigned_by_task", function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idTask"] = req.body.idTask;
@@ -583,14 +530,11 @@
                     }
                 });
             }
-            //endregion
-        });
     });
     //endregion
 
     //region GET DATA WITH idShift
     app.get("/orga_by_shift",function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idShift"] = req.body.idShift;
@@ -609,12 +553,9 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.get("/task_by_shift",function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idShift"] = req.body.idShift;
@@ -633,12 +574,9 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.get("/subshift_by_shift",function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idShift"] = req.body.idShift;
@@ -657,14 +595,11 @@
                     }
                 });
             }
-            //endregion
-        });
     });
     //endregion
 
     //region GET DATA WITH idSubShift
     app.get("/orga_by_subshift",function(req, res){
-        auth(req, res, function(){
             //endregion
             let params = [];
             params["idSubShift"] = req.body.idSubShift;
@@ -683,12 +618,9 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.get("/task_by_subshift",function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idSubShift"] = req.body.idSubShift;
@@ -705,8 +637,6 @@
                     res.send({'task' : rows, 'status': 0});
                 });
             }
-            //endregion
-        });
     });
     //endregion
 
@@ -715,7 +645,6 @@
 //region QUERY CREATE REQUESTS
 
     app.post("/orga", function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["last_name"] = req.body.last_name;
@@ -757,12 +686,9 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.post("/assign_shift_orga", function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.body.idOrga;
@@ -789,12 +715,9 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.post("/task", function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["name"] = escapeChars(req.body.name);
@@ -854,12 +777,9 @@
                 });
 
             }
-            //endregion
-        });
     });
 
     app.post("/shift", function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["start_date"] = req.body.start_date;
@@ -901,12 +821,9 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.post("/assign_task_orga", function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.body.idOrga;
@@ -941,15 +858,11 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.post("/shifts", function(req, res){
         //TODO create multiple shifts
-        auth(req, res, function(){
-            res.send({'status': 6, 'error': errors.error_6});
-        });
+        res.send({'status': 6, 'error': errors.error_6});
     });
 
 //endregion
@@ -961,7 +874,6 @@
 //region QUERY DELETE REQUESTS
 
     app.delete('/shift', function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idShift"] = req.body.idShift;
@@ -1022,12 +934,9 @@
                     });
                 }
             }
-            //endregion
-        });
     });
 
     app.delete('/orga', function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idOrga"] = req.body.idOrga;
@@ -1064,12 +973,9 @@
                     });
                 }
             }
-            //endregion
-        });
     });
 
     app.delete('/task', function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idTask"] = req.body.idTask;
@@ -1088,12 +994,9 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.delete('/task_shift', function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idTask"] = req.body.idTask;
@@ -1113,12 +1016,9 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
     app.delete('/task_orga', function(req, res){
-        auth(req, res, function(){
             //region PARAMETERS CHECK
             let params = [];
             params["idTask"] = req.body.idTask;
@@ -1138,8 +1038,6 @@
                     }
                 });
             }
-            //endregion
-        });
     });
 
 //endregion
