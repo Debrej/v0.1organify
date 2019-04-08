@@ -14,13 +14,19 @@
     const host = "organify.debrej.fr";
 
     app.use('/assets', express.static('assets'));
+    app.use(express.json());
+    app.use(express.urlencoded());
     app.use(bodyParser.json() );
     app.use(bodyParser.urlencoded({
         extended: true
     }));
-    app.use(express.json());
-    app.use(express.urlencoded());
     app.use(bearerToken());
+
+    //app.use(auth);
+    app.use(function(req, res ,next){
+        //console.log(req.valueOf());
+        next();
+    });
 
     const connection = mysql.createConnection({
         host: 'localhost',
@@ -237,7 +243,6 @@
     //region GET TABLES ALL DATA
     app.get("/orga", function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             connection.query(sql_requests.get_orga, function(err, rows, fields) {
                 if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
                 else{
@@ -249,7 +254,6 @@
 
     app.get("/task", function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
 
             //endregion
@@ -264,7 +268,6 @@
 
     app.get("/shift", function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
 
             //endregion
@@ -279,7 +282,6 @@
 
     app.get("/subshift", function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
 
             //endregion
@@ -294,9 +296,8 @@
 
     app.get("/shift_orga", function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
-            
+
             //endregion
             //region REQUEST BODY
             connection.query(sql_requests.get_shift_orga, function(err, rows, fields) {
@@ -309,7 +310,6 @@
 
     app.get("/shift_task", function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             connection.query(sql_requests.get_shift_task, function(err, rows, fields) {
                 if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
                 res.send({'subshift' : rows, 'status': 0});
@@ -321,10 +321,9 @@
     //region GET DATA WITH idOrga
     app.get("/shift_by_orga",function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.form.idOrga;
+            params["idOrga"] = req.body.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -345,10 +344,9 @@
 
     app.get("/task_by_orga",function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"]= req.form.idOrga;
+            params["idOrga"]= req.body.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -368,10 +366,9 @@
 
     app.get("/orga_task",function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.form.idOrga;
+            params["idOrga"] = req.body.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -397,10 +394,9 @@
 
     app.get("/orga_shift",function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.form.idOrga;
+            params["idOrga"] = req.body.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -425,10 +421,9 @@
 
     app.get("/orga_details",function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.form.idOrga;
+            params["idOrga"] = req.body.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -448,10 +443,9 @@
 
     app.get("/task_by_resp_orga", function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.form.idOrga;
+            params["idOrga"] = req.body.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -471,10 +465,9 @@
 
     app.get("/assigned_task_by_orga",function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.form.idOrga;
+            params["idOrga"] = req.body.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -498,10 +491,9 @@
     //region GET DATA WITH idTask
     app.get("/shift_by_task",function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idTask"] = req.form.idTask;
+            params["idTask"] = req.body.idTask;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -521,10 +513,9 @@
 
     app.get("/orga_assigned_by_task", function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idTask"] = req.form.idTask;
+            params["idTask"] = req.body.idTask;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -549,10 +540,9 @@
     //region GET DATA WITH idShift
     app.get("/orga_by_shift",function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idShift"] = req.form.idShift;
+            params["idShift"] = req.body.idShift;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -572,10 +562,9 @@
 
     app.get("/task_by_shift",function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idShift"] = req.form.idShift;
+            params["idShift"] = req.body.idShift;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -595,10 +584,9 @@
 
     app.get("/subshift_by_shift",function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idShift"] = req.form.idShift;
+            params["idShift"] = req.body.idShift;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -620,10 +608,9 @@
     //region GET DATA WITH idSubShift
     app.get("/orga_by_subshift",function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //endregion
             let params = [];
-            params["idSubShift"] = req.form.idSubShift;
+            params["idSubShift"] = req.body.idSubShift;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -645,10 +632,9 @@
 
     app.get("/task_by_subshift",function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idSubShift"] = req.form.idSubShift;
+            params["idSubShift"] = req.body.idSubShift;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -673,13 +659,12 @@
 
     app.post("/orga", function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["last_name"] = req.form.last_name;
-            params["first_name"] = req.form.first_name;
-            params["mail"] = req.form.mail;
-            params["pwd"] = req.form.pwd;
+            params["last_name"] = req.body.last_name;
+            params["first_name"] = req.body.first_name;
+            params["mail"] = req.body.mail;
+            params["pwd"] = req.body.pwd;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -717,11 +702,10 @@
 
     app.post("/assign_shift_orga", function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.form.idOrga;
-            params["shifts"] = JSON.parse(req.form.shifts).shifts;
+            params["idOrga"] = req.body.idOrga;
+            params["shifts"] = JSON.parse(req.body.shifts).shifts;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -748,14 +732,13 @@
 
     app.post("/task", function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["name"] = escapeChars(req.form.name);
-            params["description"] = escapeChars(req.form.description);
-            params["start_date"] = req.form.start_date;
-            params["end_date"] = req.form.end_date;
-            params["idOrga"] = req.form.idOrga;
+            params["name"] = escapeChars(req.body.name);
+            params["description"] = escapeChars(req.body.description);
+            params["start_date"] = req.body.start_date;
+            params["end_date"] = req.body.end_date;
+            params["idOrga"] = req.body.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -810,10 +793,9 @@
 
     app.post("/shift", function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["start_date"] = req.form.start_date;
+            params["start_date"] = req.body.start_date;
 
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
@@ -851,11 +833,10 @@
 
     app.post("/assign_task_orga", function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.form.idOrga;
-            params["idTask"] = req.form.idTask;
+            params["idOrga"] = req.body.idOrga;
+            params["idTask"] = req.body.idTask;
 
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
@@ -866,16 +847,16 @@
             else{
                 let request = sprintf(sql_requests.assign_task_orga, params["idOrga"], params["idTask"]);
                 connection.query(request, function(err, rows, field){
-                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err}); console.log(err)}
+                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
                     else{
                         let request = sprintf(sql_requests.get_orga_details, params["idOrga"]);
                         connection.query(request, function(err, rows, field){
-                            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err}); console.log(err)}
+                            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
                             else{
                                 let orga = rows[0];
                                 let request = sprintf(sql_requests.get_task_details, params["idTask"]);
                                 connection.query(request, function(err, rows, field) {
-                                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err}); console.log(err)}
+                                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
                                     else{
                                         let task = rows[0];
                                         res.send({'orga': orga, 'task': task, 'status': 0});
@@ -893,7 +874,6 @@
     app.post("/shifts", function(req, res){
         //TODO create multiple shifts
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             res.send({'status': 6, 'error': errors.error_6});
         });
     });
@@ -908,11 +888,10 @@
 
     app.delete('/shift', function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idShift"] = req.form.idShift;
-            params["delete_task"] = parseInt(req.form.delete_task);
+            params["idShift"] = req.body.idShift;
+            params["delete_task"] = parseInt(req.body.delete_task);
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -975,11 +954,10 @@
 
     app.delete('/orga', function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idOrga"] = req.form.idOrga;
-            params["delete_task"] = parseInt(req.form.delete_tasks);
+            params["idOrga"] = req.body.idOrga;
+            params["delete_task"] = parseInt(req.body.delete_tasks);
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -1018,10 +996,9 @@
 
     app.delete('/task', function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idTask"] = req.form.idTask;
+            params["idTask"] = req.body.idTask;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -1043,11 +1020,10 @@
 
     app.delete('/task_shift', function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idTask"] = req.form.idTask;
-            params["idSubShift"] = req.form.idSubShift;
+            params["idTask"] = req.body.idTask;
+            params["idSubShift"] = req.body.idSubShift;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -1069,11 +1045,10 @@
 
     app.delete('/task_orga', function(req, res){
         auth(req, res, function(){
-            console.log(host+req.originalUrl);
             //region PARAMETERS CHECK
             let params = [];
-            params["idTask"] = req.form.idTask;
-            params["idOrga"] = req.form.Orga;
+            params["idTask"] = req.body.idTask;
+            params["idOrga"] = req.body.idOrga;
             let undefParams = undefinedParameters(params);
             if(undefParams !== ""){
                 res.send({'status': 5, 'error': errors.error_5 + undefParams});
@@ -1095,9 +1070,11 @@
 
 //endregion
 
+//region DEFAULT ROUTE
 app.use(function(req, res){
     res.send(host+req.originalUrl);
 });
+//endregion
 
 //region LISTEN
 

@@ -8,5 +8,6 @@
   "error_401": {
     "token": "UNAUTHORIZED REQUEST : TOKEN NOT VALID"
   },
-  "error_1000": "CLIENT ERROR, THIS IS NOT NORMAL :/"
+  "error_1000": "CLIENT ERROR, THIS IS NOT NORMAL :/",
+  "error_1001": "DEPRECATED ENDPOINT -> PREFER "
 }
