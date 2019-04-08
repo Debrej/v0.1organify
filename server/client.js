@@ -19,7 +19,7 @@ app.use(bearerToken());
 app.use(helmet());
 
 app.use(function(req, res, next){
-    console.log("["+Date.now()+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip);
+    console.log("["+Date.now().toISOString().replace(/T/, ' ').replace(/\..+/, '')+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip);
     next();
 });
 

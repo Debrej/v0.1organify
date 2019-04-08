@@ -24,7 +24,7 @@
 
     //app.use(auth);
     app.use(function(req, res, next){
-        console.log("["+Date.now()+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip);
+        console.log("["+Date.now().toISOString().replace(/T/, ' ').replace(/\..+/, '')+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip);
         next();
     });
 
@@ -1075,7 +1075,7 @@
 
 //region DEFAULT ROUTE
 app.use(function(req, res){
-    res.send(host+req.originalUrl);
+    res.send(404);
 });
 //endregion
 
