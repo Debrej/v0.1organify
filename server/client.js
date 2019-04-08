@@ -542,7 +542,7 @@ app.post("/orga/shift/:idOrga/:shifts", function(req, res){
     });
 });
 
-app.post("/task/:name/:description/:start_date/:end_date/:idOrga", function(req, res){
+app.post("/task/:start_date/:end_date/:idOrga", function(req, res){
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/task',
@@ -554,8 +554,8 @@ app.post("/task/:name/:description/:start_date/:end_date/:idOrga", function(req,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
         form: {
-            name: req.params.name,
-            description: req.params.description,
+            name: req.body.name,
+            description: req.body.description,
             start_date: req.params.start_date,
             end_date: req.params.end_date,
             idOrga: req.params.idOrga
