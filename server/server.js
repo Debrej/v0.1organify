@@ -23,8 +23,8 @@
     app.use(bearerToken());
 
     //app.use(auth);
-    app.use(function(req, res ,next){
-        //console.log(req.valueOf());
+    app.use(function(req, res, next){
+        console.log("["+Date.now()+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip);
         next();
     });
 
@@ -376,16 +376,19 @@
             //endregion
             //region REQUEST BODY
             else{
-
                 let request = sprintf(sql_requests.get_orga_details, params["idOrga"]);
                 connection.query(request, function(err, rows, fields) {
                     if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    let details_orga = rows[0];
-                    let request = sprintf(sql_requests.get_task_by_orga, params["idOrga"]);
-                    connection.query(request, function(err, rows, fields) {
-                        if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                        res.send({'orga': details_orga, 'task': rows, 'status': 0});
-                    });
+                    else{
+                        let details_orga = rows[0];
+                        let request = sprintf(sql_requests.get_task_by_orga, params["idOrga"]);
+                        connection.query(request, function(err, rows, fields) {
+                            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                            else{
+                                res.send({'orga': details_orga, 'task': rows, 'status': 0});
+                            }
+                        });
+                    }
                 });
             }
             //endregion
