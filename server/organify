@@ -2,3 +2,4 @@
 
 konsole -e 'nodemon server.js' &
 konsole -e 'nodemon auth.js' &
+sudo konsole -e 'nodemon client.js' &

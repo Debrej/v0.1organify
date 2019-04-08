@@ -7,6 +7,7 @@
     const mysql = require('mysql');
     const app = express();
     const crypto = require('crypto');
+    const dateFormat = require('date-format');
     const pwd = require('./assets/json/pwd.json').pwd_auth_organify;
     const host = "auth.debrej.fr";
 
@@ -17,6 +18,11 @@
     }));
     app.use(express.json());
     app.use(express.urlencoded());
+
+    app.use(function(req, res, next){
+        console.log("["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip);
+        next();
+    });
 
     const connection = mysql.createConnection({
         host: 'localhost',
