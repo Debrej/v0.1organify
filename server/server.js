@@ -211,7 +211,7 @@
         return str === "" ? str : str.slice(0,-2);
     }
 
-    function auth(req, res, requestFunc){
+    function auth(req, res, next){
         let token = req.token;
         let request = sprintf(sql_requests.validate_token, token);
         connection.query(request,function(err, rows, fields) {
@@ -223,7 +223,7 @@
                 else {
                     let accept = req.token === rows[0].token;
                     if(accept) {
-                        requestFunc(res);
+                        next();
                     }
                     else {
                         res.send({'status': 401, 'error': errors.error_401.token});
