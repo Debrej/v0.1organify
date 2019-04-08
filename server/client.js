@@ -770,7 +770,7 @@ app.delete('/task/orga/:idTask/:idOrga', function(req, res){
 
 /*region AUTH REQUESTS*/
 
-app.post("/check_pwd", function(req, res){
+app.post("/login", function(req, res){
     let options = {
         method: 'POST',
         url: 'http://localhost:4524/check_pwd',
