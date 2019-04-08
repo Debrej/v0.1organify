@@ -492,7 +492,7 @@ app.get("/subshift/task/:idSubShift",function(req, res){
 
 //region QUERY CREATE REQUESTS
 
-app.post("/orga/:last_name/:first_name/:mail/:pwd", function(req, res){
+app.post("/orga", function(req, res){
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/orga',
@@ -504,10 +504,10 @@ app.post("/orga/:last_name/:first_name/:mail/:pwd", function(req, res){
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
         form: {
-            last_name: req.params.last_name,
-            first_name: req.params.first_name,
-            mail: req.params.mail,
-            pwd: req.params.pwd
+            last_name: req.body.last_name,
+            first_name: req.body.first_name,
+            mail: req.body.mail,
+            pwd: req.body.pwd
         }
     };
 
@@ -518,7 +518,7 @@ app.post("/orga/:last_name/:first_name/:mail/:pwd", function(req, res){
     });
 });
 
-app.post("/orga/shift/:idOrga/:shifts", function(req, res){
+app.post("/orga/shift/:idOrga", function(req, res){
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/assign_shift_orga',
@@ -531,7 +531,7 @@ app.post("/orga/shift/:idOrga/:shifts", function(req, res){
             },
         form: {
             idOrga: req.params.idOrga,
-            shifts: req.params.shifts
+            shifts: req.body.shifts
         }
     };
 
@@ -770,7 +770,7 @@ app.delete('/task/orga/:idTask/:idOrga', function(req, res){
 
 /*region AUTH REQUESTS*/
 
-app.post("/check_pwd/:mail/:pwd", function(req, res){
+app.post("/check_pwd", function(req, res){
     let options = {
         method: 'POST',
         url: 'http://localhost:4524/check_pwd',
@@ -782,8 +782,8 @@ app.post("/check_pwd/:mail/:pwd", function(req, res){
             },
         form:
             {
-                mail: req.params.mail,
-                pwd: req.params.pwd
+                mail: req.body.mail,
+                pwd: req.body.pwd
             }
     };
 
@@ -794,7 +794,7 @@ app.post("/check_pwd/:mail/:pwd", function(req, res){
     });
 });
 
-app.post("/register_user/:mail/:pwd", function(req, res){
+app.post("/register_user", function(req, res){
     let options = {
         method: 'POST',
         url: 'http://localhost:4524/register_user',
@@ -806,8 +806,8 @@ app.post("/register_user/:mail/:pwd", function(req, res){
             },
         form:
             {
-                mail: req.params.mail,
-                pwd: req.params.pwd
+                mail: req.body.mail,
+                pwd: req.body.pwd
             }
     };
 
