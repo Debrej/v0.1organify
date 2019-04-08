@@ -512,6 +512,30 @@
     //endregion
 
     //region GET DATA WITH idTask
+    app.get("/task_details", function(res, res){
+        auth(req, res, function(){
+            //region PARAMETERS CHECK
+            let params = [];
+            params["idTask"] = req.body.idTask;
+            let undefParams = undefinedParameters(params);
+            if(undefParams !== ""){
+                res.send({'status': 5, 'error': errors.error_5 + undefParams});
+            }
+            //endregion
+            //region REQUEST BODY
+            else{
+                let request = sql_requests.get_task_details + params["idTask"];
+                connection.query(request, function(err, rows, fields) {
+                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                    else{
+                        res.send({'task' : rows[0], 'status': 0});
+                    }
+                });
+            }
+            //endregion
+        });
+    });
+
     app.get("/shift_by_task",function(req, res){
         auth(req, res, function(){
             console.log(host+req.originalUrl);

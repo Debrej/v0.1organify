@@ -5,15 +5,24 @@ const errors = require("./assets/json/error_messages.json");
 const app = express();
 const bearerToken = require('express-bearer-token');
 const request = require("request");
+const helmet = require("helmet");
+const dateFormat = require('date-format');
+const host = "organify.debrej.fr";
 
 app.use('/assets', express.static('assets'));
+app.use(express.json());
+app.use(express.urlencoded());
 app.use(bodyParser.json() );
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-app.use(express.json());
-app.use(express.urlencoded());
 app.use(bearerToken());
+app.use(helmet());
+
+app.use(function(req, res, next){
+    console.log("["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip);
+    next();
+});
 
 //endregion
 
@@ -44,8 +53,7 @@ app.get("/affect", function(req, res){
 //region QUERY GET REQUESTS
 
 //region GET TABLES ALL DATA
-app.get("/orga", function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/orga/all", function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga',
@@ -53,22 +61,21 @@ app.get("/orga", function(req, res){
             {
                 'Postman-Token': '3cca8e0a-0ec5-465e-aff4-b8dbc6816ef8',
                 'cache-control': 'no-cache',
-                Authorization: 'Bearer '+req.token,
+                Authorization: 'Bearer ' + req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
         form: {undefined: undefined}
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 
 });
 
-app.get("/task", function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/task/all", function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/task',
@@ -83,14 +90,13 @@ app.get("/task", function(req, res){
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.get("/shift", function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/shift/all", function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/shift',
@@ -105,14 +111,13 @@ app.get("/shift", function(req, res){
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.get("/subshift", function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/subshift/all", function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/subshift',
@@ -127,14 +132,13 @@ app.get("/subshift", function(req, res){
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.get("/shift_orga", function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/shift_orga/all", function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/shift_orga',
@@ -149,14 +153,13 @@ app.get("/shift_orga", function(req, res){
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.get("/shift_task", function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/shift_task/all", function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/shift_task',
@@ -171,16 +174,17 @@ app.get("/shift_task", function(req, res){
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 //endregion
 
 //region GET DATA WITH idOrga
-app.get("/shift_by_orga",function(req, res){
-    console.log(host+req.originalUrl);
+
+// @deprecated as /orga/shift/:idOrga is better
+app.get("/shift_by_orga/:idOrga",function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/shift_by_orga',
@@ -191,18 +195,18 @@ app.get("/shift_by_orga",function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idOrga: req.body.idOrga }
+        form: { idOrga: req.params.idOrga }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        res.send({'status': 1001, 'error': errors.error_1001 + "/orga/shift/:idOrga"});
     });
 });
 
-app.get("/task_by_orga",function(req, res){
-    console.log(host+req.originalUrl);
+// @deprecated as /orga/task/available/:idOrga is better
+app.get("/task_by_orga/:idOrga",function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/task_by_orga',
@@ -213,18 +217,17 @@ app.get("/task_by_orga",function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idOrga: req.body.idOrga }
+        form: { idOrga: req.params.idOrga }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        res.send({'status': 1001, 'error': errors.error_1001 + "/orga/task/available/:idOrga"});
     });
 });
 
-app.get("/orga_task",function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/orga/task/available/:idOrga",function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga_task',
@@ -235,18 +238,19 @@ app.get("/orga_task",function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idOrga: req.body.idOrga }
+        form: { idOrga: req.params.idOrga }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{
+            res.send(body);
+        }
     });
 });
 
-app.get("/orga_shift",function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/orga/shift/:idOrga",function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga_shift',
@@ -257,18 +261,17 @@ app.get("/orga_shift",function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idOrga: req.body.idOrga }
+        form: { idOrga: req.params.idOrga }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.get("/orga_details",function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/orga/:idOrga",function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga_details',
@@ -279,18 +282,17 @@ app.get("/orga_details",function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idOrga: req.body.idOrga }
+        form: { idOrga: req.params.idOrga }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.get("/task_by_resp_orga", function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/orga/task/resp/:idOrga", function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/task_by_resp_orga',
@@ -301,18 +303,17 @@ app.get("/task_by_resp_orga", function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idOrga: req.body.idOrga }
+        form: { idOrga: req.params.idOrga }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.get("/assigned_task_by_orga",function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/orga/task/assigned/:idOrga",function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/assigned_task_by_orga',
@@ -323,20 +324,40 @@ app.get("/assigned_task_by_orga",function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idOrga: req.body.idOrga }
+        form: { idOrga: req.params.idOrga }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 //endregion
 
 //region GET DATA WITH idTask
-app.get("/shift_by_task",function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/task/:idTask", function(req, res){
+    let options = {
+        method: 'GET',
+        url: 'http://127.0.0.1:2445/task_details',
+        headers:
+            {
+                'Postman-Token': '3cca8e0a-0ec5-465e-aff4-b8dbc6816ef8',
+                'cache-control': 'no-cache',
+                Authorization: 'Bearer '+req.token,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+        form: { idTask: req.params.idTask }
+    };
+
+    request(options, function (error, response, body) {
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
+    });
+});
+
+app.get("/task/shift/:idTask",function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/shift_by_task',
@@ -347,17 +368,17 @@ app.get("/shift_by_task",function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idTask: req.body.idTask }
+        form: { idTask: req.params.idTask }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.get("/orga_assigned_by_task", function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/task/orga/assigned/:idTask", function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga_assigned_by_task',
@@ -368,19 +389,19 @@ app.get("/orga_assigned_by_task", function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idTask: req.body.idTask }
+        form: { idTask: req.params.idTask }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 //endregion
 
 //region GET DATA WITH idShift
-app.get("/orga_by_shift",function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/shift/orga/:idShift",function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga_by_shift',
@@ -391,17 +412,17 @@ app.get("/orga_by_shift",function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idShift: req.body.idShift }
+        form: { idShift: req.params.idShift }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.get("/task_by_shift",function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/shift/task/:idShift",function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/task_by_shift',
@@ -412,17 +433,17 @@ app.get("/task_by_shift",function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idShift: req.body.idShift }
+        form: { idShift: req.params.idShift }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.get("/subshift_by_shift",function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/shift/subshift/:idShift",function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/subshift_by_shift',
@@ -433,19 +454,19 @@ app.get("/subshift_by_shift",function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idShift: req.body.idShift }
+        form: { idShift: req.params.idShift }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 //endregion
 
 //region GET DATA WITH idSubShift
-app.get("/orga_by_subshift",function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/subshift/orga/:idSubShift",function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/orga_by_subshift',
@@ -456,17 +477,17 @@ app.get("/orga_by_subshift",function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idSubShift: req.body.idSubShift }
+        form: { idSubShift: req.params.idSubShift }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.get("/task_by_subshift",function(req, res){
-    console.log(host+req.originalUrl);
+app.get("/subshift/task/:idSubShift",function(req, res){
     let options = {
         method: 'GET',
         url: 'http://127.0.0.1:2445/task_by_subshift',
@@ -477,12 +498,13 @@ app.get("/task_by_subshift",function(req, res){
                 Authorization: 'Bearer '+req.token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        form: { idSubShift: req.body.idSubShift }
+        form: { idSubShift: req.params.idSubShift }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 //endregion
@@ -492,7 +514,6 @@ app.get("/task_by_subshift",function(req, res){
 //region QUERY CREATE REQUESTS
 
 app.post("/orga", function(req, res){
-    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/orga',
@@ -512,14 +533,13 @@ app.post("/orga", function(req, res){
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.post("/assign_shift_orga", function(req, res){
-    console.log(host+req.originalUrl);
+app.post("/orga/shift/:idOrga", function(req, res){
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/assign_shift_orga',
@@ -531,20 +551,19 @@ app.post("/assign_shift_orga", function(req, res){
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
         form: {
-            idOrga: req.body.idOrga,
+            idOrga: req.params.idOrga,
             shifts: req.body.shifts
         }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.post("/task", function(req, res){
-    console.log(host+req.originalUrl);
+app.post("/task/:start_date/:end_date/:idOrga", function(req, res){
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/task',
@@ -558,21 +577,20 @@ app.post("/task", function(req, res){
         form: {
             name: req.body.name,
             description: req.body.description,
-            start_date: req.body.start_date,
-            end_date: req.body.end_date,
-            idOrga: req.body.idOrga
+            start_date: req.params.start_date,
+            end_date: req.params.end_date,
+            idOrga: req.params.idOrga
         }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.post("/shift", function(req, res){
-    console.log(host+req.originalUrl);
+app.post("/shift/:start_date", function(req, res){
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/shift',
@@ -584,19 +602,18 @@ app.post("/shift", function(req, res){
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
         form: {
-            start_date: req.body.start_date
+            start_date: req.params.start_date
         }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.post("/assign_task_orga", function(req, res){
-    console.log(host+req.originalUrl);
+app.post("/orga/task/:idOrga/:idTask", function(req, res){
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/assign_task_orga',
@@ -608,20 +625,19 @@ app.post("/assign_task_orga", function(req, res){
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
         form: {
-            idOrga: req.body.idOrga,
-            idTask: req.body.idTask
+            idOrga: req.params.idOrga,
+            idTask: req.params.idTask
         }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.post("/shifts", function(req, res){
-    console.log(host+req.originalUrl);
+app.post("/shift/multiple", function(req, res){
     let options = {
         method: 'POST',
         url: 'http://127.0.0.1:2445/shifts',
@@ -638,9 +654,9 @@ app.post("/shifts", function(req, res){
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
@@ -652,8 +668,7 @@ app.post("/shifts", function(req, res){
 
 //region QUERY DELETE REQUESTS
 
-app.delete('/shift', function(req, res){
-    console.log(host+req.originalUrl);
+app.delete('/shift/:idShift/:delete_task', function(req, res){
     let options = {
         method: 'DELETE',
         url: 'http://127.0.0.1:2445/shift',
@@ -665,20 +680,19 @@ app.delete('/shift', function(req, res){
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
         form: {
-            idShift: req.body.idShift,
-            delete_task: req.body.delete_task
+            idShift: req.params.idShift,
+            delete_task: req.params.delete_task
         }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.delete('/orga', function(req, res){
-    console.log(host+req.originalUrl);
+app.delete('/orga/:idOrga/:delete_task', function(req, res){
     let options = {
         method: 'DELETE',
         url: 'http://127.0.0.1:2445/orga',
@@ -690,20 +704,19 @@ app.delete('/orga', function(req, res){
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
         form: {
-            idOrga: req.body.idOrga,
-            delete_task: req.body.delete_task
+            idOrga: req.params.idOrga,
+            delete_task: req.params.delete_task
         }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.delete('/task', function(req, res){
-    console.log(host+req.originalUrl);
+app.delete('/task/:idTask', function(req, res){
     let options = {
         method: 'DELETE',
         url: 'http://127.0.0.1:2445/task',
@@ -715,21 +728,20 @@ app.delete('/task', function(req, res){
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
         form: {
-            idTask: req.body.idTask
+            idTask: req.params.idTask
         }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.delete('/task_shift', function(req, res){
-    console.log(host+req.originalUrl);
+app.delete('/task/shift/:idTask/:idSubShift', function(req, res){
     let options = {
-        method: 'POST',
+        method: 'DELETE',
         url: 'http://127.0.0.1:2445/task_shift',
         headers:
             {
@@ -739,22 +751,21 @@ app.delete('/task_shift', function(req, res){
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
         form: {
-            idTask: req.body.idTask,
-            idSubShift: req.body.idSubShift
+            idTask: req.params.idTask,
+            idSubShift: req.params.idSubShift
         }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.delete('/task_orga', function(req, res){
-    console.log(host+req.originalUrl);
+app.delete('/task/orga/:idTask/:idOrga', function(req, res){
     let options = {
-        method: 'POST',
+        method: 'DELETE',
         url: 'http://127.0.0.1:2445/task_orga',
         headers:
             {
@@ -764,15 +775,15 @@ app.delete('/task_orga', function(req, res){
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
         form: {
-            idTask: req.body.idTask,
-            idOrga: req.body.idOrga
+            idTask: req.params.idTask,
+            idOrga: req.params.idOrga
         }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
@@ -781,7 +792,6 @@ app.delete('/task_orga', function(req, res){
 /*region AUTH REQUESTS*/
 
 app.post("/check_pwd", function(req, res){
-    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://localhost:4524/check_pwd',
@@ -799,14 +809,13 @@ app.post("/check_pwd", function(req, res){
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
 app.post("/register_user", function(req, res){
-    console.log(host+req.originalUrl);
     let options = {
         method: 'POST',
         url: 'http://localhost:4524/register_user',
@@ -824,14 +833,13 @@ app.post("/register_user", function(req, res){
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
-app.post("/logout", function(req, res){
-    console.log(host+req.originalUrl);
+app.post("/logout/:idOrga", function(req, res){
     let options = {
         method: 'POST',
         url: 'http://localhost:4524/logout',
@@ -843,18 +851,26 @@ app.post("/logout", function(req, res){
             },
         form:
             {
-                idOrga: req.body.idOrga
+                idOrga: req.params.idOrga
             }
     };
 
     request(options, function (error, response, body) {
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
-
-        res.send(body);
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
     });
 });
 
 /*endregion*/
+
+//region DEFAULT ROUTE
+
+app.use(function(req, res){
+    res.render("404.ejs");
+});
+
+//endregion
 
 //region LISTEN
 
