@@ -261,7 +261,9 @@
             //region REQUEST BODY
             connection.query(sql_requests.get_task, function(err, rows, fields) {
                 if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                res.send({'task' : rows, 'status': 0});
+                else{
+                    res.send({'task' : rows, 'status': 0});
+                }
             });
             //endregion
         });
@@ -275,7 +277,9 @@
             //region REQUEST BODY
             connection.query(sql_requests.get_shift, function(err, rows, fields) {
                 if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                res.send({'shift' : rows, 'status': 0});
+                else{
+                    res.send({'shift' : rows, 'status': 0});
+                }
             });
             //endregion
         });
@@ -289,7 +293,9 @@
             //region REQUEST BODY
             connection.query(sql_requests.get_subshift, function(err, rows, fields) {
                 if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                res.send({'subshift' : rows, 'status': 0});
+                else {
+                    res.send({'subshift' : rows, 'status': 0});
+                }
             });
             //endregion
         });
@@ -303,7 +309,9 @@
             //region REQUEST BODY
             connection.query(sql_requests.get_shift_orga, function(err, rows, fields) {
                 if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                res.send({'shift' : rows, 'status': 0});
+                else{
+                    res.send({'shift' : rows, 'status': 0});
+                }
             });
             //endregion
         });
@@ -313,7 +321,9 @@
         auth(req, res, function(){
             connection.query(sql_requests.get_shift_task, function(err, rows, fields) {
                 if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                res.send({'subshift' : rows, 'status': 0});
+                else{
+                    res.send({'subshift' : rows, 'status': 0});
+                }
             });
         });
     });
@@ -332,11 +342,12 @@
             //endregion
             //region REQUEST BODY
             else{
-
                 let request = sql_requests.get_shift_by_orga + params["idOrga"];
                 connection.query(request, function(err, rows, fields) {
                     if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    res.send({'shift' : rows, 'status': 0});
+                    else{
+                        res.send({'shift' : rows, 'status': 0});
+                    }
                 });
             }
             //endregion
@@ -358,7 +369,9 @@
                 let request = sprintf(sql_requests.get_task_by_orga, params["idOrga"]);
                 connection.query(request, function(err, rows, fields) {
                     if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    res.send({'task' : rows, 'status': 0});
+                    else{
+                        res.send({'task' : rows, 'status': 0});
+                    }
                 });
             }
             //endregion
@@ -411,12 +424,16 @@
                 let request = sprintf(sql_requests.get_orga_details, params["idOrga"]);
                 connection.query(request, function(err, rows, fields) {
                     if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    let details_orga = rows[0];
-                    let request = sql_requests.get_shift_by_orga + params["idOrga"];
-                    connection.query(request, function(err, rows, fields) {
-                        if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                        res.send({'orga': details_orga, 'shift': rows, 'status': 0});
-                    });
+                    else{
+                        let details_orga = rows[0];
+                        let request = sql_requests.get_shift_by_orga + params["idOrga"];
+                        connection.query(request, function(err, rows, fields) {
+                            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                            else{
+                                res.send({'orga': details_orga, 'shift': rows, 'status': 0});
+                            }
+                        });
+                    }
                 });
             }
             //endregion
@@ -438,7 +455,9 @@
                 let request = sprintf(sql_requests.get_orga_details, params["idOrga"]);
                 connection.query(request, function(err, rows, fields) {
                     if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    res.send({'orga': rows[0], 'status': 0});
+                    else{
+                        res.send({'orga': rows[0], 'status': 0});
+                    }
                 });
             }
             //endregion
@@ -460,7 +479,9 @@
                 let request = sprintf(sql_requests.get_task_by_resp_orga, params["idOrga"]);
                 connection.query(request, function(err, rows, fields) {
                     if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    res.send({'task': rows, 'status': 0});
+                    else{
+                        res.send({'task': rows, 'status': 0});
+                    }
                 });
             }
             //endregion
@@ -508,7 +529,9 @@
                 let request = sql_requests.get_subshift_by_task + params["idTask"];
                 connection.query(request, function(err, rows, fields) {
                     if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    res.send({'subshift' : rows, 'status': 0});
+                    else{
+                        res.send({'subshift' : rows, 'status': 0});
+                    }
                 });
             }
             //endregion
@@ -557,7 +580,9 @@
                 let request = sprintf(sql_requests.get_orga_by_shift, params["idShift"]);
                 connection.query(request, function(err, rows, fields) {
                     if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    res.send({'orga' : rows, 'status': 0});
+                    else{
+                        res.send({'orga' : rows, 'status': 0});
+                    }
                 });
             }
             //endregion
@@ -579,7 +604,9 @@
                 let request = sprintf(sql_requests.get_task_by_shift, params["idShift"]);
                 connection.query(request, function(err, rows, fields) {
                     if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    res.send({'task' : rows, 'status': 0});
+                    else{
+                        res.send({'task' : rows, 'status': 0});
+                    }
                 });
             }
             //endregion
@@ -601,7 +628,9 @@
                 let request = sprintf(sql_requests.get_subshift_by_shift, date_format, date_format, parseInt(params["idShift"]));
                 connection.query(request, function(err, rows, fields) {
                     if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    res.send({'subshift' : rows, 'status': 0});
+                    else{
+                        res.send({'subshift' : rows, 'status': 0});
+                    }
                 });
             }
             //endregion
@@ -688,13 +717,17 @@
                             let request = sprintf(sql_requests.create_orga, params["first_name"], params["last_name"], params["mail"]);
                             connection.query(request, function(err, rows, fields){
                                 if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                                let insertId = rows['insertId'];
-                                let request = sprintf(sql_requests.get_orga_details, insertId);
-                                connection.query(request, function(err, rows, fields){
-                                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                                    registerUser(params["mail"], params["pwd"]);
-                                    res.send({'orga': rows[0], 'status': 0});
-                                });
+                                else{
+                                    let insertId = rows['insertId'];
+                                    let request = sprintf(sql_requests.get_orga_details, insertId);
+                                    connection.query(request, function(err, rows, fields){
+                                        if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                                        else{
+                                            registerUser(params["mail"], params["pwd"]);
+                                            res.send({'orga': rows[0], 'status': 0});
+                                        }
+                                    });
+                                }
                             });
                         }
                     }
@@ -727,7 +760,9 @@
                 let request = sprintf(sql_requests.assign_orga_shift, shifts_string);
                 connection.query(request, function(err, rows, fields){
                     if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    res.send({'shifts': params["shifts"], 'idOrga': params["idOrga"], 'status': 0});
+                    else{
+                        res.send({'shifts': params["shifts"], 'idOrga': params["idOrga"], 'status': 0});
+                    }
                 });
             }
             //endregion
@@ -752,42 +787,46 @@
             else{
                 let requestTask = sprintf(sql_requests.create_task, params["name"], params["description"], params["idOrga"]);
                 connection.query(requestTask, function(err, rows, field){
-                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err, 'no_error': 1, 'sql_error': err});}
-                    let idTask = rows['insertId'];
-                    let request = sprintf(sql_requests.get_subshift_between_dates, date_format, date_format, params["start_date"], params["end_date"]);
-                    connection.query(request, function(err, rows, fields){
-                        if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err, 'no_error': 3, 'sql_error': err});}
-                        else{
-                            if(rows.length === 0){
-                                res.send({'status': 4, 'error': errors.error_4, 'no_error': 4, 'sql_error': err});
-                            }
-                            else {
-                                let subshift = "";
-                                for (let i = 0; i < rows.length; i++) {
-                                    subshift += "(" + rows[i].idSubShift + "," + idTask + "),";
+                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                    else{
+                        let idTask = rows['insertId'];
+                        let request = sprintf(sql_requests.get_subshift_between_dates, date_format, date_format, params["start_date"], params["end_date"]);
+                        connection.query(request, function(err, rows, fields){
+                            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                            else{
+                                if(rows.length === 0){
+                                    res.send({'status': 4, 'error': errors.error_4, 'SQL_message': err});
                                 }
-                                subshift = subshift.slice(0, -1);
-                                let requestSubshift = sprintf(sql_requests.assign_task_subshift, subshift);
-                                connection.query(requestSubshift, function(err, rows, fields){
-                                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err, 'no_error': 5, 'sql_error': err});}
-                                    else{
-                                        let request = sprintf(sql_requests.get_task_details, idTask);
-                                        connection.query(request, function(err, rows, fields){
-                                            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err, 'no_error': 6, 'sql_error': err});}
-                                            else{
-                                                let task = rows[0];
-                                                let request = sql_requests.get_subshift_by_task + idTask;
-                                                connection.query(request, function(err, rows, fields){
-                                                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err, 'no_error': 7, 'sql_error': err});}
-                                                    res.send({'task': task, 'subshift': rows, 'status': 0});
-                                                });
-                                            }
-                                        });
+                                else {
+                                    let subshift = "";
+                                    for (let i = 0; i < rows.length; i++) {
+                                        subshift += "(" + rows[i].idSubShift + "," + idTask + "),";
                                     }
-                                });
+                                    subshift = subshift.slice(0, -1);
+                                    let requestSubshift = sprintf(sql_requests.assign_task_subshift, subshift);
+                                    connection.query(requestSubshift, function(err, rows, fields){
+                                        if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                                        else{
+                                            let request = sprintf(sql_requests.get_task_details, idTask);
+                                            connection.query(request, function(err, rows, fields){
+                                                if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                                                else{
+                                                    let task = rows[0];
+                                                    let request = sql_requests.get_subshift_by_task + idTask;
+                                                    connection.query(request, function(err, rows, fields){
+                                                        if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                                                        else{
+                                                            res.send({'task': task, 'subshift': rows, 'status': 0});
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 });
 
             }
@@ -809,26 +848,33 @@
             //region REQUEST BODY
             else{
                 let dates = addShiftDuration(params["start_date"]);
-
                 let request = sprintf(sql_requests.create_shift, dates.start_date, dates.end_date);
                 connection.query(request, function(err, rows, field){
                     if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                    let insertId = rows['insertId'];
-                    let subshifts = subshiftFromShift(params["start_date"], insertId);
-                    let request = sprintf(sql_requests.get_shift_details, date_format, date_format, insertId);
-                    connection.query(request, function(err, rows, field){
-                        if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                        let shift = rows[0];
-                        let request = sprintf(sql_requests.create_subshift, subshifts);
+                    else{
+                        let insertId = rows['insertId'];
+                        let subshifts = subshiftFromShift(params["start_date"], insertId);
+                        let request = sprintf(sql_requests.get_shift_details, date_format, date_format, insertId);
                         connection.query(request, function(err, rows, field){
                             if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                            let request = sprintf(sql_requests.get_subshift_by_shift, date_format, date_format, insertId);
-                            connection.query(request, function(err, rows, field){
-                                if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
-                                res.send({"shift" : shift, "subshift": rows, "status" : 0});
-                            });
+                            else{
+                                let shift = rows[0];
+                                let request = sprintf(sql_requests.create_subshift, subshifts);
+                                connection.query(request, function(err, rows, field){
+                                    if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                                    else{
+                                        let request = sprintf(sql_requests.get_subshift_by_shift, date_format, date_format, insertId);
+                                        connection.query(request, function(err, rows, field){
+                                            if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
+                                            else{
+                                                res.send({"shift" : shift, "subshift": rows, "status" : 0});
+                                            }
+                                        });
+                                    }
+                                });
+                            }
                         });
-                    });
+                    }
                 });
             }
             //endregion

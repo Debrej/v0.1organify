@@ -69,7 +69,7 @@ app.get("/orga/all", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 
@@ -91,7 +91,7 @@ app.get("/task/all", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -112,7 +112,7 @@ app.get("/shift/all", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -133,7 +133,7 @@ app.get("/subshift/all", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -154,7 +154,7 @@ app.get("/shift_orga/all", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -175,7 +175,7 @@ app.get("/shift_task/all", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -200,7 +200,7 @@ app.get("/shift_by_orga/:idOrga",function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         res.send({'status': 1001, 'error': errors.error_1001 + "/orga/shift/:idOrga"});
     });
 });
@@ -222,7 +222,7 @@ app.get("/task_by_orga/:idOrga",function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         res.send({'status': 1001, 'error': errors.error_1001 + "/orga/task/available/:idOrga"});
     });
 });
@@ -243,7 +243,7 @@ app.get("/orga/task/available/:idOrga",function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{
             res.send(body);
         }
@@ -266,7 +266,7 @@ app.get("/orga/shift/:idOrga",function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -287,7 +287,7 @@ app.get("/orga/:idOrga",function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -308,7 +308,7 @@ app.get("/orga/task/resp/:idOrga", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -329,7 +329,7 @@ app.get("/orga/task/assigned/:idOrga",function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -352,7 +352,7 @@ app.get("/task/shift/:idTask",function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -373,7 +373,7 @@ app.get("/task/orga/assigned/:idTask", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -396,7 +396,7 @@ app.get("/shift/orga/:idShift",function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -417,7 +417,7 @@ app.get("/shift/task/:idShift",function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -438,7 +438,7 @@ app.get("/shift/subshift/:idShift",function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -461,7 +461,7 @@ app.get("/subshift/orga/:idSubShift",function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -482,7 +482,7 @@ app.get("/subshift/task/:idSubShift",function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -513,7 +513,7 @@ app.post("/orga", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -537,7 +537,7 @@ app.post("/orga/shift/:idOrga", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -564,7 +564,7 @@ app.post("/task/:start_date/:end_date/:idOrga", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -587,7 +587,7 @@ app.post("/shift/:start_date", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -611,7 +611,7 @@ app.post("/orga/task/:idOrga/:idTask", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -634,7 +634,7 @@ app.post("/shift/multiple", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -666,7 +666,7 @@ app.delete('/shift/:idShift/:delete_task', function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -690,7 +690,7 @@ app.delete('/orga/:idOrga/:delete_task', function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -713,7 +713,7 @@ app.delete('/task/:idTask', function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -737,7 +737,7 @@ app.delete('/task/shift/:idTask/:idSubShift', function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -761,7 +761,7 @@ app.delete('/task/orga/:idTask/:idOrga', function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -789,7 +789,7 @@ app.post("/check_pwd", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -813,7 +813,7 @@ app.post("/register_user", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
@@ -836,7 +836,7 @@ app.post("/logout/:idOrga", function(req, res){
 
     request(options, function (error, response, body) {
         res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000});
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
         else{res.send(body);}
     });
 });
