@@ -6,6 +6,7 @@ const app = express();
 const bearerToken = require('express-bearer-token');
 const request = require("request");
 const helmet = require("helmet");
+const dateFormat = require('date-format');
 const host = "organify.debrej.fr";
 
 app.use('/assets', express.static('assets'));
@@ -19,7 +20,7 @@ app.use(bearerToken());
 app.use(helmet());
 
 app.use(function(req, res, next){
-    console.log("["+Date.now().toISOString().replace(/T/, ' ').replace(/\..+/, '')+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip);
+    console.log("["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip);
     next();
 });
 
