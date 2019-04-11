@@ -483,7 +483,7 @@
             //endregion
             //region REQUEST BODY
             else{
-                let request = sql_requests.get_task_details + params["idTask"];
+                let request = sprintf(sql_requests.get_task_details, params["idTask"]);
                 connection.query(request, function(err, rows, fields) {
                     if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
                     else{
