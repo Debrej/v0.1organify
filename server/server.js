@@ -472,7 +472,7 @@
     //endregion
 
     //region GET DATA WITH idTask
-    app.get("/task_details", function(res, res){
+    app.get("/task_details", function(req, res){
             //region PARAMETERS CHECK
             let params = [];
             params["idTask"] = req.body.idTask;
