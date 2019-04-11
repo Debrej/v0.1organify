@@ -1,6 +1,7 @@
 //region INITIALIZATION
     const express = require('express');
     const bodyParser = require('body-parser');
+    const fs = require('fs');
     const sprintf = require('sprintf-js').sprintf;
     const sql_requests = require("./assets/json/sql_request.json");
     const errors = require("./assets/json/error_messages.json");
@@ -23,9 +24,12 @@
     }));
     app.use(bearerToken());
 
-    //app.use(auth);
     app.use(function(req, res, next){
-        console.log("["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip);
+        let log = "["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip;
+        fs.writeFile("server.log", log, (err) => {
+            if (err) throw err;
+            console.log(log);
+        });
         next();
     });
 

@@ -1,5 +1,6 @@
 //region INITIALIZATION
 const express = require('express');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 const errors = require("./assets/json/error_messages.json");
 const app = express();
@@ -20,7 +21,11 @@ app.use(bearerToken());
 app.use(helmet());
 
 app.use(function(req, res, next){
-    console.log("["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip);
+    let log = "["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip;
+    fs.writeFile("client.log", log, (err) => {
+        if (err) throw err;
+        console.log(log);
+    });
     next();
 });
 
