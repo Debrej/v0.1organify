@@ -22,7 +22,7 @@
 
     app.use(function(req, res, next){
         let log = "["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip+"\n";
-        fs.writeFile("auth.log", log, (err) => {
+        fs.appendFile("auth.log", log, (err) => {
             if (err) throw err;
             console.log(log);
         });

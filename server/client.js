@@ -22,7 +22,7 @@ app.use(helmet());
 
 app.use(function(req, res, next){
     let log = "["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip+"\n";
-    fs.writeFile("client.log", log, (err) => {
+    fs.appendFile("client.log", log, (err) => {
         if (err) throw err;
         console.log(log);
     });
