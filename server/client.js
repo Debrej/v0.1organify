@@ -341,6 +341,27 @@ app.get("/orga/task/assigned/:idOrga",function(req, res){
 //endregion
 
 //region GET DATA WITH idTask
+app.get("/task/:idTask",function(req, res){
+    let options = {
+        method: 'GET',
+        url: 'http://127.0.0.1:2445/task_details',
+        headers:
+            {
+                'Postman-Token': '3cca8e0a-0ec5-465e-aff4-b8dbc6816ef8',
+                'cache-control': 'no-cache',
+                Authorization: 'Bearer '+req.token,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+        form: { idTask: req.params.idTask }
+    };
+
+    request(options, function (error, response, body) {
+        res.type('json');
+        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+        else{res.send(body);}
+    });
+});
+
 app.get("/task/shift/:idTask",function(req, res){
     let options = {
         method: 'GET',
