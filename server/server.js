@@ -25,7 +25,7 @@
     app.use(bearerToken());
 
     app.use(function(req, res, next){
-        let log = "["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip;
+        let log = "["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip+"\n";
         fs.writeFile("server.log", log, (err) => {
             if (err) throw err;
             console.log(log);
