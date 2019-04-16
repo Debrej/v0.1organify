@@ -1,6 +1,7 @@
 //region INITIALIZATION
 const express = require('express');
 const fs = require('fs');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const errors = require("./assets/json/error_messages.json");
 const app = express();
@@ -9,6 +10,8 @@ const request = require("request");
 const helmet = require("helmet");
 const dateFormat = require('date-format');
 const host = "organify.debrej.fr";
+const bcrypt = require("bcrypt-nodejs");
+const salt = "$2a$10$yu40Y4WxBNNuGq2h2mCLYu";
 
 app.use('/assets', express.static('assets'));
 app.use(express.json());
@@ -17,6 +20,7 @@ app.use(bodyParser.json() );
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(cors());
 app.use(bearerToken());
 app.use(helmet());
 
@@ -797,26 +801,28 @@ app.delete('/task/orga/:idTask/:idOrga', function(req, res){
 /*region AUTH REQUESTS*/
 
 app.post("/login", function(req, res){
-    let options = {
-        method: 'POST',
-        url: 'http://localhost:4524/check_pwd',
-        headers:
-            {
-                'Postman-Token': 'e99cb172-c3fc-4150-ae2a-6005aadfa7bd',
-                'cache-control': 'no-cache',
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-        form:
-            {
-                mail: req.body.mail,
-                pwd: req.body.pwd
-            }
-    };
+    bcrypt.hash(req.body.pwd, salt, null, function(err,pwd){
+        let options = {
+            method: 'POST',
+            url: 'http://localhost:4524/check_pwd',
+            headers:
+                {
+                    'Postman-Token': 'e99cb172-c3fc-4150-ae2a-6005aadfa7bd',
+                    'cache-control': 'no-cache',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            form:
+                {
+                    mail: req.body.mail,
+                    pwd: pwd
+                }
+        };
 
-    request(options, function (error, response, body) {
-        res.type('json');
-        if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
-        else{res.send(body);}
+        request(options, function (error, response, body) {
+            res.type('json');
+            if (error) res.send({'status': 1000, 'error': errors.error_1000, 'error_message': body});
+            else{res.send(body);}
+        });
     });
 });
 

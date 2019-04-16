@@ -60,37 +60,49 @@
         let request = sprintf(auth_requests.get_idorga_by_mail, mail);
         connection.query(request, function(err, rows, field){
            if (err) res.send({'status': 1, 'error': errors.error_1});
-           let idOrga = rows[0].idOrga;
-           let request = sprintf(auth_requests.get_pwd_idorga, idOrga);
-           connection.query(request, function(err, rows, field){
-               if (err) res.send({'status': 1, 'error': errors.error_1});
-               let ans_status = rows[0] !== undefined ? rows[0].pwd === pwd : false;
-               let token;
-               crypto.randomBytes(48, function(err, buffer) {
-                   token = buffer.toString('hex');
-                   let request = sprintf(auth_requests.check_user_already_exist, idOrga);
-                   connection.query(request, function(err, rows, field){
-                       if(err) res.send({'status': 1, 'error': errors.error_1});
-                       else{
-                           if(rows[0] !== undefined){
-                               let request = sprintf(auth_requests.update_token, token, idOrga);
+           else if (rows[0] !== undefined){
+               let idOrga = rows[0].idOrga;
+               let request = sprintf(auth_requests.get_pwd_idorga, idOrga);
+               connection.query(request, function(err, rows, field){
+                   if (err) res.send({'status': 1, 'error': errors.error_1});
+                   else{
+                       let ans_status = rows[0] !== undefined ? rows[0].pwd === pwd : false;
+                       if(ans_status){
+                           let token;
+                           crypto.randomBytes(48, function(err, buffer) {
+                               token = buffer.toString('hex');
+                               let request = sprintf(auth_requests.check_user_already_exist, idOrga);
                                connection.query(request, function(err, rows, field){
                                    if(err) res.send({'status': 1, 'error': errors.error_1});
-                                   res.send({"status": 0, "response": ans_status, "token": token});
+                                   else{
+                                       if(rows[0] !== undefined){
+                                           let request = sprintf(auth_requests.update_token, token, idOrga);
+                                           connection.query(request, function(err, rows, field){
+                                               if(err) res.send({'status': 1, 'error': errors.error_1});
+                                               res.send({"status": 0, "response": ans_status, "token": token});
+                                           });
+                                       }
+                                       else{
+                                           let request = sprintf(auth_requests.insert_token, idOrga, token);
+                                           connection.query(request, function(err, rows, field){
+                                               if(err) res.send({'status': 1, 'error': errors.error_1});
+                                               res.send({"status": 0, "response": ans_status, "token": token});
+                                           });
+                                       }
+                                   }
                                });
-                           }
-                           else{
-                               let request = sprintf(auth_requests.insert_token, idOrga, token);
-                               connection.query(request, function(err, rows, field){
-                                   if(err) res.send({'status': 1, 'error': errors.error_1});
-                                   res.send({"status": 0, "response": ans_status, "token": token});
-                               });
-                           }
+                           });
                        }
-                   });
+                       else{
+                           res.send({"status": 0, "response": ans_status});
+                       }
+                   }
                });
-           });
-       });
+           }
+           else{
+               res.send({"status": 2, 'error': errors.error_2});
+           }
+        });
     });
 
     app.post("/register_user", function(req, res){
@@ -103,26 +115,30 @@
         let request = sprintf(auth_requests.get_idorga_by_mail, mail);
         connection.query(request, function(err, rows, field){
             if (err) res.send({'status': 1, 'error': errors.error_1, 'SQL_err': err});
-            if(rows[0] !== undefined){
-                let idOrga = rows[0].idOrga;
-                let request = sprintf(auth_requests.insert_pwd, idOrga, pwd);
-                connection.query(request, function (err, rows, field) {
-                    if (err) {
-                        res.send({'status': 1, 'error': errors.error_1, 'SQL_err': err});
-                    }
-                    else{
-                        let request = sprintf(auth_requests.get_orga_details, idOrga);
-                        connection.query(request, function (err, rows, fields) {
-                            if (err) {
-                                res.send({'status': 1, 'error': errors.error_1, 'SQL_err': err});
-                            }
-                            res.send({'orga': rows[0], 'status': 0});
-                        });
-                    }
-                });
-            }
             else{
-                res.send({'status': 1, 'error': errors.error_2, 'SQL_err': err});
+                if(rows[0] !== undefined){
+                    let idOrga = rows[0].idOrga;
+                    let request = sprintf(auth_requests.insert_pwd, idOrga, pwd);
+                    connection.query(request, function (err, rows, field) {
+                        if (err) {
+                            res.send({'status': 1, 'error': errors.error_1, 'SQL_err': err});
+                        }
+                        else{
+                            let request = sprintf(auth_requests.get_orga_details, idOrga);
+                            connection.query(request, function (err, rows, fields) {
+                                if (err) {
+                                    res.send({'status': 1, 'error': errors.error_1, 'SQL_err': err});
+                                }
+                                else{
+                                    res.send({'orga': rows[0], 'status': 0});
+                                }
+                            });
+                        }
+                    });
+                }
+                else{
+                    res.send({'status': 1, 'error': errors.error_2, 'SQL_err': err});
+                }
             }
         });
     });
@@ -135,7 +151,9 @@
             if (err) {
                 res.send({'status': 1, 'error': errors.error_1});
             }
-            res.send({'status': 0});
+            else{
+                res.send({'status': 0});
+            }
         });
     });
 
