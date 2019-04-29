@@ -70,3 +70,5 @@ server/assets/json/salt.json
 server/*.log
 .directory
  
+ssl/organify.crt
+ssl/organify.key

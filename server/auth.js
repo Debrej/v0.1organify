@@ -31,7 +31,7 @@
 
     const connection = mysql.createConnection({
         host: 'localhost',
-        user: 'oauth_organify',
+        user: 'auth_organify',
         database: 'organify',
         password: pwd
     });
