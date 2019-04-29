@@ -66,6 +66,7 @@ Organify.postman_collection.json
 .idea/
 .git/
 server/assets/json/pwd.json
+server/assets/json/salt.json
 server/*.log
 .directory
  

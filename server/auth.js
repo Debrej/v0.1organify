@@ -67,6 +67,7 @@
                    if (err) res.send({'status': 1, 'error': errors.error_1});
                    else{
                        let ans_status = rows[0] !== undefined ? rows[0].pwd === pwd : false;
+                       console.log("pwd on db:", rows[0].pwd,"\npwd from req:", pwd);
                        if(ans_status){
                            let token;
                            crypto.randomBytes(48, function(err, buffer) {

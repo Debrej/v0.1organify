@@ -1,17 +1,21 @@
 //region INITIALIZATION
 const express = require('express');
+const bodyParser = require('body-parser');
+const bearerToken = require('express-bearer-token');
+const helmet = require("helmet");
+
+const dateFormat = require('date-format');
 const fs = require('fs');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const errors = require("./assets/json/error_messages.json");
-const app = express();
-const bearerToken = require('express-bearer-token');
-const request = require("request");
-const helmet = require("helmet");
-const dateFormat = require('date-format');
-const host = "organify.debrej.fr";
 const bcrypt = require("bcrypt-nodejs");
-const salt = "$2a$10$yu40Y4WxBNNuGq2h2mCLYu";
+const https = require('https');
+const request = require("request");
+
+const errors = require("./assets/json/error_messages.json");
+const host = "organify.debrej.fr";
+const salt = require("./assets/json/salt.json").salt;
+
+const app = express();
 
 app.use('/assets', express.static('assets'));
 app.use(express.json());
@@ -20,9 +24,9 @@ app.use(bodyParser.json() );
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-app.use(cors());
 app.use(bearerToken());
 app.use(helmet());
+app.use(cors());
 
 app.use(function(req, res, next){
     let log = "["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip+"\n";
@@ -31,6 +35,27 @@ app.use(function(req, res, next){
         console.log(log);
     });
     next();
+});
+
+//endregion
+
+//region LISTEN
+
+app.listen(80, function(){
+    console.log("client server listening on port 80");
+});
+
+const key = fs.readFileSync('../ssl/organify.key');
+const cert = fs.readFileSync('../ssl/organify.crt');
+const options = {
+    key: key,
+    cert: cert
+};
+
+const server = https.createServer(options, app);
+
+server.listen(443, () => {
+    console.log("server starting on port : " + 443);
 });
 
 //endregion
@@ -879,14 +904,6 @@ app.post("/logout/:idOrga", function(req, res){
 
 app.use(function(req, res){
     res.render("404.ejs");
-});
-
-//endregion
-
-//region LISTEN
-
-app.listen(80, function(){
-    console.log("client server listening on port 80");
 });
 
 //endregion
