@@ -12,10 +12,11 @@ import { RouterModule, Routes} from "@angular/router";
 import { LoginViewComponent } from './login-view/login-view.component';
 import { TestViewComponent } from './test-view/test-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginViewComponent},
-  { path: 'test', component: TestViewComponent},
+  { path: 'test', component: SidebarComponent},
   { path: '', component: LoginViewComponent}
 ];
 
@@ -25,7 +26,8 @@ const appRoutes: Routes = [
     FormLoginComponent,
     PhotoLoginComponent,
     LoginViewComponent,
-    TestViewComponent
+    TestViewComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ const appRoutes: Routes = [
     FormLoginComponent,
     PhotoLoginComponent,
     LoginViewComponent,
-    TestViewComponent
+	TestViewComponent,
+	SidebarComponent
   ]
 })
 export class AppModule { }
