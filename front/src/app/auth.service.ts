@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http';
 export class AuthService {
 
   getToken(mail, pwd){
-    return this.http.post("http://api.organify.debrej.fr/login/", {"mail": mail, "pwd": pwd});
+    return this.http.post("https://api.organify.debrej.fr/login/", {"mail": mail, "pwd": pwd});
   }
 
   constructor(private http: HttpClient) { }
