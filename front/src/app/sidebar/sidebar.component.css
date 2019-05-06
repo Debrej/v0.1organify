@@ -1,38 +1,7 @@
-.sidebar {
-	background-color: #fff2e6;
-	align-content: center;
-	height: 100%;
+ul {
+	width: 100%;
 }
 
-li {
-	margin-top: 2vw;
-	margin-bottom: 2vw;
-}
-
-hr {
-	color: black;
-}
-
-.container {
-	margin-left: 0%;
-	align-content: center;
-	background-color: #cce6ff;
-	border-bottom-style: solid;
-	border-bottom-width: 1px;
-	border-bottom-color: black;
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: black;
-}
-#name {
-	width: 50%;
-	text-align: center;
-	display: inline-block;
-	border-right-style: solid;
-	border-right-color: black;
-	border-right-width: 1px;
-}
-
-#logo {
+ul li {
 	width: 100%;
 }

@@ -13,10 +13,14 @@ import { LoginViewComponent } from './login-view/login-view.component';
 import { TestViewComponent } from './test-view/test-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { DefaultViewComponent } from './default-view/default-view.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { DashbordComponent } from './dashbord/dashbord.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginViewComponent},
-  { path: 'test', component: SidebarComponent},
+  { path: 'test', component: DefaultViewComponent},
   { path: '', component: LoginViewComponent}
 ];
 
@@ -27,7 +31,11 @@ const appRoutes: Routes = [
     PhotoLoginComponent,
     LoginViewComponent,
     TestViewComponent,
-    SidebarComponent
+    SidebarComponent,
+    DefaultViewComponent,
+    HeaderComponent,
+    FooterComponent,
+    DashbordComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +54,8 @@ const appRoutes: Routes = [
     PhotoLoginComponent,
     LoginViewComponent,
 	TestViewComponent,
-	SidebarComponent
+	SidebarComponent,
+	DefaultViewComponent
   ]
 })
 export class AppModule { }
