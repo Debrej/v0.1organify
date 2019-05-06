@@ -39,27 +39,6 @@ app.use(function(req, res, next){
 
 //endregion
 
-//region LISTEN
-
-app.listen(8000, function(){
-    console.log("client server listening on port 8000");
-});
-
-const key = fs.readFileSync('../ssl/organify.key');
-const cert = fs.readFileSync('../ssl/organify.crt');
-const options = {
-    key: key,
-    cert: cert
-};
-
-const server = https.createServer(options, app);
-
-server.listen(1200, () => {
-    console.log("server starting on port : " + 1200);
-});
-
-//endregion
-
 //region PAGE RENDER GET REQUESTS
 
 app.get("/", function(req, res){
@@ -904,6 +883,27 @@ app.post("/logout/:idOrga", function(req, res){
 
 app.use(function(req, res){
     res.render("404.ejs");
+});
+
+//endregion
+
+//region LISTEN
+
+app.listen(8000, function(){
+    console.log("client server listening on port 8000");
+});
+
+const key = fs.readFileSync('../ssl/organify.key');
+const cert = fs.readFileSync('../ssl/organify.crt');
+const options = {
+    key: key,
+    cert: cert
+};
+
+const server = https.createServer(options, app);
+
+server.listen(1200, () => {
+    console.log("server starting on port : " + 1200);
 });
 
 //endregion

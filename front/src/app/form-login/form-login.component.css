@@ -8,8 +8,6 @@ div{
 div.holder{
   margin-top: 50vh;
   transform: translateY(-50%);
-  font-size: 15px;
-  width: 100%;
 }
 
 div.input{
@@ -20,10 +18,6 @@ div.input{
 div.password{
   margin: 0 0 5%;
   text-align: start;
-}
-
-div.buttons{
-  width: 100%;
 }
 
 span.title{
@@ -37,13 +31,16 @@ span.subtitle{
 }
 
 span.rememberMe{
-  vertical-align: center;
+  float: left;
+}
+
+input.rememberMe{
+  float: left;
 }
 
 span.forgetPassword{
-  margin-left: 10%;
   text-align: end;
-  float: end;
+  float: right;
 }
 
 input[type=checkbox]{
@@ -64,12 +61,11 @@ input[type=text], input[type=password]{
   background-color: #29281f;
   border: 1px solid #29281f;
   color: white;
-  width: 40%;
-  height: 100%;
-  display: inline-block;
+  padding: 10px 60px;
   text-align: center;
   text-decoration: none;
-  font-size: 1.5em;
+  display: inline-block;
+  font-size: 20px;
   border-radius: 8px;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
@@ -85,14 +81,12 @@ input[type=text], input[type=password]{
 .signInButton {
   background-color: white;
   border: 1px solid #29281f;
-  width: 40%;
-  height: 100%;
-  margin-left: 10%;
   color: #29281f;
+  padding: 10px 60px;
   text-align: center;
-  display: inline-block;
   text-decoration: none;
-  font-size: 1.5em;
+  display: inline-block;
+  font-size: 20px;
   border-radius: 8px;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
