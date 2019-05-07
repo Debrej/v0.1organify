@@ -14,7 +14,7 @@ div.flexHolder{
 }
 
 div.holder{
-  margin: 0;
+  margin-bottom: 0;
 }
 
 div.input{
@@ -71,7 +71,7 @@ div.flexButton{
   justify-content: center;
 }
 
-.loginButton {
+.signInButton {
   background-color: #29281f;
   border: 1px solid #29281f;
   color: white;
@@ -79,29 +79,7 @@ div.flexButton{
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 1.5em;
-  border-radius: 8px;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  margin-right: 5%;
-  margin-left: 5%;
-  font-family: 'Source Sans Pro', sans-serif;
-}
-
-.loginButton:hover {
-  background-color: #525141;
-  border: 1px solid #525141;
-}
-
-.signInButton {
-  background-color: white;
-  border: 1px solid #29281f;
-  color: #29281f;
-  padding: 1vh 3vw;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1.5em;
+  font-size: 1.50em;
   border-radius: 8px;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
@@ -113,5 +91,19 @@ div.flexButton{
 .signInButton:hover {
   background-color: #525141;
   border: 1px solid #525141;
-  color: white;
+}
+
+input.bothLineLeft{
+  width: 45%;
+  margin-right: 5%;
+}
+
+input.bothLineRight{
+  width:45%;
+  margin-left: 5%;
+}
+
+span.loginLink{
+  cursor: pointer;
+  text-decoration: underline;
 }

@@ -12,10 +12,13 @@ import { RouterModule, Routes} from "@angular/router";
 import { LoginViewComponent } from './login-view/login-view.component';
 import { TestViewComponent } from './test-view/test-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormSigninComponent } from './form-signin/form-signin.component';
+import { FormSigninViewComponent } from './form-signin-view/form-signin-view.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginViewComponent},
   { path: 'test', component: TestViewComponent},
+  { path: 'signIn', component: FormSigninViewComponent},
   { path: '', component: LoginViewComponent}
 ];
 
@@ -25,7 +28,9 @@ const appRoutes: Routes = [
     FormLoginComponent,
     PhotoLoginComponent,
     LoginViewComponent,
-    TestViewComponent
+    TestViewComponent,
+    FormSigninComponent,
+    FormSigninViewComponent
   ],
   imports: [
     BrowserModule,
