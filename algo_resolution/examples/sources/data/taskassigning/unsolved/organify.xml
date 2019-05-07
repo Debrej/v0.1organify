@@ -1,0 +1,62 @@
+<TaTaskAssigningSolution id="1">
+    <id>0</id>
+    <skillList id="2">
+        <TaSkill id="3">
+            <id>0</id>
+            <name>Ma Competence</name>
+        </TaSkill>
+    </skillList>
+    <taskTypeList id="4">
+        <TaTaskType id="5">
+            <id>0</id>
+            <code>MT</code>
+            <title>Ma Tache</title>
+            <baseDuration>60</baseDuration>
+            <requiredSkillList id="6">
+                <TaSkill reference="3"/>
+            </requiredSkillList>
+        </TaTaskType>
+    </taskTypeList>
+    <customerList id="7">
+        <TaCustomer id="8">
+            <id>0</id>
+            <name>Client Name</name>
+        </TaCustomer>
+    </customerList>
+    <employeeList id="9">
+        <TaEmployee id="10">
+            <id>0</id>
+            <fullName>Amy</fullName>
+            <skillSet class="linked-hash-set" id="11">
+                <TaSkill reference="3"/>
+            </skillSet>
+            <affinityMap class="linked-hash-map" id="12">
+                <entry>
+                    <TaCustomer reference="8"/>
+                    <org.optaplanner.examples.taskassigning.domain.Affinity>NONE</org.optaplanner.examples.taskassigning.domain.Affinity>
+                </entry>
+            </affinityMap>
+        </TaEmployee>
+    </employeeList>
+    <taskList id="13">
+        <TaTask id="14">
+            <id>0</id>
+            <taskType reference="5"/>
+            <indexInTaskType>1</indexInTaskType>
+            <customer reference="8"/>
+            <readyTime>0</readyTime>
+            <priority>MINOR</priority>
+            <pinned>false</pinned>
+        </TaTask>
+        <TaTask id="15">
+            <id>1</id>
+            <taskType reference="5"/>
+            <indexInTaskType>2</indexInTaskType>
+            <customer reference="8"/>
+            <readyTime>0</readyTime>
+            <priority>MINOR</priority>
+            <pinned>false</pinned>
+        </TaTask>
+    </taskList>
+    <frozenCutoff>0</frozenCutoff>
+</TaTaskAssigningSolution>
