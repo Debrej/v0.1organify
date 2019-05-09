@@ -17,6 +17,8 @@
     const bcrypt = require("bcrypt-nodejs");
     const salt = require("./assets/json/salt.json").salt;
 
+    const default_profile_pic_url = 'assets/img/user.svg';
+
     app.use('/assets', express.static('assets'));
     app.use(express.json());
     app.use(express.urlencoded());
@@ -683,7 +685,7 @@
                             res.send({'status': 3, 'error': errors.error_3})
                         }
                         else{
-                            let request = sprintf(sql_requests.create_orga, params["first_name"], params["last_name"], params["mail"]);
+                            let request = sprintf(sql_requests.create_orga, params["first_name"], params["last_name"], params["mail"], default_profile_pic_url);
                             connection.query(request, function(err, rows, fields){
                                 if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
                                 else{

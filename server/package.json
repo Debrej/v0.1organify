@@ -41,7 +41,7 @@
     "mysql": "^2.16.0",
     "node-gyp": "^3.8.0",
     "node-pre-gyp": "^0.12.0",
-    "nodemon": "^1.18.11",
+    "nodemon": "^1.19.0",
     "npm": "^6.8.0",
     "request": "^2.88.0",
     "sprintf-js": "^1.1.2"

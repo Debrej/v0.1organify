@@ -854,7 +854,7 @@ app.post("/register_user", function(req, res){
     });
 });
 
-app.post("/logout/:idOrga", function(req, res){
+app.post("/logout", function(req, res){
     let options = {
         method: 'POST',
         url: 'http://localhost:4524/logout',
@@ -866,7 +866,7 @@ app.post("/logout/:idOrga", function(req, res){
             },
         form:
             {
-                idOrga: req.params.idOrga
+                token: req.body.token
             }
     };
 
