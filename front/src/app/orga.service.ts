@@ -19,7 +19,8 @@ export class OrgaService {
   }
 
   getOrga(idOrga){
-    return this.http.get("http://localhost:8000/orga/" + idOrga, this.httpOptions);
+    return this.http.get("https://api.organify.debrej.fr/orga/" + idOrga, this.httpOptions);
+    //return this.http.get("http://localhost:8000/orga/" + idOrga, this.httpOptions);
   }
 
   constructor(private http: HttpClient) {  }
