@@ -5,8 +5,21 @@
             <id>0</id>
             <name>Ma Competence</name>
         </TaSkill>
+        <TaSkill>
+            <id>0</id>
+            <name>Ma Competence</name>
+        </TaSkill>
     </skillList>
     <taskTypeList>
+        <TaTaskType >
+            <id>0</id>
+            <code>MT</code>
+            <title>Ma Tache</title>
+            <baseDuration>60</baseDuration>
+            <requiredSkillList>
+                <TaSkill reference="3"/>
+            </requiredSkillList>
+        </TaTaskType>
         <TaTaskType >
             <id>0</id>
             <code>MT</code>
@@ -39,6 +52,18 @@
                     <previousTaskOrEmployee class="TaTask" reference="11"/>
                     <employee reference="10"/>
                     <startTime>60</startTime>
+                    <nextTask>
+                        <id>1</id>
+                        <taskType reference="5"/>
+                        <indexInTaskType>2</indexInTaskType>
+                        <customer reference="8"/>
+                        <readyTime>0</readyTime>
+                        <priority>MINOR</priority>
+                        <pinned>false</pinned>
+                        <previousTaskOrEmployee class="TaTask" reference="11"/>
+                        <employee reference="10"/>
+                        <startTime>60</startTime>
+                    </nextTask>
                 </nextTask>
                 <taskType reference="5"/>
                 <indexInTaskType>1</indexInTaskType>

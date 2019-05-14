@@ -30,7 +30,6 @@ public class XmlGenerator {
     private String[] taskTypeList;
     private String[] taskList;
     public XmlGenerator() {
-
         String jsonString = new JSONObject()
                 .put("TaTaskAssigningSolution",new JSONObject()
                     .put("id",0)
@@ -105,10 +104,15 @@ public class XmlGenerator {
 
                 )
                 .toString(4);
-
-        /*JSONObject json = new JSONObject(jsonString);
+        //CONVERT JSON TO XML
+        /*
+        JSONObject json = new JSONObject(jsonString);
         String xml = XML.toString(json);
-        System.out.println(xml);*/
+        System.out.println(xml);
+         */
+
+
+        //CONVERT XML TO JSON
         JSONObject json = new JSONObject();
         try {
             json = XML.toJSONObject(readAllBytesJava7( "data/taskassigning/unsolved/trash.xml" ));
@@ -117,7 +121,8 @@ public class XmlGenerator {
         } catch (JSONException je) {
             System.out.println(je.toString());
         }
-
+/*
+        //ADD IDs FROM XML
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
         DocumentBuilder db = null;
@@ -159,19 +164,20 @@ public class XmlGenerator {
         for(int i=0; i<((temp instanceof JSONObject)?1:((JSONArray)temp).length());i++){
             Element tempElem = ((Element)((Element)element.getElementsByTagName("employeeList").item(0)).getElementsByTagName("TaEmployee").item(i));
             tempElem.setAttribute("id", String.valueOf(id++));
-            while(tempElem.getElementsByTagName("nextTask").getLength()>0) {
-                System.out.println("pdpdpdpdpdp\n\n");
+            for(int j=0; j<tempElem.getElementsByTagName("nextTask").getLength();j++) {
+                ((Element)tempElem.getElementsByTagName("nextTask").item(j)).setAttribute("id", String.valueOf(id++));
             }
-            ((Element)((Element)((Element)element.getElementsByTagName("employeeList").item(0)).getElementsByTagName("TaEmployee").item(i)).getElementsByTagName("nextTask").item(0)).setAttribute("id", String.valueOf(id++));
+            ((Element)tempElem.getElementsByTagName("skillSet").item(0)).setAttribute("id", String.valueOf(id++));
+            ((Element)tempElem.getElementsByTagName("affinityMap").item(0)).setAttribute("id", String.valueOf(id++));
         }
         ((Element) element.getElementsByTagName("taskList").item(0)).setAttribute("id", String.valueOf(id++));
         ((Element) element.getElementsByTagName("score").item(0)).setAttribute("id", String.valueOf(id++));
-        //System.out.println(json.getJSONObject("TaTaskAssigningSolution").getJSONObject("skillList").getJSONArray("TaSkill").length());
         try {
             prettyPrint(doc);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        */
     }
 
     private static String readAllBytesJava7(String filePath) {
