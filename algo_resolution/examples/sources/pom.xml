@@ -153,6 +153,7 @@
       <artifactId>xstream</artifactId>
     </dependency>
 
+
     <!-- Examples only dependencies. -->
     <!--
       WARNING: every examples only dependency must be properly dealt with in
@@ -183,5 +184,6 @@
       <artifactId>javax.json</artifactId>
     </dependency>
   </dependencies>
+
 
 </project>
