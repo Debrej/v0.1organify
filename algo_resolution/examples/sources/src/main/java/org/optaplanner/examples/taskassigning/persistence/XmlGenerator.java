@@ -1,9 +1,6 @@
 package org.optaplanner.examples.taskassigning.persistence;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.XML;
+//import org.json.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -18,10 +15,13 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.*;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.*;
 
 public class XmlGenerator {
     private String[] skillList;
@@ -29,8 +29,9 @@ public class XmlGenerator {
     private Tache[] taskTypeList;
     private HashMap<String, Integer> competenceID = new HashMap<String, Integer>();
     private HashMap<String, Integer> tacheID = new HashMap<String, Integer>();
-    public XmlGenerator() {
+    private LinkedList<String> nextTaskIDs = new LinkedList<String>();
 
+    public XmlGenerator() {
     }
 
     private void build_XML(){
@@ -75,6 +76,7 @@ public class XmlGenerator {
                                     .put("TaSkill",new JSONArray())
                             )
                             .put("affinityMap",new JSONObject())
+                            //.put("nextTask", new JSONObject())
                             /*.put("nextTask",new JSONObject()
                                     .put("id",0)
                                     .put("taskType",new JSONObject()
@@ -97,6 +99,26 @@ public class XmlGenerator {
                                     )
                             )*/
                     );
+            JSONObject nextTask;
+            nextTask = employes.getJSONArray("TaEmployee").getJSONObject(i);
+            if(nextTask.has("nextTask")){
+                nextTask=nextTask.getJSONObject("nextTask");
+            }
+            for(int j = 0;j<employeeList[i].getCreneaux().length;j++){
+                nextTask.put("nextTask", new JSONObject()
+                        .put("id", idTemp++)
+                        .put("taskType", new JSONObject())
+                        .put("indexInTaskType", taskTypeList.length-1)
+                        .put("customer", new JSONObject())
+                        .put("readyTime", 0)
+                        .put("priority", "MAJOR")
+                        .put("pinned", true)
+                        .put("previousTaskOrEmployee", new JSONObject())
+                        .put("employee", new JSONObject())
+                        .put("startTime", Integer.valueOf(employeeList[i].getCreneaux()[j])*120)
+                );
+                nextTask = nextTask.getJSONObject("nextTask");
+            }
             for(int j=0;j<employeeList[i].getCompetences().length;j++){
                 employes.getJSONArray("TaEmployee").getJSONObject(i).getJSONObject("skillSet").getJSONArray("TaSkill").put(new JSONObject());
             }
@@ -104,7 +126,7 @@ public class XmlGenerator {
         JSONObject taches = new JSONObject();
         taches.put("TaTask", new JSONArray());
         idTemp = 0;
-        for (int i=0; i< taskTypeList.length;i++){
+        for (int i=0; i< taskTypeList.length-1;i++){
             taches.getJSONArray("TaTask")
                     .put(new JSONObject()
                             .put("id", idTemp++)
@@ -114,9 +136,17 @@ public class XmlGenerator {
                             .put("readyTime",0)
                             .put("priority", taskTypeList[i].getPriority())
                             .put("pinned",false)
-
                     );
+            /*if(taches.getJSONArray("TaTask").getJSONObject(i).getInt("indexInTaskType")==taskTypeList.length-1){
+                taches.getJSONArray("TaTask").getJSONObject(i).put("pinned", false); //probleme
+            }*/
         }
+        for(int i=0;i<employeeList.length; i++){
+            for(int j=0; j< employeeList[i].getCreneaux().length;j++){
+                taches.getJSONArray("TaTask").put(new JSONObject());
+            }
+        }
+
         JSONObject myJSON = new JSONObject()
                 .put("TaTaskAssigningSolution",new JSONObject()
                         .put("id",0)
@@ -128,11 +158,11 @@ public class XmlGenerator {
                         //.put("score", "[0]hard/[0/-14400/0/-180]soft")
                         .put("frozenCutoff", 0)
                 );
-
         System.out.println(myJSON.toString(4));
 
         //CONVERT JSON TO XML
         String xml = XML.toString(myJSON);
+        //System.out.println(xml);
 
         //ADD IDs FROM XML
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -145,14 +175,6 @@ public class XmlGenerator {
         }
         Document doc = null;
         doc = convertStringToXMLDocument( xml );
-/*
-        try {
-            //doc = db.parse(new FileInputStream(new File("data/taskassigning/unsolved/trash.xml")));
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
 
         int id=1;
         Element element = (Element) doc.getElementsByTagName("TaTaskAssigningSolution").item(0);
@@ -173,7 +195,8 @@ public class XmlGenerator {
             ((Element)((Element)element.getElementsByTagName("taskTypeList").item(0)).getElementsByTagName("TaTaskType").item(i)).setAttribute("id", String.valueOf(id++));
             ((Element)((Element)((Element)element.getElementsByTagName("taskTypeList").item(0)).getElementsByTagName("TaTaskType").item(i)).getElementsByTagName("requiredSkillList").item(0)).setAttribute("id", String.valueOf(id++));
             for(int j=0;j<taskTypeList[getIndexOfTask (((JSONArray)temp).getJSONObject(i).getString("title"))].getCompetencesRequises().length;j++){
-                ((Element)((Element)((Element)((Element)element.getElementsByTagName("taskTypeList").item(0)).getElementsByTagName("TaTaskType").item(i)).getElementsByTagName("requiredSkillList").item(0)).getElementsByTagName("TaSkill").item(j)).setAttribute("reference", String.valueOf(competenceID.get(taskTypeList[i].getCompetencesRequises()[j])));
+                if(competenceID.get(taskTypeList[i].getCompetencesRequises()[j])!=null)
+                    ((Element)((Element)((Element)((Element)element.getElementsByTagName("taskTypeList").item(0)).getElementsByTagName("TaTaskType").item(i)).getElementsByTagName("requiredSkillList").item(0)).getElementsByTagName("TaSkill").item(j)).setAttribute("reference", String.valueOf(competenceID.get(taskTypeList[i].getCompetencesRequises()[j])));
             }
         }
         ((Element) element.getElementsByTagName("customerList").item(0)).setAttribute("id", String.valueOf(id++));
@@ -185,9 +208,15 @@ public class XmlGenerator {
         temp = myJSON.getJSONObject("TaTaskAssigningSolution").getJSONObject("employeeList").get("TaEmployee");
         for(int i=0; i<((temp instanceof JSONObject)?1:((JSONArray)temp).length());i++){
             Element tempElem = ((Element)((Element)element.getElementsByTagName("employeeList").item(0)).getElementsByTagName("TaEmployee").item(i));
-            tempElem.setAttribute("id", String.valueOf(id++));
+            int referenceEmployee =id++;
+            tempElem.setAttribute("id", String.valueOf(referenceEmployee));
             for(int j=0; j<tempElem.getElementsByTagName("nextTask").getLength();j++) {
+                nextTaskIDs.push(String.valueOf(id));
                 ((Element)tempElem.getElementsByTagName("nextTask").item(j)).setAttribute("id", String.valueOf(id++));
+                ((Element)((Element)tempElem.getElementsByTagName("nextTask").item(j)).getElementsByTagName("taskType").item(0)).setAttribute("reference", String.valueOf(tacheID.get("freeTime")));
+                ((Element)((Element)tempElem.getElementsByTagName("nextTask").item(j)).getElementsByTagName("previousTaskOrEmployee").item(0)).setAttribute("class", j==0?"TaEmployee":"TaTask");
+                ((Element)((Element)tempElem.getElementsByTagName("nextTask").item(j)).getElementsByTagName("previousTaskOrEmployee").item(0)).setAttribute("reference", String.valueOf(referenceEmployee+j));
+                ((Element)((Element)tempElem.getElementsByTagName("nextTask").item(j)).getElementsByTagName("employee").item(0)).setAttribute("reference", String.valueOf(referenceEmployee));
             }
             for(int j=0; j<((Element)tempElem.getElementsByTagName("skillSet").item(0)).getElementsByTagName("TaSkill").getLength();j++){
                 String tempEmployeeNumber = tempElem.getElementsByTagName("id").item(0).getChildNodes().item(0).getNodeValue();
@@ -201,9 +230,14 @@ public class XmlGenerator {
         ((Element) element.getElementsByTagName("taskList").item(0)).setAttribute("id", String.valueOf(id++));
         temp = myJSON.getJSONObject("TaTaskAssigningSolution").getJSONObject("taskList").get("TaTask");
         for(int i=0; i<((temp instanceof JSONObject)?1:((JSONArray)temp).length());i++){
-            String index = ((Element)((Element)element.getElementsByTagName("taskList").item(0)).getElementsByTagName("TaTask").item(i)).getElementsByTagName("indexInTaskType").item(0).getChildNodes().item(0).getNodeValue();
-            ((Element)((Element)element.getElementsByTagName("taskList").item(0)).getElementsByTagName("TaTask").item(i)).setAttribute("id", String.valueOf(id++));
-            ((Element)((Element)((Element)element.getElementsByTagName("taskList").item(0)).getElementsByTagName("TaTask").item(i)).getElementsByTagName("taskType").item(0)).setAttribute("reference",  String.valueOf(tacheID.get(taskTypeList[Integer.valueOf(index)].getID())));
+            Element nl = (Element)((Element)((Element)element.getElementsByTagName("taskList").item(0)).getElementsByTagName("TaTask").item(i));
+            if(nl.getElementsByTagName("indexInTaskType").getLength()>0){
+                String index = ((Element)((Element)element.getElementsByTagName("taskList").item(0)).getElementsByTagName("TaTask").item(i)).getElementsByTagName("indexInTaskType").item(0).getChildNodes().item(0).getNodeValue();
+                ((Element)((Element)element.getElementsByTagName("taskList").item(0)).getElementsByTagName("TaTask").item(i)).setAttribute("id", String.valueOf(id++));
+                ((Element)((Element)((Element)element.getElementsByTagName("taskList").item(0)).getElementsByTagName("TaTask").item(i)).getElementsByTagName("taskType").item(0)).setAttribute("reference",  String.valueOf(tacheID.get(taskTypeList[Integer.valueOf(index)].getID())));
+            }else{
+                ((Element)((Element)element.getElementsByTagName("taskList").item(0)).getElementsByTagName("TaTask").item(i)).setAttribute("reference", nextTaskIDs.pop());
+            }
         }
         //((Element) element.getElementsByTagName("score").item(0)).setAttribute("id", String.valueOf(id++));
 
@@ -225,24 +259,20 @@ public class XmlGenerator {
         for (int i=0;i<arraySize;i++){
             JSONObject temp = inputJSON.getJSONArray("listeEmployes").getJSONObject(i);
             employeeList[i]= new Employe( temp.getString("ID"),temp.getJSONArray("competences"), temp.getJSONArray("creneaux"));
-
         }
         arraySize = inputJSON.getJSONArray("listeDeTaches").length();
-        taskTypeList = new Tache[arraySize];
+        taskTypeList = new Tache[arraySize+1];
         for(int i =0; i< arraySize;i++){
             JSONObject temp = inputJSON.getJSONArray("listeDeTaches").getJSONObject(i);
             taskTypeList[i]=new Tache(temp.getString("ID"), temp.getInt("duree"), temp.getJSONArray("competencesRequises"), temp.getString("priority"));
         }
-
-        for(int i=0; i<skillList.length;i++) System.out.println(skillList[i]);
-        for (int i=0; i< employeeList.length;i++) System.out.println(employeeList[i]);
-        for (int i=0; i<taskTypeList.length;i++) System.out.println(taskTypeList[i]);
+        taskTypeList[arraySize]= new Tache("freeTime", 120, new JSONArray(), "MAJOR");
     }
 
     private int getIndexOfTask(String title){
         int res=-1;
         for(int i=0;i<taskTypeList.length; i++){
-            if(taskTypeList[i].getID()==title) res = i;
+            if(taskTypeList[i].getID().equals(title)) res = i;
         }
         return res;
     }
@@ -303,57 +333,57 @@ public class XmlGenerator {
         String inputJSON = new JSONObject()
                 .put("listeCompetences", new JSONArray()
                         .put("competence1")
-                        .put("competence2")
-                        .put("competence3")
-                        .put("competence4")
                 )
                 .put("listeEmployes", new JSONArray()
                         .put(new JSONObject()
                                 .put("ID","1")
                                 .put("competences", new JSONArray()
                                         .put("competence1")
-                                        .put("competence2")
-                                        .put("competence3")
                                 )
                                 .put("creneaux", new JSONArray()
+                                        .put("0")
                                         .put("2")
-                                        .put("999999999")
                                 )
                         )
                         .put(new JSONObject()
                                 .put("ID","2")
                                 .put("competences", new JSONArray()
-                                        .put("competence2")
+                                        .put("competence1")
                                 )
                                 .put("creneaux", new JSONArray()
-                                        .put("3")
-                                        .put("1234")
+                                        .put("5")
+                                        .put("0")
                                 )
                         )
                 )
                 .put("listeDeTaches", new JSONArray()
                         .put(new JSONObject()
                                 .put("ID", "1")
-                                .put("duree", "60")
+                                .put("duree", "120")
                                 .put("competencesRequises", new JSONArray()
-                                        .put("competence2")
                                         .put("competence1")
-                                        .put("competence3")
                                 )
                                 .put("priority","MINOR")
                         )
                         .put(new JSONObject()
                                 .put("ID", "2")
-                                .put("duree", "120")
+                                .put("duree", "400")
                                 .put("competencesRequises", new JSONArray()
                                         .put("competence1")
                                 )
-                                .put("priority","CRITICAL")
+                                .put("priority","MINOR")
+                        )
+                        .put(new JSONObject()
+                                .put("ID", "3")
+                                .put("duree", "200")
+                                .put("competencesRequises", new JSONArray()
+                                        .put("competence1")
+                                )
+                                .put("priority","MINOR")
                         )
                 )
                 .toString(4);
 
-        //System.out.println(inputJSON);
         XmlGenerator a = new XmlGenerator();
         a.init(new JSONObject(inputJSON));
         a.build_XML();

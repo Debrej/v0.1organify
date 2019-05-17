@@ -1,6 +1,5 @@
 package org.optaplanner.examples.taskassigning.persistence;
 
-import org.json.JSONArray;
 
 import java.util.Arrays;
 
@@ -16,7 +15,6 @@ public class Tache {
         this.competencesRequises = new String[competencesRequises.length()];
         for (int i=0; i<competencesRequises.length(); i++){
             this.competencesRequises[i]=competencesRequises.getString(i);
-            System.out.println(this.competencesRequises[i]);
         }
         this.priority=priority;
     }

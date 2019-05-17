@@ -1,7 +1,5 @@
 package org.optaplanner.examples.taskassigning.persistence;
 
-import org.json.JSONArray;
-
 import java.util.Arrays;
 
 public class Employe {
