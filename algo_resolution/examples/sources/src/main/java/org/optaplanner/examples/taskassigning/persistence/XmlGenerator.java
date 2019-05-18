@@ -126,6 +126,7 @@ public class XmlGenerator {
         taches.put("TaTask", new JSONArray());
         idTemp = 0;
         for (int i=0; i< taskTypeList.length-1;i++){
+            System.out.println(taskTypeList[i].getID());
             taches.getJSONArray("TaTask")
                     .put(new JSONObject()
                             .put("id", idTemp++)

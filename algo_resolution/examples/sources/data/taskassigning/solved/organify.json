@@ -1,25 +1,25 @@
 {
     "1": [
         {
-            "taskID": "12",
+            "taskID": "555",
             "duree": 60
         },
         {
-            "taskID": "8",
+            "taskID": "222",
             "duree": 400
+        },
+        {
+            "taskID": "111",
+            "duree": 60
         }
     ],
     "2": [
         {
-            "taskID": "14",
+            "taskID": "444",
             "duree": 60
         },
         {
-            "taskID": "6",
-            "duree": 120
-        },
-        {
-            "taskID": "10",
+            "taskID": "333",
             "duree": 500
         }
     ]

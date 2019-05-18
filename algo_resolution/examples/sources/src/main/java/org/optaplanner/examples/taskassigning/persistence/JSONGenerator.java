@@ -39,7 +39,7 @@ public class JSONGenerator {
                     String title = eElement.getElementsByTagName("title").item(0).getTextContent();
                     String id =  eElement.getElementsByTagName("id").item(0).getTextContent();
                     int baseDuration = Integer.valueOf(eElement.getElementsByTagName("baseDuration").item(0).getTextContent());
-                    taskTypeList.put(Integer.valueOf(eElement.getAttribute("id")),new Tache(attributeID,baseDuration,new JSONArray(),""));
+                    taskTypeList.put(Integer.valueOf(eElement.getAttribute("id")),new Tache(title,baseDuration,new JSONArray(),""));
                 }
             }
             nNode = doc.getElementsByTagName("employeeList").item(0);
