@@ -6,8 +6,14 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AuthService {
 
+	baseUrl = 'http://localhost:8000';
+
   getToken(mail, pwd){
-    return this.http.post("http://localhost:8000/login", {"mail": mail, "pwd": pwd});
+    return this.http.post( this.baseUrl + '/login', {"mail": mail, "pwd": pwd});
+  }
+
+  delToken(body: any) {
+	  return this.http.post(this.baseUrl + '/logout', body);
   }
 
   constructor(private http: HttpClient) { }

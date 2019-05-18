@@ -1,0 +1,25 @@
+<div class="panel">
+		<div class="panel-heading">
+			<h4 *ngIf="!create; else elseTitleBlock">Détails orga n°{{orga.idOrga}}</h4>
+			<ng-template #elseTitleBlock><h4>Nouvel orga</h4></ng-template>
+		</div>
+		<div class="panel-body">
+			<form>
+				<div class="col-md-6 form-group">
+					<label for="lastName">Nom</label>
+					<input type="text" class="form-control" id="lastName" [(ngModel)]="orga.last_name" name="lastName" required>
+				</div>
+				<div class="col-md-6 form-group">
+					<label for="firstName">Prénom</label>
+					<input class="form-control" id="firstName" name="firstName" [(ngModel)]="orga.first_name" required>
+				</div>
+				<div class="col-md-6 form-group">
+					<label for="mail">Mail</label>
+					<input type="text" class="form-control" id="mail" name="mail" [(ngModel)]="orga.mail" required>
+				</div>
+				<div class="col-md-12 form-group formButtons">
+					<button *ngIf="create" type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>

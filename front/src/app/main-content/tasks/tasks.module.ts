@@ -5,6 +5,7 @@ import { TasksRoutingModule } from './tasks-routing.module';
 import { TasksComponent } from './tasks.component';
 import { TasksListComponent } from './tasks-list/tasks-list.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { TaskDetailComponent } from './task-detail/task-detail.component';
 	  TaskDetailComponent
   ],
   imports: [
-    CommonModule,
+	CommonModule,
+	FormsModule,
     TasksRoutingModule
   ],
   exports: [

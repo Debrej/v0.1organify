@@ -1,10 +1,53 @@
 <div class="panel">
 	<div class="panel-heading">
-		<h4>Détails de la tâche n°{{task.idTask}}</h4>
+		<h4 *ngIf="!create; else elseTitleBlock">Détails de la tâche n°{{task.idTask}}</h4>
+		<ng-template #elseTitleBlock><h4>Nouvelle tâche</h4></ng-template>
 	</div>
 	<div class="panel-body">
-		<p>Name : {{task.name}}</p>
-		<p>Description : {{task.description}}</p>
-		<p>idOrga : {{task.idOrga}}</p>
+		<form>
+			<div class="col-md-6 form-group">
+				<label for="name">Titre de la tâche</label>
+				<input type="text" class="form-control" id="name" [(ngModel)]="task.name" name="name" required>
+			</div>
+			<div class="col-md-6 form-group">
+				<label for="idOrga">Orga responsable</label>
+				<select class="form-control" id="idOrga" name="idOrga" [(ngModel)]="task.idOrga" required>
+					<option [value]="1">Balthazar</option>
+					<option [value]="2">Jean-Michel</option>
+				</select>
+			</div>
+			<div class="col-md-12 form-group">
+				<label for="description">Description</label>
+				<textarea class="form-control" id="description" name="description" [(ngModel)]="task.description" required></textarea>
+			</div>
+			<div class="col-md-12 form-group formButtons">
+				<button *ngIf="create" type="submit" class="btn btn-primary">Submit</button>
+			</div>
+			<div class="col-md-12">
+				<h4>Créneaux</h4>
+				<div class="col-md-6 form-group">
+					<label for="startday">Date de début</label>
+					<input type="date" id="startday" name="startday" [(ngModel)]="startdate">
+				</div>
+				<div class="col-md-6 form-group">
+					<label for="starthour">Heure de début</label>
+					<input type="time" id="starthour" name="starthour" [(ngModel)]="starthour">
+				</div>
+				<div class="col-md-6 form-group">
+						<label for="endday">Date de fin</label>
+						<input type="date" id="endday" name="endday" [(ngModel)]="enddate">
+					</div>
+					<div class="col-md-6 form-group">
+						<label for="endhour">Heure de fin</label>
+						<input type="time" id="endhour" name="endhour" [(ngModel)]="endhour">
+					</div>
+			</div>
+		</form>
+		<div class="col-md-12">
+			<h4>Orgas</h4>
+			<ul class="list-group" name="list-orgas">
+				<li *ngFor="let orga of orgas" class="list-group-item"><a href="/orgas/{{orga.idOrga}}">{{orga.last_name}} {{orga.first_name}}</a> <button class="delete" (click)="deleteOrga(orga.idOrga)">x</button></li>
+			</ul>
+		</div>
 	</div>
 </div>

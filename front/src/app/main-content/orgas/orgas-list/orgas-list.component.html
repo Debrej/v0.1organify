@@ -1,0 +1,25 @@
+<div class="panel">
+	<div class="panel-heading">
+		<h4>Liste des orgas</h4>
+	</div>
+	<div *ngIf="orgas; else elseBlock" class="panel-body">
+		<div class="row">
+			<div class="col-md-5">
+				<h5>Nom</h5>
+			</div>
+			<div class="col-md-5">
+				<h5>Prénom</h5>
+			</div>
+		</div>
+		<div *ngFor="let orga of orgas" class="row">
+			<div class="col-sm-5">
+				{{orga.last_name}}
+			</div>
+			<div class="col-sm-5">
+				{{orga.first_name}}
+			</div>
+			<a href="/orgas/{{orga.idOrga}}"><i class="far fa-eye fa-lg"></i></a>
+		</div>
+	</div>
+	<ng-template #elseBlock><div class="panel-body">No Orgas to show</div></ng-template>
+</div>

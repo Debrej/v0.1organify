@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, Injectable} from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { AuthService } from "../auth.service";
 import { Router } from "@angular/router";
 import { CookieService } from "angular2-cookie/core";

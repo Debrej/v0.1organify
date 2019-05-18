@@ -6,6 +6,7 @@ import { MainContentComponent } from './main-content.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { TasksModule } from './tasks/tasks.module';
+import { OrgasModule } from './orgas/orgas.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { TasksModule } from './tasks/tasks.module';
 	CommonModule,
 	FullCalendarModule,
 	TasksModule,
+	OrgasModule,
     MainContentRoutingModule
   ],
   exports: [
