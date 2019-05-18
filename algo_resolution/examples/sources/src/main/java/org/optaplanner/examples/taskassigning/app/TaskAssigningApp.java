@@ -42,7 +42,6 @@ public class TaskAssigningApp extends CommonApp<TaskAssigningSolution> {
                 + "Minimize the makespan.",
                 SOLVER_CONFIG, DATA_DIR_NAME,
                 TaskAssigningPanel.LOGO_PATH);
-        System.out.println("debut du script");
     }
 
     @Override

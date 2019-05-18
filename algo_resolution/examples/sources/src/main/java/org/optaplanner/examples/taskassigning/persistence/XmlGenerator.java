@@ -1,6 +1,5 @@
 package org.optaplanner.examples.taskassigning.persistence;
 
-//import org.json.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -15,10 +14,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -32,6 +28,9 @@ public class XmlGenerator {
     private LinkedList<String> nextTaskIDs = new LinkedList<String>();
 
     public XmlGenerator() {
+        String inputJSON = readAllBytesJava7("data/taskassigning/unsolved/organify.json");
+        init(new JSONObject(inputJSON));
+        build_XML();
     }
 
     private void build_XML(){
@@ -242,10 +241,17 @@ public class XmlGenerator {
         //((Element) element.getElementsByTagName("score").item(0)).setAttribute("id", String.valueOf(id++));
 
         try {
-            prettyPrint(doc);
+            //prettyPrint(doc);
+            writeInFile(prettyPrint(doc));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void writeInFile(String xml) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("data/taskassigning/unsolved/organify.xml"));
+        writer.write(xml);
+        writer.close();
     }
 
     private void init(JSONObject inputJSON){
@@ -296,13 +302,14 @@ public class XmlGenerator {
         return content;
     }
 
-    public static void prettyPrint(Document xml) throws Exception {
+    public static String prettyPrint(Document xml) throws Exception {
         Transformer tf = TransformerFactory.newInstance().newTransformer();
         tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         tf.setOutputProperty(OutputKeys.INDENT, "no");
         Writer out = new StringWriter();
         tf.transform(new DOMSource(xml), new StreamResult(out));
         System.out.println(out.toString());
+        return (out.toString());
     }
 
     private static Document convertStringToXMLDocument(String xmlString)
@@ -328,8 +335,8 @@ public class XmlGenerator {
         return null;
     }
 
-    public static void main(String[] args) {
-        //new XmlGenerator();
+    public static String JSONGenerator()
+    {
         String inputJSON = new JSONObject()
                 .put("listeCompetences", new JSONArray()
                         .put("competence1")
@@ -383,9 +390,6 @@ public class XmlGenerator {
                         )
                 )
                 .toString(4);
-
-        XmlGenerator a = new XmlGenerator();
-        a.init(new JSONObject(inputJSON));
-        a.build_XML();
+        return inputJSON;
     }
 }

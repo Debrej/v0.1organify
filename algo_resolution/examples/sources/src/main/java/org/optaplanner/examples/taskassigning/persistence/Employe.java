@@ -1,11 +1,13 @@
 package org.optaplanner.examples.taskassigning.persistence;
 
 import java.util.Arrays;
+import java.util.ArrayList; // import the ArrayList class
 
 public class Employe {
     private String ID;
     private String[] competences;
     private String[] creneaux;
+    private ArrayList<Tache> listeTaches = new ArrayList<Tache>();
 
     public Employe(String ID, JSONArray competences, JSONArray creneaux){
         this.ID=ID;
@@ -25,6 +27,7 @@ public class Employe {
                 "ID='" + ID + '\'' +
                 ", competences=" + Arrays.toString(competences) +
                 ", creneaux=" + Arrays.toString(creneaux) +
+                ", listeTaches=" + listeTaches +
                 '}';
     }
 
@@ -50,5 +53,13 @@ public class Employe {
 
     public void setCreneaux(String[] creneaux) {
         this.creneaux = creneaux;
+    }
+
+    public ArrayList<Tache> getListeTaches() {
+        return listeTaches;
+    }
+
+    public void setListeTaches(ArrayList<Tache> listeTaches) {
+        this.listeTaches = listeTaches;
     }
 }

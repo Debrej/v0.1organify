@@ -8,6 +8,7 @@ public class Tache {
     private int duree;
     private String[] competencesRequises;
     private String priority;
+    private boolean isFreeTime;
 
     public Tache(String ID, int duree, JSONArray competencesRequises, String priority){
         this.ID=ID;
@@ -26,6 +27,7 @@ public class Tache {
                 ", duree=" + duree +
                 ", competencesRequises=" + Arrays.toString(competencesRequises) +
                 ", priority='" + priority + '\'' +
+                ", isFreeTime=" + isFreeTime +
                 '}';
     }
 
@@ -59,5 +61,13 @@ public class Tache {
 
     public void setPriority(String priority) {
         this.priority = priority;
+    }
+
+    public boolean isFreeTime() {
+        return isFreeTime;
+    }
+
+    public void setFreeTime(boolean freeTime) {
+        isFreeTime = freeTime;
     }
 }

@@ -62,6 +62,8 @@ import org.optaplanner.core.api.score.Score;
 import org.optaplanner.examples.common.app.CommonApp;
 import org.optaplanner.examples.common.business.SolutionBusiness;
 import org.optaplanner.examples.common.persistence.AbstractSolutionImporter;
+import org.optaplanner.examples.taskassigning.persistence.JSONGenerator;
+import org.optaplanner.examples.taskassigning.persistence.XmlGenerator;
 import org.optaplanner.swing.impl.TangoColorFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,6 +109,7 @@ public class SolverAndPersistenceFrame<Solution_> extends JFrame {
     public SolverAndPersistenceFrame(SolutionBusiness<Solution_> solutionBusiness,
             SolutionPanel<Solution_> solutionPanel, CommonApp.ExtraAction<Solution_>[] extraActions) {
         super(solutionBusiness.getAppName() + " OptaPlanner example");
+        new XmlGenerator();
         this.solutionBusiness = solutionBusiness;
         this.solutionPanel = solutionPanel;
         setIconImage(OPTA_PLANNER_ICON.getImage());
@@ -131,7 +134,6 @@ public class SolverAndPersistenceFrame<Solution_> extends JFrame {
         registerListeners();
         constraintMatchesDialog = new ConstraintMatchesDialog(this, solutionBusiness);
         solutionBusiness.openSolution(new File("data/taskassigning/unsolved/organify.xml" ));
-        //setSolutionLoaded(e.getSource());
     }
 
     private void registerListeners() {
@@ -159,7 +161,6 @@ public class SolverAndPersistenceFrame<Solution_> extends JFrame {
         setContentPane(createContentPane());
         pack();
         setLocationRelativeTo(centerForComponent);
-        //gilles
         setSolvingState(true);
         Solution_ problem = solutionBusiness.getSolution();
         new SolveWorker(problem).execute();
@@ -170,8 +171,8 @@ public class SolverAndPersistenceFrame<Solution_> extends JFrame {
                 terminateSolvingEarlyAction.setEnabled(false);
                 // This async, so it doesn't stop the solving immediately
                 solutionBusiness.terminateSolvingEarly();
-                System.out.println("Sauvegarde en cours");
                 solutionBusiness.saveSolution(new File ("data/taskassigning/solved/organify.xml"));
+                new JSONGenerator();
                 System.exit(0);
             }
         } ).start();
