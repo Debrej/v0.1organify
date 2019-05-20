@@ -2,23 +2,29 @@
 	<div class="panel-heading">
 		<h4>Liste des tâches</h4>
 	</div>
+	<div class="col-md-12" >
+		<button class="btn btn-primary" onclick="document.location.href='tasks/create'">Nouvelle tâche</button>
+	</div>
 	<div *ngIf="tasks; else elseBlock" class="panel-body">
 		<div class="row">
 			<div class="col-md-5">
 				<h5>Titre</h5>
 			</div>
 			<div class="col-md-5">
-				<h5>Resp</h5>
+				<h5>Responsable</h5>
 			</div>
 		</div>
-		<div *ngFor="let task of tasks" class="row">
+		<div *ngFor="let task of tasks; let i = index" class="row">
 			<div class="col-sm-5">
 				{{task.name}}
 			</div>
 			<div class="col-sm-5">
-				{{task.idOrga}}
+				{{orgas[i].first_name}} {{orgas[i].last_name}}
 			</div>
-			<a href="/tasks/{{task.idTask}}"><i class="far fa-eye fa-lg"></i></a>
+			<div class="col-sm-2">
+				<a href="/tasks/{{task.idTask}}"><i class="far fa-eye fa-lg"></i></a>
+				<a href="/tasks/{{task.idTask}}/update"><i class="far fa-edit fa-lg"></i></a>
+			</div>
 		</div>
 	</div>
 	<ng-template #elseBlock><div class="panel-body">No Tasks to show</div></ng-template>

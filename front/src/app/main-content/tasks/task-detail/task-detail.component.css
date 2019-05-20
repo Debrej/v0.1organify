@@ -1,3 +1,13 @@
 label {
 	margin-right: 10px;
 }
+
+#addOrgaButton {
+	margin-bottom: 5%;
+	margin-top: 5%;
+}
+
+#moreOrga {
+	background-color: #f0f0f5;
+	border-radius: 10px;
+}

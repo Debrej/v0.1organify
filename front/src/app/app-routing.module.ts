@@ -8,6 +8,8 @@ import { CalendarComponent } from './main-content/calendar/calendar.component';
 import { TaskDetailComponent } from './main-content/tasks/task-detail/task-detail.component';
 import { OrgasComponent } from './main-content/orgas/orgas.component';
 import { OrgaDetailComponent } from './main-content/orgas/orga-detail/orga-detail.component';
+import { ShiftsComponent } from './main-content/shifts/shifts.component';
+import { ShiftDetailComponent } from './main-content/shifts/shift-detail/shift-detail.component';
 
 const appRoutes: Routes = [
 	{ path: 'login', component: LoginViewComponent},
@@ -34,8 +36,16 @@ const appRoutes: Routes = [
 					{	
 						path: ':id',
 						component: TaskDetailComponent
-					} 
+					},
+					{
+						path: ':id/:action',
+						component: TaskDetailComponent
+					}
 				]
+			},
+			{
+				path: 'create',
+				component: TasksComponent
 			}
 		]
 	},
@@ -60,8 +70,40 @@ const appRoutes: Routes = [
 					{	
 						path: ':id',
 						component: OrgaDetailComponent
-					} 
+					},
+					{
+						path: ':id/:action',
+						component: OrgaDetailComponent
+					}
 				]
+			},
+			{
+				path: 'create',
+				component: OrgasComponent
+			}
+		]
+	},
+	{
+		path: 'shifts',
+		component : DefaultViewComponent,
+		children: [
+			{
+				path: '',
+				component: ShiftsComponent,
+				children: [
+					{
+						path: ':id',
+						component: ShiftDetailComponent
+					},
+					{
+						path: ':id/:action',
+						component: ShiftDetailComponent
+					}
+				]
+			},
+			{
+				path: 'create',
+				component: ShiftsComponent
 			}
 		]
 	}

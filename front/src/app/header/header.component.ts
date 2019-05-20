@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { CookieService } from "angular2-cookie/core";
 import { AuthService } from "../auth.service";
+import { Orga } from 'src/models/orga';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,8 @@ import { AuthService } from "../auth.service";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+	user: Orga;
 
   constructor(private routerService: Router, private authService: AuthService, private cookieService: CookieService) { }
 
@@ -20,6 +23,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+	  //this.user = this.authService.connectedUser;
+	  this.user = new Orga(23, 'Devulder', 'Vincent', "vincent.devulder@insa-lyon.fr");
   }
 
 }

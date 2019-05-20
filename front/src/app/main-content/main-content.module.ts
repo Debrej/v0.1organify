@@ -7,6 +7,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { TasksModule } from './tasks/tasks.module';
 import { OrgasModule } from './orgas/orgas.module';
+import { ShiftsModule } from './shifts/shifts.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { OrgasModule } from './orgas/orgas.module';
 	FullCalendarModule,
 	TasksModule,
 	OrgasModule,
+	ShiftsModule,
     MainContentRoutingModule
   ],
   exports: [

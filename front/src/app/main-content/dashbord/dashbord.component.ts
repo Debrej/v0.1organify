@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from "../../auth.service";
+import { Orga } from 'src/models/orga';
 
 @Component({
   selector: 'app-dashbord',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashbordComponent implements OnInit {
 
-  constructor() { }
+	user: Orga;
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+	  //this.user = this.authService.connectedUser;
+	  this.user = new Orga(23, 'Devulder', 'Vincent', "vincent.devulder@insa-lyon.fr");
   }
 
 }
