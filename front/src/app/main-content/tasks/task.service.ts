@@ -72,4 +72,11 @@ export class TaskService {
 			);
 	}
 
+	deleteTaskOrga(idTask: number, idOrga: number): Observable<any> {
+		return this.http.delete(this.baseUrl + 'orga/' + idTask + '/' + idOrga, this.httpOptions)
+			.pipe(
+				catchError(this.handleError('deleteTaskSubshift', {}))
+			);
+	}
+
 }
