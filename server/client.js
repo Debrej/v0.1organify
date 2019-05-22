@@ -41,7 +41,7 @@ app.use(function(req, res, next){
 
 //region LISTEN
 
-app.listen(80, function(){
+app.listen(8000, function(){
     console.log("client server listening on port 80");
 });
 
@@ -54,9 +54,9 @@ const options = {
 
 const server = https.createServer(options, app);
 
-server.listen(443, () => {
+/*server.listen(443, () => {
     console.log("server starting on port : " + 443);
-});
+});*/
 
 //endregion
 
