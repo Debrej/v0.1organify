@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bearerToken());
 app.use(helmet());
-//app.use(cors());
+app.use(cors());
 
 app.use(function(req, res, next){
     let log = "["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip+"\n";

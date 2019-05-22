@@ -1,6 +1,7 @@
 /*region ORGAS*/
 
 INSERT INTO ORGA (last_name, first_name, mail) VALUES ('Bellanger','Thibaut', 't.bellanger34@gmail.com');
+INSERT INTO ORGA (last_name, first_name, mail, profile_pic_url) VALUES ('Thia-Song-Fat','Gilles', 'gilles.thia-song-fat@insa-lyon.fr', 'assets/img/user.svg');
 
 /*endregion*/
 
