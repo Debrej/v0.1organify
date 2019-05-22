@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ShiftsRoutingModule } from './shifts-routing.module';
 import { ShiftsComponent } from './shifts.component';
 import { ShiftsListComponent } from './shifts-list/shifts-list.component';

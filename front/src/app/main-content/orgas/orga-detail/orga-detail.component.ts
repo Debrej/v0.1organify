@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrgaService } from '../orga.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Orga } from 'src/models/orga';
+import { Shift } from 'src/models/shift';
 
 @Component({
   selector: 'app-orga-detail',
@@ -15,6 +16,9 @@ export class OrgaDetailComponent implements OnInit {
 	password: string;
 	update: boolean;
 	create: boolean;
+	allShifts: Shift[];
+	addedShift: Shift;
+	optionHidden: boolean = true;
 
   constructor(private orgaService: OrgaService, private route: ActivatedRoute, private router: Router) { }
 
@@ -34,7 +38,8 @@ export class OrgaDetailComponent implements OnInit {
 				} else {
 					this.update = true;
 				}
-				this.getOrgaById(selectedId);
+				//this.getOrgaById(selectedId);
+				//this.getShifts(selectedId);
 			}
 		}
 	);
@@ -48,6 +53,15 @@ export class OrgaDetailComponent implements OnInit {
   getOrgaById(id: number) {
 	this.orgaService.getOrga(id)
 	.subscribe(orga => this.orga = orga);
+  }
+
+  getShifts(id: number) {
+	this.orgaService.getOrgaShift(id)
+	.subscribe(res => {
+		if (res.status == 0) {
+			this.allShifts = res.shift;
+		}
+	});
   }
 
   onSubmit() {

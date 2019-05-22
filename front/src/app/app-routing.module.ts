@@ -10,10 +10,10 @@ import { OrgasComponent } from './main-content/orgas/orgas.component';
 import { OrgaDetailComponent } from './main-content/orgas/orga-detail/orga-detail.component';
 import { ShiftsComponent } from './main-content/shifts/shifts.component';
 import { ShiftDetailComponent } from './main-content/shifts/shift-detail/shift-detail.component';
+import { InfosComponent } from './main-content/infos/infos.component';
 
 const appRoutes: Routes = [
 	{ path: 'login', component: LoginViewComponent},
-	{ path: 'test', component: DefaultViewComponent},
 	{ path: '', component: LoginViewComponent},
 	{ 
 		path: 'dashboard',
@@ -104,6 +104,16 @@ const appRoutes: Routes = [
 			{
 				path: 'create',
 				component: ShiftsComponent
+			}
+		]
+	},
+	{
+		path: 'infos',
+		component: DefaultViewComponent,
+		children: [
+			{
+				path: '',
+				component: InfosComponent
 			}
 		]
 	}

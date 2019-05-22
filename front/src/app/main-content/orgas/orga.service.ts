@@ -47,15 +47,15 @@ export class OrgaService {
 		);
 	}
 
-	getOrga (id: number): Observable<Orga> {
-		return this.http.get<Orga>(this.baseUrl + id)
+	getOrga (id: number): Observable<any> {
+		return this.http.get<any>(this.baseUrl + '/' + id)
 		.pipe(
-			catchError(this.handleError('getOrgaById', null))
+			catchError(this.handleError('getOrgaById', {}))
 		);
 	}
 
-	getOrgaShift (id: number): Observable<Object> {
-		return this.http.get<Object>(this.baseUrl + '/shift/' + id)
+	getOrgaShift (id: number): Observable<any> {
+		return this.http.get<any>(this.baseUrl + '/shift/' + id)
 		.pipe(
 			catchError(this.handleError('getOrgaShift', {}))
 		);

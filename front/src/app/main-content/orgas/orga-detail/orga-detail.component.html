@@ -25,5 +25,26 @@
 				<button *ngIf="update" type="submit" class="btn btn-success" [disabled]="!orgaForm.form.valid">Submit</button>
 			</div>
 		</form>
+		<div class="col-md-12" *ngIf="!create">
+			<h4>Disponibilités</h4>
+			<ul class="list-group" name="list-shifts">
+				<li *ngFor="let shift of shifts" class="list-group-item"><a href="/shifts/{{shift.idShift}}">{{shift.start_date}} {{shift.end_date}}</a> <button class="delete" (click)="deleteShift(shift.idShift)" [hidden]="!update">x</button></li>
+			</ul>
+			<div class="col-md-6" id="moreShift" *ngIf="update">
+				<div class="col-md-12">
+					<button class="btn btn-primary" id="addShiftButton" (click)="optionHidden = !optionHidden">Ajouter une disponibilité</button>
+				</div>
+				<form (ngSubmit)="addShift()" #shiftForm="ngForm" [hidden]="optionHidden">
+					<div class="col-md-12 form-group">
+						<select class="form-control" id="idShiftAdd" name="idShiftAdd" [(ngModel)]="addedShift">
+							<option *ngFor="let shift of allShifts; let i = index" [value]="shift.idShift">{{shift.strat_date}} {{shift.end_date}}</option>
+						</select>
+					</div>
+					<div class="col-md-12 form-group">
+						<button class="btn btn-success" type="submit" [disabled]="!shiftForm.form.valid">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>

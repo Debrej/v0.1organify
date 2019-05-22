@@ -16,6 +16,8 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MainContentModule } from './main-content/main-content.module';
+import { CookieModule } from 'ngx-cookie';
+import { CookieOptions } from 'angular2-cookie';
 
 
 @NgModule({
@@ -31,7 +33,7 @@ import { MainContentModule } from './main-content/main-content.module';
     FooterComponent
   ],
   imports: [
-    BrowserModule,
+	BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
 	MatSnackBarModule,

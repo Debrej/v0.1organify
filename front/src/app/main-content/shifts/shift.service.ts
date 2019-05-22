@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HandleError, HttpErrorHandlerService } from '../../http-error-handler.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Shift } from 'src/models/shift';
@@ -11,10 +11,17 @@ import { Task } from 'src/models/task';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ShiftService {
 	private handleError: HandleError;
 	baseUrl = 'http://localhost:8000/shift';
-
+	httpOptions = {
+		headers: new HttpHeaders({
+		  'Content-Type':  'application/json',
+		  'token': '70b86b6d666f4a4e8938e308529465e7774fd0877dd8540edc5584448f745ffc6115e553211166a9698f947e81b4d0a5'
+		})
+	};
+	
   	constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandlerService) {
 		this.handleError = httpErrorHandler.createHandleError('TaskService');
 	}
@@ -26,15 +33,15 @@ export class ShiftService {
 			);
 	}
 
-	createMultipleShifts(startDate: string, endDate: string): Observable<Object> {
+	createMultipleShifts(startDate: string, endDate: string): Observable<any> {
 		return this.http.post(this.baseUrl + '/' + startDate + '/' + endDate, null)
 			.pipe(
 				catchError(this.handleError('createMultipleShifts', {}))
 			);
 	}
 
-	getAllShifts (): Observable<Shift[]> {
-		return this.http.get<Shift[]>(this.baseUrl + '/all')
+	getAllShifts (): Observable<any> {
+		return this.http.get<any>(this.baseUrl + '/all')
 		.pipe(
 			catchError(this.handleError('getAllShifts', []))
 		);

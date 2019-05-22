@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Orga } from 'src/models/orga';
 import {OrgaService} from './main-content/orgas/orga.service';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
 
 	baseUrl = 'http://localhost:8000';

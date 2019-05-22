@@ -22,9 +22,7 @@ export class CalendarComponent implements OnInit {
 	calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin, bootstrapPlugin, listPlugin];
 	calendarVisible = true;
 	calendarWeekends = true;
-  	calendarEvents: EventInput[] = [
-    	{ title: 'Event Now', start: new Date() }
-	];
+  	calendarEvents: EventInput[] = [];
 
 	handleDateClick(arg) {
 		if (confirm('Ajouter un évènement au ' + arg.dateStr + ' ?')) {
