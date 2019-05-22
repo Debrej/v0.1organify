@@ -9,13 +9,15 @@ import { TasksModule } from './tasks/tasks.module';
 import { OrgasModule } from './orgas/orgas.module';
 import { ShiftsModule } from './shifts/shifts.module';
 import { InfosComponent } from './infos/infos.component';
+import { AffectationComponent } from './affectation/affectation.component';
 
 @NgModule({
   declarations: [
 	MainContentComponent,
 	DashbordComponent,
 	CalendarComponent,
-	InfosComponent
+	InfosComponent,
+	AffectationComponent
 ],
   imports: [
 	CommonModule,
