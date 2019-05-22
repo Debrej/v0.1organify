@@ -16,31 +16,11 @@ import {PhotoLoginComponent} from "./photo-login/photo-login.component";
 
 const appRoutes: Routes = [
 	{ path: 'login',
-    component: LoginViewComponent,
-    children: [
-      {
-        path: '',
-        component: FormLoginComponent
-      },
-      {
-        path: '',
-        component: PhotoLoginComponent
-      }
-    ]
+    component: LoginViewComponent
   },
 	{
 	  path: '',
-    component: LoginViewComponent,
-    children: [
-      {
-        path: '',
-        component: FormLoginComponent
-      },
-      {
-        path: '',
-        component: PhotoLoginComponent
-      }
-    ]
+    component: LoginViewComponent
   },
 	{
 		path: 'dashboard',
