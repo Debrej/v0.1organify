@@ -10,10 +10,10 @@ import { AuthService } from '../../auth.service';
 })
 export class TaskService {
 	private handleError: HandleError;
-	baseUrl = 'http://localhost:8000/task/';
+	baseUrl = 'https://api.organify.debrej.fr/task/';
 	httpOptions = {
 		headers: new HttpHeaders({
-		  'Content-Type':  'application/json',
+		  'Content-Type':  'application/x-www-form-urlencoded',
 		  'Authorization': 'Bearer ' + this.authService.token
 		})
 	};

@@ -11,10 +11,10 @@ import { AuthService } from '../../auth.service';
 
 export class ShiftService {
 	private handleError: HandleError;
-	baseUrl = 'http://localhost:8000/shift';
+	baseUrl = 'https://api.organify.debrej.fr/shift';
 	httpOptions = {
 		headers: new HttpHeaders({
-		  'Content-Type':  'application/json',
+		  'Content-Type':  'application/x-www-form-urlencoded',
 		  'Authorization': 'Bearer ' + this.authService.token
 		})
 	};

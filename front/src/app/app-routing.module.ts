@@ -11,7 +11,6 @@ import { OrgaDetailComponent } from './main-content/orgas/orga-detail/orga-detai
 import { ShiftsComponent } from './main-content/shifts/shifts.component';
 import { ShiftDetailComponent } from './main-content/shifts/shift-detail/shift-detail.component';
 import { InfosComponent } from './main-content/infos/infos.component';
-import { AffectationComponent } from './main-content/affectation/affectation.component';
 
 const appRoutes: Routes = [
 	{ path: 'login', component: LoginViewComponent},
@@ -105,16 +104,6 @@ const appRoutes: Routes = [
 			{
 				path: 'create',
 				component: ShiftsComponent
-			}
-		]
-	},
-	{
-		path: 'affectation',
-		component: DefaultViewComponent,
-		children: [
-			{
-				path: '',
-				component: AffectationComponent
 			}
 		]
 	},

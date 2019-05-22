@@ -10,10 +10,10 @@ import { AuthService } from '../../auth.service';
 })
 export class SubshiftService {
 	private handleError: HandleError;
-	baseUrl = 'http://localhost:8000/subshift';
+	baseUrl = 'https://api.organify.debrej.fr/subshift';
 	httpOptions = {
 		headers: new HttpHeaders({
-		  'Content-Type':  'application/json',
+		  'Content-Type':  'application/x-www-form-urlencoded',
 		  'Authorization': 'Bearer ' + this.authService.token
 		})
 	};
