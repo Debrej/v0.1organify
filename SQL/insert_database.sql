@@ -1,12 +1,12 @@
 /*region ORGAS*/
 
-INSERT INTO ORGA (last_name, first_name) VALUES ('Bellanger','Thibaut');
+INSERT INTO ORGA (last_name, first_name, mail) VALUES ('Thia Song Fat','Gilles', 'gilles_thia@hotmail.fr');
 
 /*endregion*/
 
 /*region PWD*/
 
-INSERT INTO PWD (idOrga, pwd) VALUES (1, '$2a$10$yu40Y4WxBNNuGq2h2mCLYuq6CuZeSNtiIxJjxGcZnQWWXFCOo6psi');
+INSERT INTO PWD (idOrga, pwd) VALUES (1, '$2a$10$yu40Y4WxBNNuGq2h2mCLYuNNHt87LSAC..ZvGl5q7r6aLWVWX4FEu');
 
 /*endregion*/
 

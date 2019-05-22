@@ -1,0 +1,46 @@
+<div class="panel">
+		<div class="panel-heading">
+			<h4 *ngIf="!create; else elseTitleBlock">Détails créneau n°{{selectedId}}</h4>
+			<ng-template #elseTitleBlock><h4>Nouveau créneau</h4></ng-template>
+		</div>
+		<div class="panel-body">
+			<form (ngSubmit)="onSubmit()" #shiftForm="ngForm">
+				<div class="col-md-12">
+					<h4>Dates</h4>
+					<div class="col-md-6 form-group">
+						<label for="startday">Date de début</label>
+						<input type="date" id="startday" name="startday" [(ngModel)]="startdate" [disabled]="!update" required>
+					</div>
+					<div class="col-md-6 form-group">
+						<label for="starthour">Heure de début</label>
+						<input type="time" id="starthour" name="starthour" [(ngModel)]="starthour" [disabled]="!update" required>
+					</div>
+					<div class="col-md-6 form-group">
+						<label for="endday">Date de fin</label>
+						<input type="date" id="endday" name="endday" [(ngModel)]="enddate" [disabled]="!update" required>
+					</div>
+					<div class="col-md-6 form-group">
+						<label for="endhour">Heure de fin</label>
+						<input type="time" id="endhour" name="endhour" [(ngModel)]="endhour" [disabled]="!update" required>
+					</div>
+				</div>
+				<div class="col-md-12 form-group formButtons">
+					<button *ngIf="update" type="submit" class="btn btn-success">Submit</button>
+				</div>
+			</form>
+			<div class="col-md-12" *ngIf="!create">
+				<h4>Tâches</h4>
+				<div *ngIf="!tasks">Aucune</div>
+				<ul class="list-group" name="list-tasks">
+					<li *ngFor="let task of tasks" class="list-group-item"><a href="/tasks/{{task.idTask}}">{{task.name}}</a> <button class="delete" (click)="deleteTask(task.idTask)" [hidden]="!update">x</button></li>
+				</ul>
+			</div>
+			<div class="col-md-12" *ngIf="!create">
+				<h4>Orgas</h4>
+				<div *ngIf="!orgas">Aucun(e)</div>
+				<ul class="list-group" name="list-orgas">
+					<li *ngFor="let orga of orgas" class="list-group-item"><a href="/orgas/{{orga.idOrga}}">{{orga.last_name}} {{orga.first_name}}</a> <button class="delete" (click)="deleteOrga(orga.idOrga)" [hidden]="!update">x</button></li>
+				</ul>
+			</div>
+		</div>
+	</div>

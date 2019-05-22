@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bearerToken());
 app.use(helmet());
-//app.use(cors());
+app.use(cors());
 
 app.use(function(req, res, next){
     let log = "["+dateFormat(new Date(), "yyyy-mm-dd h:MM:ss")+"] : "+req.method+" "+host+req.originalUrl+" FROM "+req.ip+"\n";
@@ -41,9 +41,9 @@ app.use(function(req, res, next){
 
 //region LISTEN
 
-/*app.listen(80, function(){
-    console.log("client server listening on port 80");
-});*/
+app.listen(8000, function(){
+    console.log("client server listening on port 8000");
+});
 
 const key = fs.readFileSync('../ssl/organify.key');
 const cert = fs.readFileSync('../ssl/organify.crt');
@@ -54,9 +54,9 @@ const options = {
 
 const server = https.createServer(options, app);
 
-server.listen(1200, () => {
-    console.log("server starting on port : " + 1200);
-});
+/*server.listen(443, () => {
+    console.log("server starting on port : " + 443);
+});*/
 
 //endregion
 

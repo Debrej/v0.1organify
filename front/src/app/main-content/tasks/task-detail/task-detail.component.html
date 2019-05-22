@@ -1,0 +1,67 @@
+<div class="panel">
+	<div class="panel-heading">
+		<h4 *ngIf="!create; else elseTitleBlock">Détails de la tâche n°{{task.idTask}}</h4>
+		<ng-template #elseTitleBlock><h4>Nouvelle tâche</h4></ng-template>
+	</div>
+	<div class="panel-body">
+		<form (ngSubmit)="onSubmit()" #taskForm="ngForm">
+			<div class="col-md-6 form-group">
+				<label for="name">Titre de la tâche</label>
+				<input type="text" class="form-control" id="name" [(ngModel)]="task.name" name="name" [disabled]="!update" required>
+			</div>
+			<div class="col-md-6 form-group">
+				<label for="idOrga">Orga responsable</label>
+				<select class="form-control" id="idOrga" name="idOrga" [(ngModel)]="task.idOrga" [disabled]="!update" required>
+					<option *ngFor="let orga of orgas; let i = index" [value]="orga.idOrga">{{orga.first_name}} {{orga.last_name}}</option>
+				</select>
+			</div>
+			<div class="col-md-12 form-group">
+				<label for="description">Description</label>
+				<textarea class="form-control" id="description" name="description" [(ngModel)]="task.description" [disabled]="!update" required></textarea>
+			</div>
+			<div class="col-md-12">
+				<h4>Créneaux</h4>
+				<div class="col-md-6 form-group">
+					<label for="startday">Date de début</label>
+					<input type="date" id="startday" name="startday" [(ngModel)]="startdate" [disabled]="!update" required>
+				</div>
+				<div class="col-md-6 form-group">
+					<label for="starthour">Heure de début</label>
+					<input type="time" id="starthour" name="starthour" [(ngModel)]="starthour" [disabled]="!update" required>
+				</div>
+				<div class="col-md-6 form-group">
+						<label for="endday">Date de fin</label>
+						<input type="date" id="endday" name="endday" [(ngModel)]="enddate" [disabled]="!update" required>
+					</div>
+					<div class="col-md-6 form-group">
+						<label for="endhour">Heure de fin</label>
+						<input type="time" id="endhour" name="endhour" [(ngModel)]="endhour" [disabled]="!update" required>
+					</div>
+			</div>
+			<div class="col-md-12 form-group formButtons" *ngIf="update">
+				<button type="submit" [disabled]="!taskForm.form.valid" class="btn btn-success">Submit</button>
+			</div>
+		</form>
+		<div class="col-md-12" *ngIf="!create">
+			<h4>Orgas</h4>
+			<ul class="list-group" name="list-orgas">
+				<li *ngFor="let orga of orgas" class="list-group-item"><a href="/orgas/{{orga.idOrga}}">{{orga.last_name}} {{orga.first_name}}</a> <button class="delete" (click)="deleteOrga(orga.idOrga)" [hidden]="!update">x</button></li>
+			</ul>
+			<div class="col-md-6" id="moreOrga" *ngIf="update">
+				<div class="col-md-12">
+					<button class="btn btn-primary" id="addOrgaButton" (click)="optionHidden = !optionHidden">Ajouter un orga</button>
+				</div>
+				<form (ngSubmit)="addOrga()" #orgaForm="ngForm" [hidden]="optionHidden">
+					<div class="col-md-12 form-group">
+						<select class="form-control" id="idOrgaAdd" name="idOrgaAdd" [(ngModel)]="addedOrga">
+							<option *ngFor="let orga of allOrgas; let i = index" [value]="orga.idOrga">{{orga.first_name}} {{orga.last_name}}</option>
+						</select>
+					</div>
+					<div class="col-md-12 form-group">
+						<button class="btn btn-success" type="submit" [disabled]="!orgaForm.form.valid">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

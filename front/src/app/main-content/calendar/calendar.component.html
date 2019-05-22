@@ -1,0 +1,29 @@
+<div class="panel panel-default calendar">
+	<div class="panel-heading">
+	  <h3 class="panel-title">Calendrier</h3>
+	</div>
+	<div class="panel-body">
+		<full-calendar
+			#calendar
+			defaultView="dayGridMonth"
+			[header]="{
+			  left: 'prev,next today',
+			  center: 'title',
+			  right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+			}"
+			[plugins]="calendarPlugins"
+			[weekends]="calendarWeekends"
+			[events]="calendarEvents"
+			(dateClick)="handleDateClick($event)"
+			(eventClick)="handleEventClick($event)"
+			slotDuration="00:15:00"
+			locale='fr'
+			nowIndicator=true
+			eventOrder='start'
+		></full-calendar>
+	</div>
+	<div class="panel-footer">
+		<button class="btn btn-primary btnBottom" onclick="document.location.href='/shifts/create'">Ajouter un créneau</button>
+		<button class="btn btn-primary btnBottom" onclick="document.location.href='/tasks/create'">Ajouter une tâche</button>
+	</div>
+</div>

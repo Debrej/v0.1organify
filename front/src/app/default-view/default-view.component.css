@@ -1,0 +1,22 @@
+.sidebar {
+	margin-left: 0%;
+	height: 100%;
+	border: solid;
+	border-color: #d1d1e0;
+	border-width: 2px;
+	border-radius: 6px;
+	background-color: #2C363F;
+}
+
+.header {
+	display: inline-block;
+	height: 10%;
+}
+.container {
+	width: 100%;
+	min-height: 80%;
+}
+
+.footer {
+	margin-top: 1%;
+}

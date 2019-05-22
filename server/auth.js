@@ -80,7 +80,7 @@
                                            let request = sprintf(auth_requests.update_token, token, idOrga);
                                            connection.query(request, function(err, rows, field){
                                                if(err) res.send({'status': 1, 'error': errors.error_1});
-                                               res.send({"status": 0, "response": ans_status, "token": token});
+                                               res.send({"status": 0, "response": ans_status, "token": token, "idOrga": idOrga});
                                            });
                                        }
                                        else{

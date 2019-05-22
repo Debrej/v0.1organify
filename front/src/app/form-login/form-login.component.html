@@ -11,8 +11,8 @@
     <input type="checkbox"><span class="rememberMe">Remember me</span>
     <span class="forgetPassword">Forgot password</span>
   </div>
-  <div>
-    <button class="loginButton" (click)="login(mail.value, pwd.value)">Login</button>
-    <button class="signInButton">Sign in</button>
+  <div class="buttons">
+	<input type="button" class="loginButton" value="Login" (click)="login(mail.value, pwd.value)">
+	<input type="button" class="signInButton" value="Sign in">
   </div>
 </div>
