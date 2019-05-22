@@ -62,6 +62,7 @@
            if (err) res.send({'status': 1, 'error': errors.error_1});
            else if (rows[0] !== undefined){
                let idOrga = rows[0].idOrga;
+               let username = rows[0].first_name + " " + rows[0].last_name.toUpperCase();
                let request = sprintf(auth_requests.get_pwd_idorga, idOrga);
                connection.query(request, function(err, rows, field){
                    if (err) res.send({'status': 1, 'error': errors.error_1});
@@ -80,14 +81,14 @@
                                            let request = sprintf(auth_requests.update_token, token, idOrga);
                                            connection.query(request, function(err, rows, field){
                                                if(err) res.send({'status': 1, 'error': errors.error_1});
-                                               res.send({"status": 0, "response": ans_status, "token": token, "idOrga": idOrga});
+                                               res.send({"status": 0, "response": ans_status, "token": token, "username": username, "idOrga": idOrga});
                                            });
                                        }
                                        else{
                                            let request = sprintf(auth_requests.insert_token, idOrga, token);
                                            connection.query(request, function(err, rows, field){
                                                if(err) res.send({'status': 1, 'error': errors.error_1});
-                                               res.send({"status": 0, "response": ans_status, "token": token});
+                                               res.send({"status": 0, "response": ans_status, "token": token, "username": username, "idOrga": idOrga});
                                            });
                                        }
                                    }
@@ -146,11 +147,11 @@
 
     app.post("/logout", function(req, res){
         console.log(host+req.originalUrl);
-        let idOrga = req.body.idOrga;
-        let request = sprintf(auth_requests.delete_token, idOrga);
+        let token = req.body.token;
+        let request = sprintf(auth_requests.delete_token, token);
         connection.query(request, function (err, rows, fields) {
             if (err) {
-                res.send({'status': 1, 'error': errors.error_1});
+                res.send({'status': 1, 'error': errors.error_1, 'error_msg': err});
             }
             else{
                 res.send({'status': 0});

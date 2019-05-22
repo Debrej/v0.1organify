@@ -24,7 +24,7 @@
   "get_orga_assigned_by_task": "SELECT * FROM ORGA WHERE idOrga IN (SELECT idOrga FROM TASK_ORGA WHERE idTask = %s);",
   "get_subshift_between_dates": "select idSubShift, DATE_FORMAT(start_date, %s) AS start_date, DATE_FORMAT(end_date, %s) AS end_date from SUBSHIFT where start_date >= (select start_date from SUBSHIFT where idSubShift = %s) AND end_date <= (select end_date from SUBSHIFT where idSubShift = %s) ORDER BY start_date;",
 
-  "create_orga": "INSERT INTO ORGA (first_name, last_name, mail) VALUES ('%s', '%s', '%s');",
+  "create_orga": "INSERT INTO ORGA (first_name, last_name, mail, profile_pic_url) VALUES ('%s', '%s', '%s', '%s');",
   "create_task": "INSERT INTO TASK (name, description, idOrga) VALUES ('%s', '%s', %d);",
   "create_shift": "INSERT INTO SHIFT (start_date, end_date) VALUES ('%s', '%s');",
   "create_subshift": "INSERT INTO SUBSHIFT (start_date, end_date, idShift) VALUES %s;",

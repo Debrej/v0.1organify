@@ -8,6 +8,7 @@ GRANT ALL PRIVILEGES ON `organify`.`SHIFT_TASK` TO 'organify'@'localhost';
 GRANT ALL PRIVILEGES ON `organify`.`SUBSHIFT` TO 'organify'@'localhost';
 GRANT ALL PRIVILEGES ON `organify`.`TASK_ORGA` TO 'organify'@'localhost';
 GRANT SELECT ON `organify`.`TOKEN` TO 'organify'@'localhost';
+GRANT ALL PRIVILEGES ON `organify`.`TASK` TO 'organify'@'localhost';
 
 GRANT ALL PRIVILEGES ON `organify`.`ORGA` TO 'auth_organify'@'localhost';
 GRANT ALL PRIVILEGES ON `organify`.`PWD` TO 'auth_organify'@'localhost';

@@ -14,6 +14,10 @@
     const bearerToken = require('express-bearer-token');
     const pwd = require('./assets/json/pwd.json').pwd_organify;
     const host = "organify.debrej.fr";
+    const bcrypt = require("bcrypt-nodejs");
+    const salt = require("./assets/json/salt.json").salt;
+
+    const default_profile_pic_url = 'assets/img/user.svg';
 
     app.use('/assets', express.static('assets'));
     app.use(express.json());
@@ -237,7 +241,17 @@
         });
     }
 
-    app.use(auth);
+    function maybe(fn) {
+        return function(req, res, next) {
+            if (req.path === '/orga' && req.method === 'POST') {
+                next();
+            } else {
+                fn(req, res, next);
+            }
+        }
+    }
+
+    app.use(maybe(auth));
 
 //endregion
 
@@ -671,7 +685,7 @@
                             res.send({'status': 3, 'error': errors.error_3})
                         }
                         else{
-                            let request = sprintf(sql_requests.create_orga, params["first_name"], params["last_name"], params["mail"]);
+                            let request = sprintf(sql_requests.create_orga, params["first_name"], params["last_name"], params["mail"], default_profile_pic_url);
                             connection.query(request, function(err, rows, fields){
                                 if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
                                 else{
@@ -680,8 +694,10 @@
                                     connection.query(request, function(err, rows, fields){
                                         if (err) {res.send({'status': 1, 'error': errors.error_1, 'SQL_message': err});}
                                         else{
-                                            registerUser(params["mail"], params["pwd"]);
-                                            res.send({'orga': rows[0], 'status': 0});
+                                            bcrypt.hash(req.body.pwd, salt, null, function(err,pwd) {
+                                                registerUser(params["mail"], pwd);
+                                                res.send({'orga': rows[0], 'status': 0});
+                                            });
                                         }
                                     });
                                 }
@@ -690,6 +706,7 @@
                     }
                 });
             }
+            //endregion
     });
 
     app.post("/assign_shift_orga", function(req, res){
