@@ -10,10 +10,10 @@ import { AuthService } from '../../auth.service';
 })
 export class TaskService {
 	private handleError: HandleError;
-	baseUrl = 'http://localhost:8000/task/';
+	baseUrl = 'https://api.organify.debrej.fr/task/';
 	httpOptions = {
 		headers: new HttpHeaders({
-		  'Content-Type':  'application/json',
+		  'Content-Type':  'application/x-www-form-urlencoded',
 		  'Authorization': 'Bearer ' + this.authService.token
 		})
 	};
@@ -67,6 +67,13 @@ export class TaskService {
 
 	deleteTaskSubshift(idTask: number, idSubShift: number): Observable<any> {
 		return this.http.delete(this.baseUrl + idTask + '/' + idSubShift, this.httpOptions)
+			.pipe(
+				catchError(this.handleError('deleteTaskSubshift', {}))
+			);
+	}
+
+	deleteTaskOrga(idTask: number, idOrga: number): Observable<any> {
+		return this.http.delete(this.baseUrl + 'orga/' + idTask + '/' + idOrga, this.httpOptions)
 			.pipe(
 				catchError(this.handleError('deleteTaskSubshift', {}))
 			);

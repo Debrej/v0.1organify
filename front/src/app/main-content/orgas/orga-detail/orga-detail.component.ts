@@ -68,6 +68,19 @@ export class OrgaDetailComponent implements OnInit {
 	});
   }
 
+  deleteOrga() {
+	  let taskSupp = 0;
+	  if(confirm('Supprimer ses tâches au passage ?')) {
+		taskSupp = 1;
+	  }
+	  this.orgaService.deleteOrga(this.orga.idOrga, false)
+	  .subscribe(res => {
+		if (res.status == 0) {
+			this.router.navigateByUrl('/orgas');
+		}
+	  });
+  }
+
   addShift() {
 	  let body = {shifts: this.addedShift};
 	  this.orgaService.postShifts(this.orga.idOrga, body)
