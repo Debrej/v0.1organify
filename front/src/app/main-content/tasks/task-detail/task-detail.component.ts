@@ -111,8 +111,30 @@ export class TaskDetailComponent implements OnInit {
   }
 
   deleteOrga(id: number) {
-	//TODO
-	//this.orgaService
+	this.taskService.deleteTaskOrga(this.task.idTask, id)
+	.subscribe(res => {
+		if (res.status == 0) {
+			this.router.navigateByUrl('/tasks/' + this.task.idTask);
+		}
+	});
+  }
+
+  deleteSubshift(id: number) {
+	  this.taskService.deleteTaskSubshift(this.task.idTask, id)
+	  .subscribe(res => {
+		if (res.status == 0) {
+			this.router.navigateByUrl('/tasks/' + this.task.idTask);
+		}
+	  });
+  }
+
+  deleteTask() {
+	  this.taskService.deleteTask(this.task.idTask)
+	  .subscribe(res => {
+		if (res.status == 0) {
+			this.router.navigateByUrl('/tasks');
+		}
+	  });
   }
 
   addOrga() {

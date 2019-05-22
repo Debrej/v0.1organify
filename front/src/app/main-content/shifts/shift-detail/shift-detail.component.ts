@@ -89,6 +89,19 @@ export class ShiftDetailComponent implements OnInit {
 	  });
   }
 
+  deleteShift() {
+	let taskSupp = 0;
+	if(confirm('Supprimer les tâches du créneau au passage ?')) {
+	  taskSupp = 1;
+	}
+	this.shiftService.deleteShift(this.shift.idShift, false)
+	.subscribe(res => {
+	  if (res.status == 0) {
+		  this.router.navigateByUrl('/shifts');
+	  }
+	});
+  }
+
   onSubmit() {
 	const start = this.startdate + ' ' + this.starthour;
 	const end = this.enddate + ' ' + this. endhour;

@@ -10,10 +10,10 @@ import { AuthService } from '../../auth.service';
 })
 export class OrgaService {
 	private handleError: HandleError;
-	baseUrl = 'http://localhost:8000/orga';
+	baseUrl = 'https://api.organify.debrej.fr/orga';
 	httpOptions = {
 		headers: new HttpHeaders({
-		  'Content-Type':  'application/json',
+		  'Content-Type':  'application/x-www-form-urlencoded',
 		  'Authorization': 'Bearer ' + this.authService.token
 		})
 	};

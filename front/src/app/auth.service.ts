@@ -8,9 +8,9 @@ import { Orga } from 'src/models/orga';
 
 export class AuthService {
 
-	baseUrl = 'http://localhost:8000';
+	baseUrl = 'https://api.organify.debrej.fr';
 	connectedUser: Orga;
-	token: String = '929dd47dea2b93d56c2c6a16eac072317b216dfbd743d61da6e447609b171b30284c1107b477f5dbe69f3743a0f9e2bf';
+	token: string = 'eaebf277e0037bc319193fe4887bc5ba6b6fabeec06e6356a93744c1e2ad0b24826c20f16983327c2c253a44f4cf8dcf';
 
   getToken(mail, pwd){
     return this.http.post( this.baseUrl + '/login', {"mail": mail, "pwd": pwd});

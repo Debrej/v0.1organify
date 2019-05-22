@@ -42,5 +42,8 @@
 					<li *ngFor="let orga of orgas" class="list-group-item"><a href="/orgas/{{orga.idOrga}}">{{orga.last_name}} {{orga.first_name}}</a> <button class="delete" (click)="deleteOrga(orga.idOrga)" [hidden]="!update">x</button></li>
 				</ul>
 			</div>
+			<div class="col-md-12 fromButtons">
+				<button class="btn btn-danger btn-lg" (click)="deleteShift()">Supprimer</button>
+			</div>
 		</div>
 	</div>
