@@ -1,0 +1,51 @@
+{
+  "listeCompetences": ["competence1","competence2"],
+  "listeEmployes": [
+    {
+      "ID": "1",
+      "competences": ["competence1"],
+      "creneaux": [
+        "2"
+      ]
+    },
+    {
+      "ID": "2",
+      "competences": ["competence1"],
+      "creneaux": [
+        "0"
+      ]
+    }
+  ],
+  "listeDeTaches": [
+    {
+      "ID": "1",
+      "duree": "120",
+      "competencesRequises": ["competence1"],
+      "priority": "MINOR"
+    },
+    {
+      "ID": "2",
+      "duree": "400",
+      "competencesRequises": ["competence1"],
+      "priority": "MINOR"
+    },
+    {
+      "ID": "3",
+      "duree": "500",
+      "competencesRequises": ["competence2"],
+      "priority": "MINOR"
+    },
+    {
+      "ID": "4",
+      "duree": "60",
+      "competencesRequises": ["competence1"],
+      "priority": "MINOR"
+    },
+    {
+      "ID": "5",
+      "duree": "60",
+      "competencesRequises": ["competence2"],
+      "priority": "MINOR"
+    }
+  ]
+}
