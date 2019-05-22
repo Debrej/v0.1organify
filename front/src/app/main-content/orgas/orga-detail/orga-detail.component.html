@@ -19,7 +19,7 @@
 			</div>
 			<div class="col-md-6 form-group" *ngIf="create">
 				<label for="password">Password</label>
-				<input type="text" class="form-control" id="password" name="password" [(ngModel)]="password" required>
+				<input type="password" class="form-control" id="password" name="password" [(ngModel)]="password" required>
 			</div>
 			<div class="col-md-12 form-group formButtons">
 				<button *ngIf="update" type="submit" class="btn btn-success" [disabled]="!orgaForm.form.valid">Submit</button>
@@ -27,8 +27,9 @@
 		</form>
 		<div class="col-md-12" *ngIf="!create">
 			<h4>Disponibilités</h4>
+			<div *ngIf="!shifts">Aucune disponibilité précisée</div>
 			<ul class="list-group" name="list-shifts">
-				<li *ngFor="let shift of shifts" class="list-group-item"><a href="/shifts/{{shift.idShift}}">{{shift.start_date}} {{shift.end_date}}</a> <button class="delete" (click)="deleteShift(shift.idShift)" [hidden]="!update">x</button></li>
+				<li *ngFor="let shift of shifts" class="list-group-item"><a href="/shifts/{{shift.idShift}}">{{shift.start_date}} 	- 	{{shift.end_date}}</a> <button class="delete" (click)="deleteShift(shift.idShift)" [hidden]="!update">x</button></li>
 			</ul>
 			<div class="col-md-6" id="moreShift" *ngIf="update">
 				<div class="col-md-12">
@@ -36,7 +37,7 @@
 				</div>
 				<form (ngSubmit)="addShift()" #shiftForm="ngForm" [hidden]="optionHidden">
 					<div class="col-md-12 form-group">
-						<select class="form-control" id="idShiftAdd" name="idShiftAdd" [(ngModel)]="addedShift">
+						<select class="form-control shiftSelection" id="idShiftAdd" name="idShiftAdd" [(ngModel)]="addedShift" multiple>
 							<option *ngFor="let shift of allShifts; let i = index" [value]="shift.idShift">{{shift.strat_date}} {{shift.end_date}}</option>
 						</select>
 					</div>
@@ -44,6 +45,14 @@
 						<button class="btn btn-success" type="submit" [disabled]="!shiftForm.form.valid">Submit</button>
 					</div>
 				</form>
+				<script>
+					$(document).ready(function() {
+						$(".shiftSelection").select2({
+							minimumSelectionLength: 1,
+							placeholder: "Sélectionner un ou plusieurs"
+						});
+					});
+				</script>
 			</div>
 		</div>
 	</div>

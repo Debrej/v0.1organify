@@ -3,10 +3,7 @@ import { HandleError, HttpErrorHandlerService } from '../../http-error-handler.s
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Shift } from 'src/models/shift';
-import { Orga } from 'src/models/orga';
-import { Subshift } from 'src/models/subshift';
-import { Task } from 'src/models/task';
+import { AuthService } from '../../auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,59 +15,59 @@ export class ShiftService {
 	httpOptions = {
 		headers: new HttpHeaders({
 		  'Content-Type':  'application/json',
-		  'token': '70b86b6d666f4a4e8938e308529465e7774fd0877dd8540edc5584448f745ffc6115e553211166a9698f947e81b4d0a5'
+		  'Authorization': 'Bearer ' + this.authService.token
 		})
 	};
 	
-  	constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandlerService) {
+  	constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandlerService, private authService: AuthService) {
 		this.handleError = httpErrorHandler.createHandleError('TaskService');
 	}
 
 	createShift(startDate: string): Observable<Object> {
-		return this.http.post(this.baseUrl + '/' + startDate, null)
+		return this.http.post(this.baseUrl + '/' + startDate, null, this.httpOptions)
 			.pipe(
 				catchError(this.handleError('createShift', {}))
 			);
 	}
 
 	createMultipleShifts(startDate: string, endDate: string): Observable<any> {
-		return this.http.post(this.baseUrl + '/' + startDate + '/' + endDate, null)
+		return this.http.post(this.baseUrl + '/' + startDate + '/' + endDate, null, this.httpOptions)
 			.pipe(
 				catchError(this.handleError('createMultipleShifts', {}))
 			);
 	}
 
 	getAllShifts (): Observable<any> {
-		return this.http.get<any>(this.baseUrl + '/all')
+		return this.http.get<any>(this.baseUrl + '/all', this.httpOptions)
 		.pipe(
 			catchError(this.handleError('getAllShifts', []))
 		);
 	}
 
-	getAllShiftOrgas (id: number): Observable<Orga[]> {
-		return this.http.get<Orga[]>(this.baseUrl + '/orga/' + id)
+	getAllShiftOrgas (id: number): Observable<any> {
+		return this.http.get<any>(this.baseUrl + '/orga/' + id, this.httpOptions)
 			.pipe(
-				catchError(this.handleError('getAllShiftOrgas', []))
+				catchError(this.handleError('getAllShiftOrgas', {}))
 			)
 	}
 
-	getShiftSubshifts (id: number): Observable<Subshift[]> {
-		return this.http.get<Subshift[]>(this.baseUrl + '/subshift/' + id)
+	getShiftSubshifts (id: number): Observable<any> {
+		return this.http.get<any>(this.baseUrl + '/subshift/' + id, this.httpOptions)
 			.pipe(
-				catchError(this.handleError('getshiftSubshifts', []))
+				catchError(this.handleError('getshiftSubshifts', {}))
 			);
 	}
 
-	getAllShiftTasks (id: number): Observable<Task[]> {
-		return this.http.get<Task[]>(this.baseUrl + '/task/' + id)
+	getAllShiftTasks (id: number): Observable<any> {
+		return this.http.get<any>(this.baseUrl + '/task/' + id, this.httpOptions)
 		.pipe(
-			catchError(this.handleError('getAllShiftTasks', []))
+			catchError(this.handleError('getAllShiftTasks', {}))
 		);
 	}
 
-	deleteShift(idShift: number, deleteTasks: boolean): Observable<Object> {
+	deleteShift(idShift: number, deleteTasks: boolean): Observable<any> {
 		let tasksDelete = deleteTasks ? 1 : 0;
-		return this.http.delete(this.baseUrl + '/' + idShift + '/' + tasksDelete)
+		return this.http.delete(this.baseUrl + '/' + idShift + '/' + tasksDelete, this.httpOptions)
 			.pipe(
 				catchError(this.handleError('deleteShift', {}))
 			);

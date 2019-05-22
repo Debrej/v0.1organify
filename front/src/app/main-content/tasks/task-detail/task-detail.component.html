@@ -22,26 +22,29 @@
 			<div class="col-md-12">
 				<h4>Créneaux</h4>
 				<div class="col-md-6 form-group">
-					<label for="startday">Date de début</label>
-					<input type="date" id="startday" name="startday" [(ngModel)]="startdate" [disabled]="!update" required>
+					<label for="start">Début</label>
+					<select class="form-control" id="start" name="start" [(ngModel)]="subshifts[0].idSubshift" [disabled]="!update" required>
+						<option *ngFor="let shift of allSubshifts;" [value]="shift.idSubshift">{{shift.start_date}}</option>
+					</select>
 				</div>
 				<div class="col-md-6 form-group">
-					<label for="starthour">Heure de début</label>
-					<input type="time" id="starthour" name="starthour" [(ngModel)]="starthour" [disabled]="!update" required>
+					<label for="end">Fin</label>
+					<select class="form-control" id="end" name="end" [(ngModel)]="subshifts[subshifts.length - 1].idSubshift" [disabled]="!update" required>
+						<option *ngFor="let shift of allSubshifts;" [value]="shift.idSubshift">{{shift.end_date}}</option>
+					</select>
 				</div>
-				<div class="col-md-6 form-group">
-						<label for="endday">Date de fin</label>
-						<input type="date" id="endday" name="endday" [(ngModel)]="enddate" [disabled]="!update" required>
-					</div>
-					<div class="col-md-6 form-group">
-						<label for="endhour">Heure de fin</label>
-						<input type="time" id="endhour" name="endhour" [(ngModel)]="endhour" [disabled]="!update" required>
-					</div>
 			</div>
 			<div class="col-md-12 form-group formButtons" *ngIf="update">
 				<button type="submit" [disabled]="!taskForm.form.valid" class="btn btn-success">Submit</button>
 			</div>
 		</form>
+		<div class="col-md-12" *ngIf="!create">
+				<h5>Total</h5>
+				<div *ngIf="!subshifts">Aucun créneau</div>
+				<ul class="list-group" name="list-shifts">
+					<li *ngFor="let shift of subshifts" class="list-group-item">{{shift.start_date}} 	- 	{{shift.end_date}} <button class="delete" (click)="deleteSubshift(shift.idSubshift)" [hidden]="!update">x</button></li>
+				</ul>
+			</div>
 		<div class="col-md-12" *ngIf="!create">
 			<h4>Orgas</h4>
 			<ul class="list-group" name="list-orgas">

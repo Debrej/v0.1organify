@@ -30,24 +30,27 @@ export class TasksListComponent implements OnInit {
 		}
 	);
 
-	  //this.getTasks();
-	  this.tasks = [
-		  {idTask: 1, name: "Test", description: "TEst ibeifbzrng", idOrga: 2},
-		  {idTask: 2, name: "Test2", description: "TEst2 ibeifbzrng", idOrga: 3}
-	  ]
-	  //this.getOrgas();
-	  this.orgas = [new Orga(2, 'Michel', 'Blanc', 'faisonscommeca@gmail.com'), new Orga(3, 'Patrice', 'Duchemein', 'vivelesaucisson@gmail.com')]
+	  this.getTasks();
   }
 
   getTasks(): void {
     this.taskService.getAllTasks()
-      .subscribe(tasks => this.tasks = tasks);
+      .subscribe(res => {
+		  if(res.status == 0) {
+			this.tasks = res.task;
+			this.getOrgas();
+		  }
+		});
   }
 
   getOrgas(): void {
 	  for (let i=0; i < this.tasks.length; i++) {
 		  this.orgaService.getOrga(this.tasks[i].idOrga)
-		  .subscribe(orga => this.orgas[i]);
+		  .subscribe(res => {
+			  if (res.status == 0) {
+				  this.orgas[i] = res.orga;
+			  }
+			});
 	  }
   }
 

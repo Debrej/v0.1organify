@@ -16,12 +16,15 @@ export class OrgasListComponent implements OnInit {
 
   ngOnInit() {
 		this.getOrgas();
-		this.orgas = [new Orga(1, "Jean", "Papon", "iubiubn@ijzbefiun.com"), new Orga(2, "Pierre", "Ducul", "wallah@jtbz.com")];
   }
 
   getOrgas(): void {
 	  this.orgaService.getAllOrgas()
-	  	.subscribe(orgas => this.orgas = orgas);
+	  	.subscribe(res =>  {
+			if(res.status == 0) {
+				this.orgas = res.orga;
+			}
+		});
   }
 
 }
