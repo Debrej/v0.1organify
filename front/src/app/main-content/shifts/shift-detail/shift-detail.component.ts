@@ -45,23 +45,14 @@ export class ShiftDetailComponent implements OnInit {
 				} else {
 					this.update = true;
 				}
-				//this.getSubshifts(this.selectedId);
-				//this.getOrgas(this.selectedId);
-				//this.getTasks(this.selectedId);
+				this.getSubshifts(this.selectedId);
+				this.getOrgas(this.selectedId);
+				this.getTasks(this.selectedId);
 			}
 		}
 	);
 	if(!this.create) {
-		this.subshifts = [new Subshift(2, "2019-04-24 13:00", "2019-04-24 13:15"), new Subshift(3, "2019-04-24 13:15", "2019-04-24 13:30")];
-		this.startdate = this.subshifts[0].start_date.split(' ')[0];
-		this.starthour = this.subshifts[0].start_date.split(' ')[1];
-		this.enddate = this.subshifts[this.subshifts.length-1].end_date.split(' ')[0];
-		this.endhour = this.subshifts[this.subshifts.length-1].end_date.split(' ')[1];
-		this.orgas = [new Orga(1, "Jean", "Papon", "iubiubn@ijzbefiun.com"), new Orga(2, "Pierre", "Ducul", "wallah@jtbz.com")];
-		this.tasks = [
-			{idTask: 1, name: "Test", description: "TEst ibeifbzrng", idOrga: 2},
-			{idTask: 2, name: "Test2", description: "TEst2 ibeifbzrng", idOrga: 3}
-		]
+		
 	} else {
 
 	}
@@ -70,21 +61,31 @@ export class ShiftDetailComponent implements OnInit {
   getSubshifts(id: number) {
 	this.shiftService.getShiftSubshifts(id)
 	.subscribe(res => {
-		this.subshifts = res;
+		if (res.status == 0) {
+			this.subshifts = res.subshift;
+			this.startdate = this.subshifts[0].start_date.split(' ')[0];
+			this.starthour = this.subshifts[0].start_date.split(' ')[1];
+			this.enddate = this.subshifts[this.subshifts.length - 1].end_date.split(' ')[0];
+			this.endhour = this.subshifts[this.subshifts.length - 1].end_date.split(' ')[1];
+		}
 	});
   }
 
   getOrgas(id: number) {
 	  this.shiftService.getAllShiftOrgas(id)
 	  .subscribe(res => {
-		this.orgas = res;
+		  if (res.status == 0) {
+			this.orgas = res.orga;
+		  }
 	  });
   }
 
   getTasks(id: number) {
 	  this.shiftService.getAllShiftTasks(id)
 	  .subscribe(res => {
-		this.tasks = res;
+		  if (res.status == 0) {
+			this.tasks = res.task;
+		  }
 	  });
   }
 
@@ -93,10 +94,9 @@ export class ShiftDetailComponent implements OnInit {
 	const end = this.enddate + ' ' + this. endhour;
 	this.shiftService.createMultipleShifts(start, end)
 	  .subscribe(res => {
+		  if (res.status == 0) {
 			this.router.navigateByUrl('/shifts/' + res.shift.idShift);
+		  }
 		});
-	
-	this.router.navigateByUrl('/shifts');
-
   }
 }

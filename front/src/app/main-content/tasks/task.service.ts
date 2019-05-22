@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Task } from '../../../models/task';
 import { HttpErrorHandlerService, HandleError } from '../../http-error-handler.service';
-import { Subshift } from 'src/models/subshift';
-import { Orga } from 'src/models/orga';
+import { AuthService } from '../../auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,56 +11,62 @@ import { Orga } from 'src/models/orga';
 export class TaskService {
 	private handleError: HandleError;
 	baseUrl = 'http://localhost:8000/task/';
+	httpOptions = {
+		headers: new HttpHeaders({
+		  'Content-Type':  'application/json',
+		  'Authorization': 'Bearer ' + this.authService.token
+		})
+	};
 
 	constructor(private http: HttpClient,
-		httpErrorHandler: HttpErrorHandlerService) {
+		httpErrorHandler: HttpErrorHandlerService, private authService: AuthService) {
 		this.handleError = httpErrorHandler.createHandleError('TaskService');
 	}
 
-	createTask (idStart: number, idEnd: number, idOrga: number, body: any): Observable<Object> {
-		return this.http.post(this.baseUrl + idStart + '/' + idEnd + '/' + idOrga, body)
+	createTask (idStart: number, idEnd: number, idOrga: number, body: any): Observable<any> {
+		return this.http.post(this.baseUrl + idStart + '/' + idEnd + '/' + idOrga, body, this.httpOptions)
 			.pipe(
 				catchError(this.handleError('createTask', {}))
 			);
 	}
 
-	getAllTasks (): Observable<Task[]> {
-		return this.http.get<Task[]>(this.baseUrl + 'all')
+	getAllTasks (): Observable<any> {
+		return this.http.get<any>(this.baseUrl + 'all', this.httpOptions)
 			.pipe(
-				catchError(this.handleError('getAllTasks', []))
+				catchError(this.handleError('getAllTasks', {}))
 			);
 	}
 
-	getTask (id: number): Observable<Task> {
-		return this.http.get<Task>(this.baseUrl + id)
+	getTask (id: number): Observable<any> {
+		return this.http.get<any>(this.baseUrl + id, this.httpOptions)
 			.pipe(
-				catchError(this.handleError('getTaskById', null))
+				catchError(this.handleError('getTaskById', {}))
 			);
 	}
 
-	getTaskShift (id: number): Observable<Subshift[]> {
-		return this.http.get<Subshift[]>(this.baseUrl + 'shift/' + id)
+	getTaskShift (id: number): Observable<any> {
+		return this.http.get<any>(this.baseUrl + 'shift/' + id, this.httpOptions)
 			.pipe(
-				catchError(this.handleError('getTaskShift', []))
+				catchError(this.handleError('getTaskShift', {}))
 			);
 	}
 
-	getAllTaskOrgas (id: number): Observable<Orga[]> {
-		return this.http.get<Orga[]>(this.baseUrl + 'orga/assigned/' + id)
+	getAllTaskOrgas (id: number): Observable<any> {
+		return this.http.get<any>(this.baseUrl + 'orga/assigned/' + id, this.httpOptions)
 			.pipe(
-				catchError(this.handleError('getAllTaskOrgas', []))
+				catchError(this.handleError('getAllTaskOrgas', {}))
 			)
 	}
 
-	deleteTask(id: number): Observable<Object> {
-		return this.http.delete(this.baseUrl + id)
+	deleteTask(id: number): Observable<any> {
+		return this.http.delete(this.baseUrl + id, this.httpOptions)
 			.pipe(
 				catchError(this.handleError('deleteTask', {}))
 			);
 	}
 
-	deleteTaskSubshift(idTask: number, idSubShift: number): Observable<Object> {
-		return this.http.delete(this.baseUrl + idTask + '/' + idSubShift)
+	deleteTaskSubshift(idTask: number, idSubShift: number): Observable<any> {
+		return this.http.delete(this.baseUrl + idTask + '/' + idSubShift, this.httpOptions)
 			.pipe(
 				catchError(this.handleError('deleteTaskSubshift', {}))
 			);

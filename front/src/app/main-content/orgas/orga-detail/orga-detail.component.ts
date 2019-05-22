@@ -16,8 +16,9 @@ export class OrgaDetailComponent implements OnInit {
 	password: string;
 	update: boolean;
 	create: boolean;
+	shifts: Shift[];
+	addedShift: Shift[];
 	allShifts: Shift[];
-	addedShift: Shift;
 	optionHidden: boolean = true;
 
   constructor(private orgaService: OrgaService, private route: ActivatedRoute, private router: Router) { }
@@ -38,13 +39,12 @@ export class OrgaDetailComponent implements OnInit {
 				} else {
 					this.update = true;
 				}
-				//this.getOrgaById(selectedId);
-				//this.getShifts(selectedId);
+				this.getOrgaById(selectedId);
+				this.getShifts(selectedId);
 			}
 		}
 	);
 	if(!this.create) {
-		this.orga = new Orga(1, "Jean", "Papon", "iubiubn@ijzbefiun.com"); 
 	} else {
 		this.orga = new Orga(undefined, undefined, undefined, undefined);
 	}
@@ -52,16 +52,30 @@ export class OrgaDetailComponent implements OnInit {
 
   getOrgaById(id: number) {
 	this.orgaService.getOrga(id)
-	.subscribe(orga => this.orga = orga);
+	.subscribe(res => {
+		if (res.status == 0) {
+			this.orga = res.orga;
+		}
+	});
   }
 
   getShifts(id: number) {
 	this.orgaService.getOrgaShift(id)
 	.subscribe(res => {
 		if (res.status == 0) {
-			this.allShifts = res.shift;
+			this.shifts = res.shift;
 		}
 	});
+  }
+
+  addShift() {
+	  let body = {shifts: this.addedShift};
+	  this.orgaService.postShifts(this.orga.idOrga, body)
+	  .subscribe(res => {
+		  if(res.status == 0) {
+			this.router.navigateByUrl('/orgas/' + res.idOrga);
+		  }
+	  })
   }
 
   onSubmit() {
@@ -72,9 +86,10 @@ export class OrgaDetailComponent implements OnInit {
 		  pwd: this.password
 	  };
 	  this.orgaService.createOrga(body)
-	  .subscribe(orga => {
-			this.orga = <Orga>orga;
-			this.router.navigateByUrl('/orgas/' + this.orga.idOrga);
+	  .subscribe(res => {
+		  if(res.status == 0) {
+			this.router.navigateByUrl('/orgas/' + res.orga.idOrga);
+		  }
 	  });
   }
 

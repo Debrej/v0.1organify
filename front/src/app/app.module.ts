@@ -16,8 +16,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MainContentModule } from './main-content/main-content.module';
-import { CookieModule } from 'ngx-cookie';
-import { CookieOptions } from 'angular2-cookie';
+
 
 
 @NgModule({
@@ -45,11 +44,7 @@ import { CookieOptions } from 'angular2-cookie';
     CookieService
   ],
   bootstrap: [
-    AppComponent,
-    FormLoginComponent,
-    PhotoLoginComponent,
-    LoginViewComponent,
-	TestViewComponent,
+    AppComponent
   ]
 })
 export class AppModule { }

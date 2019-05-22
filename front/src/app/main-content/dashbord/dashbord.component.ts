@@ -14,8 +14,8 @@ export class DashbordComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-	  //this.user = this.authService.connectedUser;
-	  this.user = new Orga(23, 'Devulder', 'Vincent', "vincent.devulder@insa-lyon.fr");
+	  this.user = this.authService.connectedUser;
+	  // this.user = new Orga(23, 'Devulder', 'Vincent', "vincent.devulder@insa-lyon.fr");
   }
 
 }
