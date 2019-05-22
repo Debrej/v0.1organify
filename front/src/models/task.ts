@@ -1,6 +1,8 @@
-export interface Task {
-	idTask: number,
-	name: string,
-	description: string,
-	idOrga: number,
+export class Task {
+	constructor(
+		public idTask: number,
+		public name: string,
+		public description: string,
+		public idOrga: number
+	) { }
 }

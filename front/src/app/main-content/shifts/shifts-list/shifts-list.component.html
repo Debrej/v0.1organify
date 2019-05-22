@@ -1,0 +1,31 @@
+<div class="panel">
+		<div class="panel-heading">
+			<h4>Liste des créneaux</h4>
+		</div>
+		<div class="col-md-12" >
+			<button class="btn btn-primary" onclick="document.location.href='shifts/create'">Nouveau créneau</button>
+		</div>
+		<div *ngIf="shifts; else elseBlock" class="panel-body">
+			<div class="row">
+				<div class="col-md-5">
+					<h5>Date de début</h5>
+				</div>
+				<div class="col-md-5">
+					<h5>Date de fin</h5>
+				</div>
+			</div>
+			<div *ngFor="let shift of shifts;" class="row">
+				<div class="col-sm-5">
+					{{shift.start_date}}
+				</div>
+				<div class="col-sm-5">
+					{{shift.end_date}}
+				</div>
+				<div class="col-sm-2">
+					<a href="/shifts/{{shift.idShift}}"><i class="far fa-eye fa-lg"></i></a>
+					<a href="/shifts/{{shift.idShift}}/update"><i class="far fa-edit fa-lg"></i></a>
+				</div>
+			</div>
+		</div>
+		<ng-template #elseBlock><div class="panel-body">No shifts to show</div></ng-template>
+	</div>

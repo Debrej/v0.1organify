@@ -1,7 +1,7 @@
-import { Component, OnInit, NgZone, Injectable} from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { AuthService } from "../auth.service";
 import { Router } from "@angular/router";
-import { CookieService } from "angular2-cookie/core";
+import { CookieService } from 'ngx-cookie-service';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
@@ -24,8 +24,9 @@ export class FormLoginComponent implements OnInit {
       let data = JSON.parse(JSON.stringify(ret));
       if(data.status === 0){ // if the status is ok
         if(data.response === true){ // if the password is the right one
-          this._cookieService.put("token", data.token, {path: "/"}); // we store the token in the cookie
-          this._router.navigate(['/', 'test']); // we navigate to the other view
+		  this._cookieService.set("token", data.token, undefined, '/', 'localhost:8000'); // we store the token in the cookie
+		  this._authService.setConnectedUser(data.idOrga);
+          this._router.navigate(['/', 'dashboard']); // we navigate to the other view
         }
         else{
           this.openSnackBar("Not the good password sorry", this.zone);

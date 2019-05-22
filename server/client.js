@@ -42,7 +42,7 @@ app.use(function(req, res, next){
 //region LISTEN
 
 app.listen(8000, function(){
-    console.log("client server listening on port 80");
+    console.log("client server listening on port 8000");
 });
 
 const key = fs.readFileSync('../ssl/organify.key');
