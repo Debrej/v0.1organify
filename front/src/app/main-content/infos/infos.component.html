@@ -3,6 +3,149 @@
 	  <h3 class="panel-title">Informations</h3>
 	</div>
 	<div class="panel-body">
-	  Content
+		<h2> Présentation générale :</h2>
+		Ce site web a pour but de faciliter l'organisation d'un évènement en permettant la centralisation des planning, des horaires et de l'affectation de chaque organisateur sur chaque tache à effectuer.
+		L'objectif visé est de permettre une meilleure organisation de planning notamment sur de gros évènements faisant intervenir beaucoup de personnes.
+		<br><br>
+		Le temps est organisé en créneaux de deux heures. Chaque membre inscrit peut définir ses disponibilités sur différents créneaux. Ainsi, il est alors possible d'être affecté à des taches pendant ses disponibilités.
+		<br><br>
+		Pour un organisateur, il est possible de créer des taches. Pour un administrateur, il est possible de créer un profil de membre, modifier des droits et éditer toutes les informations présentes dans la base de données.
+		<h2> Front :</h2>
+		L'accès à l'application du côté client se fait par une application écrite en Javascript avec le framework AngularJS.
+	  <h2> Back :</h2>
+		L'API se fait à travers deux applications :
+		<ul>
+			<li>Une application d'authentification : celle ci permet de se connecter sur le site et fournit un token de connection en cas de succès</li>
+			<li>Une application d'accès aux ressources : celle ci permet de de manipuler correctement la base de donnée en fonction des requêtes correspondantes à l'api</li>
+		</ul>
+		Ces applications sont écrites en Javascript avec le framework web Express.
+		<br><br>
+		Notre base de données se situe sur un serveur MySQL. Les différentes applications y accèdent en local. On utilise du SQL pour faire les requêtes.
+		La base de données est la suivante :
+		<br>
+		<img src="assets/img/organify_bdd.png" width="900">
+		<h2> Algorithme de répartition des taches :</h2>
+		L'algorithme de répartition des tâches utilise "Opta planner".
+		Il s'agit d'un solveur de satisfaction de contraintes open source.
+		Il est écrit en java.
+		Pour cela, optaplanner fait appel à des algorithmes de construction heuristique (une heuristique est un algorithme qui fournit rapidement une solution réalisable, mais pas nécessairement optimale, pour un problème d'optimisation complexe)
+		et des algorithmes de recherche locale (permettant de découper le problème en plus petits problèmes pour découvrir des optimums locaux).
+		<br><br>
+		Les contraintes évoquées peuvent être de deux natures :
+		<ul>
+			<li>Des contraintes "hard" : Cela correspond aux contraintes ne devant pas être brisées (une tache ne peut pas être affectées à une personne n'ayant pas les responsabilités adaptées)</li>
+			<li>Des contraintes "soft" : Cela correspond aux contraintes devant être remplies (Une tâche de priorité critique doit être réalisée le plus tot possible)</li>
+		</ul>
+		<br>
+		On utilise différentes classes pour modéliser le problème :
+		<ul>
+			<li>Compétence : cela correspond aux responsabilités qui peuvent être affectées à un individu (responsable, projet1...)</li>
+			<li>Membre : cela correspond aux membres inscrits. Un membre est défini par un identifiant et une liste de compétences</li>
+			<li>Tache : cela correspond aux taches devant être réalisées. Une tache est définie par un identifiant, une durée, une liste de compétences requises associée et enfin une priorité (pouvant être mineure, majeure ou critique)</li>
+		</ul>
+		Toutes ces informations sont réunies dans un fichier JSON afin d'être lues, et se présente de la façon suivante :
+		<br><br>
+		<textarea name="inputJSON" rows="4" cols="40">
+{
+  "listeCompetences": [
+    "responsable",
+    "mission1"
+  ],
+  "listeEmployes": [
+    {
+      "ID": "1",
+      "competences": [
+        "responsable",
+        "mission1"
+      ],
+      "creneaux": [
+        "0"
+      ]
+    },
+    {
+      "ID": "2",
+      "competences": [
+        "mission1"
+      ],
+      "creneaux": [
+        "0"
+      ]
+    }
+  ],
+  "listeDeTaches": [
+    {
+      "ID": "111",
+      "duree": "60",
+      "competencesRequises": [
+        "responsable"
+      ],
+      "priority": "MINOR"
+    },
+    {
+      "ID": "222",
+      "duree": "400",
+      "competencesRequises": [
+        "mission1"
+      ],
+      "priority": "MAJOR"
+    },
+    {
+      "ID": "333",
+      "duree": "500",
+      "competencesRequises": [
+        "mission1"
+      ],
+      "priority": "MINOR"
+    },
+    {
+      "ID": "444",
+      "duree": "60",
+      "competencesRequises": [
+        "mission1"
+      ],
+      "priority": "CRITICAL"
+    },
+    {
+      "ID": "555",
+      "duree": "60",
+      "competencesRequises": [
+        "mission1"
+      ],
+      "priority": "MAJOR"
+    }
+  ]
+}
+		</textarea>
+		<br><br>
+		 L'algorithme retourne un fichier JSON solution à la fin de son exécution sous la forme suivante :
+		 <br><br>
+		 <textarea name="outputJSON" rows="4" cols="40">
+ {
+     "1": [
+         {
+             "taskID": "555",
+             "duree": 60
+         },
+         {
+             "taskID": "222",
+             "duree": 400
+         },
+         {
+             "taskID": "111",
+             "duree": 60
+         }
+     ],
+     "2": [
+         {
+             "taskID": "444",
+             "duree": 60
+         },
+         {
+             "taskID": "333",
+             "duree": 500
+         }
+     ]
+ }
+		 </textarea>
 	</div>
 </div>
