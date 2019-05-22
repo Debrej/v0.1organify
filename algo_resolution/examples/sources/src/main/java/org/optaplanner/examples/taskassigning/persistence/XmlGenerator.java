@@ -137,9 +137,6 @@ public class XmlGenerator {
                             .put("priority", taskTypeList[i].getPriority())
                             .put("pinned",false)
                     );
-            /*if(taches.getJSONArray("TaTask").getJSONObject(i).getInt("indexInTaskType")==taskTypeList.length-1){
-                taches.getJSONArray("TaTask").getJSONObject(i).put("pinned", false); //probleme
-            }*/
         }
         for(int i=0;i<employeeList.length; i++){
             for(int j=0; j< employeeList[i].getCreneaux().length;j++){
