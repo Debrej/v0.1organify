@@ -46,7 +46,10 @@ import { MainContentModule } from './main-content/main-content.module';
     CookieService
   ],
   bootstrap: [
-    AppComponent
+    AppComponent,
+    FormLoginComponent,
+    PhotoLoginComponent,
+    LoginViewComponent,
   ]
 })
 export class AppModule { }

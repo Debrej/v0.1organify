@@ -11,8 +11,6 @@ import { OrgaDetailComponent } from './main-content/orgas/orga-detail/orga-detai
 import { ShiftsComponent } from './main-content/shifts/shifts.component';
 import { ShiftDetailComponent } from './main-content/shifts/shift-detail/shift-detail.component';
 import { InfosComponent } from './main-content/infos/infos.component';
-import {FormLoginComponent} from "./form-login/form-login.component";
-import {PhotoLoginComponent} from "./photo-login/photo-login.component";
 
 const appRoutes: Routes = [
 	{ path: 'login',
