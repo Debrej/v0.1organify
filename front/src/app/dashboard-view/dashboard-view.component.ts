@@ -14,7 +14,8 @@ export class DashboardViewComponent implements OnInit {
   idOrga: any;
 
   @ViewChild('profileMenu') profileMenu: ElementRef;
-  private profile_pic_url: any;
+  @ViewChild('searchBar') searchBar: ElementRef;
+  profile_pic_url: any;
 
   constructor(private _renderer: Renderer2, private _authService: AuthService, private _router: Router, private _orgaService: OrgaService) {
     this.token = localStorage.getItem('token');
@@ -60,6 +61,7 @@ export class DashboardViewComponent implements OnInit {
 
   searchBarClick() {
     this.closeProfilePopUp();
+    this.searchBar.nativeElement.focus();
   }
 
   mainClick() {
